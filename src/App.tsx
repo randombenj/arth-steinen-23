@@ -12,18 +12,6 @@ const Logo = styled('img')({
   width: 200
 });
 
-const Teaser = styled('img')({
-  overflow: 'hidden',
-  height: 250,
-})
-
-
-const Divider = styled('div')({
-  width: '60px',
-  borderTop: '1px solid #8d1e1f'
-});
-
-
 
 function App() {
   return (
@@ -136,7 +124,7 @@ function App() {
         14 Musikschüler werden ausgebildet.
 
         <Box sx={{ marginTop: 1 }}>
-          <a href="http://tambourenarthgoldau.ch" target="_blank">tambourenarthgoldau.ch</a>
+          <a href="http://tambourenarthgoldau.ch" target="_blank" rel="noreferrer">tambourenarthgoldau.ch</a>
         </Box>
 
         <Box sx={{
@@ -166,7 +154,7 @@ function App() {
         Heute trommeln 27 Aktivmitglieder mit und es werden 47 Trommelschüler unterrichtet.
 
         <Box sx={{ marginTop: 1 }}>
-          <a href="https://tambouren-steinen.ch" target="_blank">tambouren-steinen.ch</a>
+          <a href="https://tambouren-steinen.ch" target="_blank" rel="noreferrer">tambouren-steinen.ch</a>
         </Box>
 
         <Box sx={{ height: 60, marginTop: 6, color: '#c3c3c3' }} >
