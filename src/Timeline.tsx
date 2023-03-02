@@ -52,6 +52,10 @@ export default function FestTimeline() {
           [`& .${timelineOppositeContentClasses.root}`]: {
             flex: 0.6,
           },
+          [`& .MuiTimelineOppositeContent-root`]: {
+            width: 100,
+            flex: 'none'
+          }
         }}
       >
         {saturday.map((event, i) => (
@@ -73,9 +77,14 @@ export default function FestTimeline() {
       </Typography>
       <Timeline
         sx={{
+          padding: 0,
           [`& .${timelineOppositeContentClasses.root}`]: {
             flex: 0.6,
           },
+          [`& .MuiTimelineOppositeContent-root`]: {
+            width: 100,
+            flex: 'none'
+          }
         }}
       >
         {sunday.map((event, i) => (

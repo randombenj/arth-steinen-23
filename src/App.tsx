@@ -7,6 +7,7 @@ import { Box, Container, styled, Typography } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FestTimeline from './Timeline';
 import Title from './Title';
+import People from './People';
 
 const Logo = styled('img')({
   width: 200
@@ -24,7 +25,7 @@ function App() {
         paddingLeft: 5,
         overflowX: 'hidden',
         marginLeft: {
-          lg: 15
+          lg: 30
         }
       }}>
         <Logo sx={{ marginTop: 5 }} src={logo} />
@@ -153,14 +154,19 @@ function App() {
         Letztmals organisierte Steinen 2021 ein ZJTPF.
         Heute trommeln 27 Aktivmitglieder mit und es werden 47 Trommelschüler unterrichtet.
 
-        <Box sx={{ marginTop: 1 }}>
+        <Box sx={{ marginTop: 1, marginBottom: 2 }}>
           <a href="https://tambouren-steinen.ch" target="_blank" rel="noreferrer">tambouren-steinen.ch</a>
         </Box>
+
+        <Title title='DAS ORGANISATIONSKOMITEE' fontSize={20} />
+
+        <People />
+
+        {/* FOOTER */}
 
         <Box sx={{ height: 60, marginTop: 6, color: '#c3c3c3' }} >
           Created with <FavoriteBorderIcon sx={{marginBottom: -0.5, height: 20}} /> by Benj Fassbind
         </Box>
-
       </Container>
 
 
