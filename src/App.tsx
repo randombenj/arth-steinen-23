@@ -103,18 +103,6 @@ function App() {
           TAMBOURENVEREIN ARTH-GOLDAU
         </Typography>
 
-        Der Tambourenverein Steinen wurde im Jahr 1969 gegründet.
-        Der Ursprung für die damalige Vereinsgründung basierte auf der Tatsache,
-        dass es bei der Rekrutierung von Tambouren für die Steiner Fasnacht Probleme gab.
-        Die Fasnacht spielte natürlich nicht nur bei der Entstehung des
-        Tambourenvereins eine massgebliche Rolle, sie bildet auch heute noch einen wichtigen
-        Bestandteil des Vereinslebens. Steinen hat sich dank konstant starker
-        Wettspielresultate bei den Jungtambouren und den Erwachsenen einen
-        hervorragenden Ruf in der Trommelszene erarbeitet und zählt seit
-        Jahren zu den stärksten Tambourenkorps der Schweiz.
-        Letztmals organisierte Steinen 2021 ein ZJTPF.
-        Heute trommeln 27 Aktivmitglieder mit und es werden 47 Trommelschüler unterrichtet.
-
         Der Tambourenverein Arth-Goldau wurde 1993 offiziell gegründet.
         2006 erfolgte erstmals die Teilnahme an einem Eidgenössischen.
         In den Folgejahren besuchte der Verein zahlreiche regionale und alle
