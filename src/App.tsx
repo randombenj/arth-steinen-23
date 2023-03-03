@@ -3,8 +3,17 @@ import React from 'react';
 import logo from './logo.png';
 import teaser from './teaser.jpg';
 import teaserGoldau from './teaser-goldau.jpg';
-import { Box, Container, styled, Typography } from '@mui/material';
+import kantonSchwyz from './sponsoren/kanton-schwyz.png';
+import gemeindeArth from './sponsoren/gemeinde-arth.png';
+import bezirkSchwyz from './sponsoren/kulturkommission.png';
+import szkb from './sponsoren/szkb.png';
+import victorinox from './sponsoren/victorinox.png';
+
+import schlegel from './piccolo_trommelschlegel.png'
+
+import { Box, Button, Container, Divider, styled, Typography } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import FestTimeline from './Timeline';
 import Title from './Title';
 import People from './People';
@@ -13,14 +22,25 @@ const Logo = styled('img')({
   width: 200
 });
 
+const Schlegel = styled('img')({});
+
 
 function App() {
   return (
     <Box sx={{
       width: '100%',
-      height: '100%',
-      backgroundColor: '#fefefe'
+      height: '100%'
     }}>
+
+      <Schlegel src={schlegel} sx={{
+        position: 'fixed',
+        right: '20%',
+        top: 200,
+        zIndex: -1,
+        opacity: 0.4,
+        transform: 'rotate(10deg)'
+      }} />
+
       <Container maxWidth="md" sx={{
         paddingLeft: 5,
         overflowX: 'hidden',
@@ -28,23 +48,22 @@ function App() {
           lg: 30
         }
       }}>
-        <Logo sx={{ marginTop: 5 }} src={logo} />
+        <Logo sx={{ marginTop: 5, marginBottom: 2 }} src={logo} />
 
         <Box />
-        <Typography component="span" sx={{
-          marginTop: 2,
-          display: 'inline-block',
-          color: '#505050',
-          backgroundColor: "#f7f7f7",
-          borderRadius: 1.5,
-          padding: 0.5,
-          paddingLeft: 1.2,
-          paddingRight: 1.2,
-          fontSize: 19,
-          fontWeight: 200
-        }}>
-          23. - 24. September 2023
-        </Typography>
+        <Button sx={{ marginTop: 1, marginRight: 2 }} variant="outlined" disabled>
+          <Typography sx={{
+            color: '#505050',
+            fontSize: 18
+          }}>23. - 24. September 2023</Typography>
+        </Button>
+
+        <Button sx={{ marginTop: 1 }} variant="outlined" href='mailto:info@arth-steinen-23.ch'>
+          <MailOutlineIcon sx={{ marginRight: 1 }} />
+          <Typography sx={{
+            fontSize: 16
+          }}>Kontakt</Typography>
+        </Button>
 
         {/* <Box sx={{
           marginTop: 2,
@@ -77,6 +96,7 @@ function App() {
         (AG, BE, BL, BS, FR, LU, NW, SO, SZ, ZG)
         nehmen über 500 Jungtambouren und -Pfeifer im Alter von
         8-19 Jahren am Wettbewerb teil.
+
 
         <FestTimeline />
 
@@ -150,10 +170,47 @@ function App() {
 
         <People />
 
+        <Box sx={{ marginTop: 2 }} />
+        <Title title='UNTERSTÜTZT DURCH' fontSize={20} />
+
+        Vielen dank für die Unterstützung!
+
+        <Typography sx={{ marginBottom: 2, marginTop: 2, color: '#505050' }}>
+          ÖFFENTLICHE HAND
+        </Typography>
+
+        <img src={kantonSchwyz} alt="Kanton Schwyz (Lotteriefonds)" style={{ width: 200 }} />
+        <Divider sx={{ width: 40, paddingBottom: 0.6, marginBottom: 2 }} component="div" />
+
+        <img src={gemeindeArth} alt="Gemeinde Arth" style={{ width: 200 }} />
+        <Divider sx={{ width: 40, paddingBottom: 0.6, marginBottom: 2 }} component="div" />
+
+        <img src={bezirkSchwyz} alt="Bezirk Schwyz" style={{ width: 200 }} />
+        <Divider sx={{ width: 40, paddingBottom: 0.6, marginBottom: 2 }} component="div" />
+
+        <Typography sx={{ marginBottom: 2, marginTop: 2, color: '#505050' }}>
+          GOLDSPONSOREN
+        </Typography>
+
+        <img src={szkb} alt="Schwyzer Kantonalbank" style={{ width: 200 }} />
+        <Divider sx={{ width: 40, paddingBottom: 0.6, marginBottom: 2 }} component="div" />
+
+        <img src={victorinox} alt="Victorinox" style={{ width: 200 }} />
+        <Divider sx={{ width: 40, paddingBottom: 0.6, marginBottom: 2 }} component="div" />
+
+        <Box sx={{ marginTop: 3 }} />
+        <Button sx={{ marginTop: 1 }} variant="outlined" href='mailto:info@arth-steinen-23.ch'>
+          <MailOutlineIcon sx={{ marginRight: 1, fontSize: 16 }} />
+          <Typography sx={{
+            fontSize: 16
+          }}>Jetzt Gönner werden!</Typography>
+        </Button>
+
+
         {/* FOOTER */}
 
         <Box sx={{ height: 60, marginTop: 6, color: '#c3c3c3' }} >
-          Created with <FavoriteBorderIcon sx={{marginBottom: -0.5, height: 20}} /> by Benj Fassbind
+          Created with <FavoriteBorderIcon sx={{ marginBottom: -0.5, height: 20 }} /> by Benj Fassbind
         </Box>
       </Container>
 
