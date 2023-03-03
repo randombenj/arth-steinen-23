@@ -16,7 +16,7 @@ export default function People() {
   ]
 
   return (
-    <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper', padding: 0 }}>
+    <List sx={{ width: '100%', maxWidth: 360, padding: 0 }}>
       {committee.map((p) => (
         <>
           <ListItem alignItems="flex-start" sx={{ padding: 0 }}>
