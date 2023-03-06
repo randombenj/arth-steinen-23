@@ -173,7 +173,7 @@ function App() {
         <Box sx={{ marginTop: 2 }} />
         <Title title='UNTERSTÜTZT DURCH' fontSize={20} />
 
-        Vielen dank für die Unterstützung!
+        Vielen Dank für die Unterstützung!
 
         <Typography sx={{ marginBottom: 2, marginTop: 2, color: '#505050' }}>
           ÖFFENTLICHE HAND

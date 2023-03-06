@@ -20,7 +20,7 @@ export default function FestTimeline() {
     { from: new Date(2023, 9, 23, 16, 30), to: new Date(2023, 9, 23, 18, 0), event: 'Veteranenehrung' },
     { from: new Date(2023, 9, 23, 17, 0), to: new Date(2023, 9, 23, 19, 0), event: 'Nachtessen' },
     { from: new Date(2023, 9, 23, 18, 0), to: undefined, event: 'Bekanntgabe Finalteilnehmer' },
-    { from: new Date(2023, 9, 23, 19, 0), to: new Date(2023, 9, 23, 20, 30), event: 'Top Ten Finale T1' },
+    { from: new Date(2023, 9, 23, 19, 0), to: new Date(2023, 9, 23, 20, 30), event: 'Finalwettspiele' },
     { from: new Date(2023, 9, 23, 19, 0), to: new Date(2023, 9, 23, 22, 0), event: 'freies Gässeln in den Gassen von Arth' },
     { from: new Date(2023, 9, 23, 20, 30), to: new Date(2023, 9, 23, 24, 0), event: 'Start Unterhaltungsabend' }
   ]
@@ -29,7 +29,7 @@ export default function FestTimeline() {
     { from: new Date(2023, 9, 24, 6, 30), to: new Date(2023, 9, 24, 8, 30), event: 'Morgenessen' },
     { from: new Date(2023, 9, 24, 8, 30), to: new Date(2023, 9, 24, 12, 0), event: 'Sektionswettspiele S1-S3' },
     { from: new Date(2023, 9, 24, 8, 53), to: new Date(2023, 9, 24, 10, 15), event: 'Sektionswettspiele Pfeifer' },
-    { from: new Date(2023, 9, 24, 10, 0), to: undefined, event: 'Empfang Ehrengäste' },
+    { from: new Date(2023, 9, 24, 10, 30), to: undefined, event: 'Empfang Ehrengäste' },
     { from: new Date(2023, 9, 24, 11, 30), to: new Date(2023, 9, 24, 13, 15), event: 'Mittagessen und Bankett' },
     { from: new Date(2023, 9, 24, 11, 48), to: new Date(2023, 9, 24, 12, 55), event: 'Sektionswettspiele Tambouren und Pfeifer' },
     { from: new Date(2023, 9, 24, 13, 30), to: undefined, event: 'Bereitstellen für Festumzug' },
