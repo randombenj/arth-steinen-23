@@ -58,12 +58,20 @@ function App() {
           }}>23. - 24. September 2023</Typography>
         </Button>
 
+        <Button sx={{ marginTop: 1, marginRight: 2 }} variant="outlined" href='https://www.ztpv.ch/wettspielprogramm-zjtpf-steinen-arth-2023/' target='_blank'>
+          <Typography sx={{
+            fontSize: 16
+          }}>Wettspielprogramm</Typography>
+        </Button>
+
         <Button sx={{ marginTop: 1 }} variant="outlined" href='mailto:info@arth-steinen-23.ch'>
           <MailOutlineIcon sx={{ marginRight: 1 }} />
           <Typography sx={{
             fontSize: 16
           }}>Kontakt</Typography>
         </Button>
+
+
 
         {/* <Box sx={{
           marginTop: 2,
