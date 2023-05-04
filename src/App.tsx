@@ -192,7 +192,7 @@ function App() {
         Vielen Dank für die Unterstützung!
 
         <Typography sx={{ marginBottom: 2, marginTop: 2, color: '#505050' }}>
-          ÖFFENTLICHE HAND
+          INSTITUTIONELLE SPONSOREN
         </Typography>
 
         <img src={kantonSchwyz} alt="Kanton Schwyz (Lotteriefonds)" style={{ width: 200 }} />
