@@ -1,5 +1,7 @@
 import * as React from 'react';
-import { Divider, List, ListItem, ListItemText, Typography } from '@mui/material';
+import { Box, Divider, List, ListItem, ListItemText, Typography } from '@mui/material';
+
+import vorstand from './arth-steinen-vorstand.png'
 
 export default function People() {
 
@@ -16,6 +18,10 @@ export default function People() {
   ]
 
   return (
+    <>
+    <img src={vorstand} alt="Victorinox" width="100%"/>
+
+
     <List sx={{ width: '100%', maxWidth: 360, padding: 0 }}>
       {committee.map((p) => (
         <>
@@ -30,17 +36,18 @@ export default function People() {
                     component="span"
                     variant="body2"
                     color="text.primary"
-                  >
+                    >
                     {p.role}
                   </Typography>
                   {` — ${p.ort}`}
                 </React.Fragment>
               }
-            />
+              />
           </ListItem>
           <Divider sx={{ width: 40, paddingBottom: 0.6 }} component="li" />
         </>
       ))}
     </List>
+    </>
   );
 }
