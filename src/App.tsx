@@ -6,8 +6,13 @@ import teaserGoldau from './teaser-goldau.jpg';
 import kantonSchwyz from './sponsoren/kanton-schwyz.png';
 import gemeindeArth from './sponsoren/gemeinde-arth.png';
 import bezirkSchwyz from './sponsoren/kulturkommission.png';
-import szkb from './sponsoren/szkb.png';
-import victorinox from './sponsoren/victorinox.png';
+import kantonArgau from './sponsoren/swisslos-argau.png';
+import egstiftung from './sponsoren/erns-goehner-stiftung.jpg'
+import szkb from './sponsoren/szkb.png'
+import bauplanung from './sponsoren/bauplanung-suter.png'
+import victorinox from './sponsoren/victorinox.png'
+import riwag from './sponsoren/riwag.png'
+import bote from './sponsoren/bote.png'
 
 import schlegel from './piccolo_trommelschlegel.png'
 
@@ -192,10 +197,26 @@ function App() {
         Vielen Dank für die Unterstützung!
 
         <Typography sx={{ marginBottom: 2, marginTop: 2, color: '#505050' }}>
+          GOLDSPONSOREN
+        </Typography>
+
+        <img src={szkb} alt="Schwyzer Kantonalbank" style={{ width: 200 }} />
+        <Divider sx={{ width: 40, paddingBottom: 0.6, marginBottom: 2 }} component="div" />
+
+        <img src={victorinox} alt="Victorinox" style={{ width: 200 }} />
+        <Divider sx={{ width: 40, paddingBottom: 0.6, marginBottom: 2 }} component="div" />
+
+        <Typography sx={{ marginBottom: 2, marginTop: 2, color: '#505050' }}>
           INSTITUTIONELLE SPONSOREN
         </Typography>
 
         <img src={kantonSchwyz} alt="Kanton Schwyz (Lotteriefonds)" style={{ width: 200 }} />
+        <Divider sx={{ width: 40, paddingBottom: 0.6, marginBottom: 2 }} component="div" />
+
+        <img src={kantonArgau} alt="Kanton Argau (Lotteriefonds)" style={{ width: 200 }} />
+        <Divider sx={{ width: 40, paddingBottom: 0.6, marginBottom: 2 }} component="div" />
+
+        <img src={egstiftung} alt="Ernst Göhner Stiftung" style={{ width: 200 }} />
         <Divider sx={{ width: 40, paddingBottom: 0.6, marginBottom: 2 }} component="div" />
 
         <img src={gemeindeArth} alt="Gemeinde Arth" style={{ width: 200 }} />
@@ -205,13 +226,44 @@ function App() {
         <Divider sx={{ width: 40, paddingBottom: 0.6, marginBottom: 2 }} component="div" />
 
         <Typography sx={{ marginBottom: 2, marginTop: 2, color: '#505050' }}>
-          GOLDSPONSOREN
+          SPONSOREN
         </Typography>
 
-        <img src={szkb} alt="Schwyzer Kantonalbank" style={{ width: 200 }} />
+        <img src={bauplanung} alt="Bauplanung Suter GmbH" style={{ width: 200 }} />
         <Divider sx={{ width: 40, paddingBottom: 0.6, marginBottom: 2 }} component="div" />
 
-        <img src={victorinox} alt="Victorinox" style={{ width: 200 }} />
+        <img src={riwag} alt="Riwag Türen" style={{ width: 200 }} />
+        <Divider sx={{ width: 40, paddingBottom: 0.6, marginBottom: 2 }} component="div" />
+
+        <Typography sx={{ marginBottom: 2, marginTop: 2, color: '#505050' }}>
+          MEDIENPATRONAT
+        </Typography>
+
+        <img src={bote} alt="Bote der Urschweiz AG" style={{ width: 200 }} />
+        <Divider sx={{ width: 40, paddingBottom: 0.6, marginBottom: 2 }} component="div" />
+
+        <Typography sx={{ marginBottom: 2, marginTop: 2, color: '#505050' }}>
+          GÖNNER
+        </Typography>
+
+        <Typography component="div" sx={{ width: 200 }} >
+          Stiftung Pfarreiheim St. Georg, Arth
+        </Typography>
+        <Divider sx={{ width: 40, paddingBottom: 0.6, marginBottom: 2 }} component="div" />
+
+        <Typography component="div" sx={{ width: 200 }} >
+          Stiftung Pflegezentren Gemeinde Arth
+        </Typography>
+        <Divider sx={{ width: 40, paddingBottom: 0.6, marginBottom: 2 }} component="div" />
+
+        <Typography component="div" sx={{ width: 200 }} >
+          Theater Arth
+        </Typography>
+        <Divider sx={{ width: 40, paddingBottom: 0.6, marginBottom: 2 }} component="div" />
+
+        <Typography component="div" sx={{ width: 200 }} >
+          Wilhelm Schmidlin AG
+        </Typography>
         <Divider sx={{ width: 40, paddingBottom: 0.6, marginBottom: 2 }} component="div" />
 
         <Box sx={{ marginTop: 3 }} />
