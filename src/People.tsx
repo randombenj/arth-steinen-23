@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Box, Divider, List, ListItem, ListItemText, Typography } from '@mui/material';
+import { Divider, List, ListItem, ListItemText, Typography } from '@mui/material';
 
 import vorstand from './arth-steinen-vorstand.png'
 
