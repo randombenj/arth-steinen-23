@@ -13,6 +13,7 @@ import victorinox from './sponsoren/victorinox.png'
 import riwag from './sponsoren/riwag.png'
 import bote from './sponsoren/bote.png'
 import bs from './sponsoren/swisslos-bs.jpg'
+import bl from './sponsoren/swisslos-bl.jpg'
 import lu from './sponsoren/swisslos-lu.png'
 
 export default function Sponsoring() {
@@ -41,6 +42,9 @@ export default function Sponsoring() {
       <Divider sx={{ width: 40, paddingBottom: 0.6, marginBottom: 2 }} component="div" />
 
       <img src={kantonArgau} alt="Kanton Argau (Lotteriefonds)" style={{ width: 200 }} />
+      <Divider sx={{ width: 40, paddingBottom: 0.6, marginBottom: 2 }} component="div" />
+
+      <img src={bl} alt="Kanton Basel-Landschaft (Lotteriefonds)" style={{ width: 200 }} />
       <Divider sx={{ width: 40, paddingBottom: 0.6, marginBottom: 2 }} component="div" />
 
       <img src={bs} alt="Kanton Basel-Stadt (Lotteriefonds)" style={{ width: 200 }} />
