@@ -28,7 +28,7 @@ const Subtitle = ({ children }: { children?: string }) => (
     fontSize: '1.05em',
     fontWeight: 500,
   }}>
-    {children}
+    {children} <Box sx={{ width: '60px', borderBottom: '1px solid #8d1e1f40', marginBottom: 2 }}></Box>
   </Typography>
 )
 

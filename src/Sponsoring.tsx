@@ -16,6 +16,12 @@ import bs from './sponsoren/swisslos-bs.jpg'
 import bl from './sponsoren/swisslos-bl.jpg'
 import lu from './sponsoren/swisslos-lu.png'
 
+
+const LogoDivider = () => (
+  <Divider sx={{ width: 40, paddingBottom: 1, marginBottom: 3 }} component="div" />
+)
+
+
 export default function Sponsoring() {
   return (
     <>
@@ -29,55 +35,55 @@ export default function Sponsoring() {
       </Subtitle>
 
       <img src={szkb} alt="Schwyzer Kantonalbank" style={{ width: 200 }} />
-      <Divider sx={{ width: 40, paddingBottom: 0.6, marginBottom: 2 }} component="div" />
+      <LogoDivider />
 
       <img src={victorinox} alt="Victorinox" style={{ width: 200 }} />
-      <Divider sx={{ width: 40, paddingBottom: 0.6, marginBottom: 2 }} component="div" />
+      <LogoDivider />
 
       <Subtitle>
         INSTITUTIONELLE SPONSOREN
       </Subtitle>
 
       <img src={kantonSchwyz} alt="Kanton Schwyz (Lotteriefonds)" style={{ width: 200 }} />
-      <Divider sx={{ width: 40, paddingBottom: 0.6, marginBottom: 2 }} component="div" />
+      <LogoDivider />
 
       <img src={kantonArgau} alt="Kanton Argau (Lotteriefonds)" style={{ width: 200 }} />
-      <Divider sx={{ width: 40, paddingBottom: 0.6, marginBottom: 2 }} component="div" />
+      <LogoDivider />
 
       <img src={bl} alt="Kanton Basel-Landschaft (Lotteriefonds)" style={{ width: 200 }} />
-      <Divider sx={{ width: 40, paddingBottom: 0.6, marginBottom: 2 }} component="div" />
+      <LogoDivider />
 
       <img src={bs} alt="Kanton Basel-Stadt (Lotteriefonds)" style={{ width: 200 }} />
-      <Divider sx={{ width: 40, paddingBottom: 0.6, marginBottom: 2 }} component="div" />
+      <LogoDivider />
 
       <img src={lu} alt="Kanton Luzern (Lotteriefonds)" style={{ width: 200 }} />
-      <Divider sx={{ width: 40, paddingBottom: 0.6, marginBottom: 2 }} component="div" />
+      <LogoDivider />
 
       <img src={egstiftung} alt="Ernst Göhner Stiftung" style={{ width: 200 }} />
-      <Divider sx={{ width: 40, paddingBottom: 0.6, marginBottom: 2 }} component="div" />
+      <LogoDivider />
 
       <img src={gemeindeArth} alt="Gemeinde Arth" style={{ width: 200 }} />
-      <Divider sx={{ width: 40, paddingBottom: 0.6, marginBottom: 2 }} component="div" />
+      <LogoDivider />
 
       <img src={bezirkSchwyz} alt="Bezirk Schwyz" style={{ width: 200 }} />
-      <Divider sx={{ width: 40, paddingBottom: 0.6, marginBottom: 2 }} component="div" />
+      <LogoDivider />
 
       <Subtitle>
         SPONSOREN
       </Subtitle>
 
       <img src={bauplanung} alt="Bauplanung Suter GmbH" style={{ width: 200 }} />
-      <Divider sx={{ width: 40, paddingBottom: 0.6, marginBottom: 2 }} component="div" />
+      <LogoDivider />
 
       <img src={riwag} alt="Riwag Türen" style={{ width: 200 }} />
-      <Divider sx={{ width: 40, paddingBottom: 0.6, marginBottom: 2 }} component="div" />
+      <LogoDivider />
 
       <Subtitle>
         MEDIENPATRONAT
       </Subtitle>
 
       <img src={bote} alt="Bote der Urschweiz AG" style={{ width: 200 }} />
-      <Divider sx={{ width: 40, paddingBottom: 0.6, marginBottom: 2 }} component="div" />
+      <LogoDivider />
 
       <Subtitle>
         GÖNNER
@@ -86,22 +92,22 @@ export default function Sponsoring() {
       <Typography component="div" sx={{ width: 200 }} >
         Stiftung Pfarreiheim St. Georg, Arth
       </Typography>
-      <Divider sx={{ width: 40, paddingBottom: 0.6, marginBottom: 2 }} component="div" />
+      <LogoDivider />
 
       <Typography component="div" sx={{ width: 200 }} >
         Stiftung Pflegezentren Gemeinde Arth
       </Typography>
-      <Divider sx={{ width: 40, paddingBottom: 0.6, marginBottom: 2 }} component="div" />
+      <LogoDivider />
 
       <Typography component="div" sx={{ width: 200 }} >
         Theater Arth
       </Typography>
-      <Divider sx={{ width: 40, paddingBottom: 0.6, marginBottom: 2 }} component="div" />
+      <LogoDivider />
 
       <Typography component="div" sx={{ width: 200 }} >
         Wilhelm Schmidlin AG
       </Typography>
-      <Divider sx={{ width: 40, paddingBottom: 0.6, marginBottom: 2 }} component="div" />
+      <LogoDivider />
 
       <Box sx={{ marginTop: 3 }} />
       <Button sx={{ marginTop: 1 }} variant="outlined" href='mailto:info@arth-steinen-23.ch'>
