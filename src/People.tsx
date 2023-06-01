@@ -19,7 +19,7 @@ export default function People() {
 
   return (
     <>
-    <img src={vorstand} alt="Victorinox" width="100%"/>
+    <img src={vorstand} alt="Victorinox" width="84%"/>
 
 
     <List sx={{ width: '100%', maxWidth: 360, padding: 0 }}>

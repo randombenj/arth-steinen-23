@@ -1,27 +1,15 @@
-import React from 'react';
-
 import logo from './logo.png';
 import teaser from './teaser.jpg';
 import teaserGoldau from './teaser-goldau.jpg';
-import kantonSchwyz from './sponsoren/kanton-schwyz.png';
-import gemeindeArth from './sponsoren/gemeinde-arth.png';
-import bezirkSchwyz from './sponsoren/kulturkommission.png';
-import kantonArgau from './sponsoren/swisslos-argau.png';
-import egstiftung from './sponsoren/erns-goehner-stiftung.jpg'
-import szkb from './sponsoren/szkb.png'
-import bauplanung from './sponsoren/bauplanung-suter.png'
-import victorinox from './sponsoren/victorinox.png'
-import riwag from './sponsoren/riwag.png'
-import bote from './sponsoren/bote.png'
-
 import schlegel from './piccolo_trommelschlegel.png'
 
-import { Box, Button, Container, Divider, styled, Typography } from '@mui/material';
+import { Box, Button, Container, styled, Typography } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import FestTimeline from './Timeline';
-import Title from './Title';
+import { Subtitle, Title } from './Typography';
 import People from './People';
+import Sponsoring from './Sponsoring';
 
 const Logo = styled('img')({
   width: 200
@@ -140,9 +128,9 @@ function App() {
           backgroundPosition: 'center center'
         }} />
 
-        <Typography sx={{ marginTop: 0.5, marginBottom: 2, color: '#505050' }}>
+        <Subtitle>
           TAMBOURENVEREIN ARTH-GOLDAU
-        </Typography>
+        </Subtitle>
 
         Der Tambourenverein Arth-Goldau wurde 1993 offiziell gegründet.
         2006 erfolgte erstmals die Teilnahme an einem Eidgenössischen.
@@ -167,9 +155,9 @@ function App() {
           backgroundRepeat: 'no-repeat',
           backgroundPosition: 'center center'
         }} />
-        <Typography sx={{ marginTop: 0.5, marginBottom: 2, color: '#505050' }}>
+        <Subtitle>
           TAMBOURENVEREIN STEINEN
-        </Typography>
+        </Subtitle>
 
         Der Tambourenverein Steinen wurde im Jahr 1969 gegründet.
         Der Ursprung für die damalige Vereinsgründung basierte auf der Tatsache,
@@ -191,89 +179,7 @@ function App() {
 
         <People />
 
-        <Box sx={{ marginTop: 2 }} />
-        <Title title='UNTERSTÜTZT DURCH' fontSize={20} />
-
-        Vielen Dank für die Unterstützung!
-
-        <Typography sx={{ marginBottom: 2, marginTop: 2, color: '#505050' }}>
-          GOLDSPONSOREN
-        </Typography>
-
-        <img src={szkb} alt="Schwyzer Kantonalbank" style={{ width: 200 }} />
-        <Divider sx={{ width: 40, paddingBottom: 0.6, marginBottom: 2 }} component="div" />
-
-        <img src={victorinox} alt="Victorinox" style={{ width: 200 }} />
-        <Divider sx={{ width: 40, paddingBottom: 0.6, marginBottom: 2 }} component="div" />
-
-        <Typography sx={{ marginBottom: 2, marginTop: 2, color: '#505050' }}>
-          INSTITUTIONELLE SPONSOREN
-        </Typography>
-
-        <img src={kantonSchwyz} alt="Kanton Schwyz (Lotteriefonds)" style={{ width: 200 }} />
-        <Divider sx={{ width: 40, paddingBottom: 0.6, marginBottom: 2 }} component="div" />
-
-        <img src={kantonArgau} alt="Kanton Argau (Lotteriefonds)" style={{ width: 200 }} />
-        <Divider sx={{ width: 40, paddingBottom: 0.6, marginBottom: 2 }} component="div" />
-
-        <img src={egstiftung} alt="Ernst Göhner Stiftung" style={{ width: 200 }} />
-        <Divider sx={{ width: 40, paddingBottom: 0.6, marginBottom: 2 }} component="div" />
-
-        <img src={gemeindeArth} alt="Gemeinde Arth" style={{ width: 200 }} />
-        <Divider sx={{ width: 40, paddingBottom: 0.6, marginBottom: 2 }} component="div" />
-
-        <img src={bezirkSchwyz} alt="Bezirk Schwyz" style={{ width: 200 }} />
-        <Divider sx={{ width: 40, paddingBottom: 0.6, marginBottom: 2 }} component="div" />
-
-        <Typography sx={{ marginBottom: 2, marginTop: 2, color: '#505050' }}>
-          SPONSOREN
-        </Typography>
-
-        <img src={bauplanung} alt="Bauplanung Suter GmbH" style={{ width: 200 }} />
-        <Divider sx={{ width: 40, paddingBottom: 0.6, marginBottom: 2 }} component="div" />
-
-        <img src={riwag} alt="Riwag Türen" style={{ width: 200 }} />
-        <Divider sx={{ width: 40, paddingBottom: 0.6, marginBottom: 2 }} component="div" />
-
-        <Typography sx={{ marginBottom: 2, marginTop: 2, color: '#505050' }}>
-          MEDIENPATRONAT
-        </Typography>
-
-        <img src={bote} alt="Bote der Urschweiz AG" style={{ width: 200 }} />
-        <Divider sx={{ width: 40, paddingBottom: 0.6, marginBottom: 2 }} component="div" />
-
-        <Typography sx={{ marginBottom: 2, marginTop: 2, color: '#505050' }}>
-          GÖNNER
-        </Typography>
-
-        <Typography component="div" sx={{ width: 200 }} >
-          Stiftung Pfarreiheim St. Georg, Arth
-        </Typography>
-        <Divider sx={{ width: 40, paddingBottom: 0.6, marginBottom: 2 }} component="div" />
-
-        <Typography component="div" sx={{ width: 200 }} >
-          Stiftung Pflegezentren Gemeinde Arth
-        </Typography>
-        <Divider sx={{ width: 40, paddingBottom: 0.6, marginBottom: 2 }} component="div" />
-
-        <Typography component="div" sx={{ width: 200 }} >
-          Theater Arth
-        </Typography>
-        <Divider sx={{ width: 40, paddingBottom: 0.6, marginBottom: 2 }} component="div" />
-
-        <Typography component="div" sx={{ width: 200 }} >
-          Wilhelm Schmidlin AG
-        </Typography>
-        <Divider sx={{ width: 40, paddingBottom: 0.6, marginBottom: 2 }} component="div" />
-
-        <Box sx={{ marginTop: 3 }} />
-        <Button sx={{ marginTop: 1 }} variant="outlined" href='mailto:info@arth-steinen-23.ch'>
-          <MailOutlineIcon sx={{ marginRight: 1, fontSize: 16 }} />
-          <Typography sx={{
-            fontSize: 16
-          }}>Jetzt Gönner werden!</Typography>
-        </Button>
-
+        <Sponsoring />
 
         {/* FOOTER */}
 
