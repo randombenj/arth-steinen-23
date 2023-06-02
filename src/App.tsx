@@ -3,7 +3,7 @@ import teaser from './teaser.jpg';
 import teaserGoldau from './teaser-goldau.jpg';
 import schlegel from './piccolo_trommelschlegel.png'
 
-import { Box, Button, Container, styled, Typography } from '@mui/material';
+import { Box, Button, Container, Hidden, styled, Typography } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import FestTimeline from './Timeline';
@@ -11,6 +11,7 @@ import { Subtitle, Title } from './Typography';
 import People from './People';
 import Sponsoring from './Sponsoring';
 import Umzug from './Umzug';
+import MyFest from './MyFest';
 
 const Logo = styled('img')({
   width: 200
@@ -18,6 +19,10 @@ const Logo = styled('img')({
 
 const Schlegel = styled('img')({});
 
+const Map = styled('iframe')({
+  // marginTop: '-78px',
+  border: 0,
+});
 
 function App() {
   return (
@@ -73,19 +78,31 @@ function App() {
           }}>Kontakt</Typography>
         </Button>
 
+        <Box sx={{ marginTop: 4 }} />
+        <Title title='DIGITALER FESTFÜHRER' fontSize={20} />
+        <MyFest />
 
+      </Container>
 
-        {/* <Box sx={{
-          marginTop: 2,
-          padding: 2,
-          marginRight: -2,
-          height: '500px'
-        }}>
-          TODO: (mein fest)
-        </Box> */}
+        <Box sx={{
+          marginLeft: '308px',
+          marginTop: '16px',
+          marginBottom: '-67px',
+          height: '67px',
+          backgroundColor: 'white',
+          zIndex: 1,
+          position: 'relative'
+        }} />
 
+        <Map src="https://www.google.com/maps/d/embed?mid=1kkRY4LWj6bS_93cKTBPiKdoKx0GSFdsE&hl=en&ehbc=FFFFFF" width="100%" height="720" />
 
-
+      <Container maxWidth="md" sx={{
+        paddingLeft: 5,
+        overflowX: 'hidden',
+        marginLeft: {
+          lg: 30
+        }
+      }}>
         {/* CONTENT */}
         <Box sx={{ marginTop: 4 }} />
         <Title title='DAS FEST' fontSize={20} />
