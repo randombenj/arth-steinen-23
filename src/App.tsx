@@ -204,7 +204,7 @@ function App() {
         {/* FOOTER */}
 
         <Box sx={{ height: 60, marginTop: 6, color: '#c3c3c3' }} >
-          Created with <FavoriteBorderIcon sx={{ marginBottom: -0.5, height: 20 }} /> by Benj Fassbind
+          Created with <FavoriteBorderIcon sx={{ marginBottom: -0.5, height: 20 }} /> by <a href="https://github.com/randombenj/arth-steinen-23">Benj Fassbind</a>
         </Box>
       </Container>
 
