@@ -34,10 +34,14 @@ export default function Sponsoring() {
         GOLDSPONSOREN
       </Subtitle>
 
-      <img src={szkb} alt="Schwyzer Kantonalbank" style={{ width: 200 }} />
+      <a href="https://szkb.ch" target="_blank" rel="noreferrer">
+        <img src={szkb} alt="Schwyzer Kantonalbank" style={{ width: 200 }} />
+      </a>
       <LogoDivider />
 
-      <img src={victorinox} alt="Victorinox" style={{ width: 200 }} />
+      <a href="https://victorinox.com" target="_blank" rel="noreferrer">
+        <img src={victorinox} alt="Victorinox" style={{ width: 200 }} />
+      </a>
       <LogoDivider />
 
       <Subtitle>
@@ -72,17 +76,23 @@ export default function Sponsoring() {
         SPONSOREN
       </Subtitle>
 
-      <img src={bauplanung} alt="Bauplanung Suter GmbH" style={{ width: 200 }} />
+      <a href="https://www.bauplanung-suter.ch/" target="_blank" rel="noreferrer">
+        <img src={bauplanung} alt="Bauplanung Suter GmbH" style={{ width: 200 }} />
+      </a>
       <LogoDivider />
 
-      <img src={riwag} alt="Riwag Türen" style={{ width: 200 }} />
+      <a href="https://www.riwag.ch/" target="_blank" rel="noreferrer">
+        <img src={riwag} alt="Riwag Türen" style={{ width: 200 }} />
+      </a>
       <LogoDivider />
 
       <Subtitle>
         MEDIENPATRONAT
       </Subtitle>
 
-      <img src={bote} alt="Bote der Urschweiz AG" style={{ width: 200 }} />
+      <a href="https://www.bote.ch/" target="_blank" rel="noreferrer">
+        <img src={bote} alt="Bote der Urschweiz AG" style={{ width: 200 }} />
+      </a>
       <LogoDivider />
 
       <Subtitle>
