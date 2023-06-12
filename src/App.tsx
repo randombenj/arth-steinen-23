@@ -87,8 +87,8 @@ function App() {
         <Box sx={{
           marginLeft: '308px',
           marginTop: '16px',
-          marginBottom: '-67px',
-          height: '67px',
+          marginBottom: '-60px',
+          height: '60px',
           backgroundColor: 'white',
           zIndex: 1,
           position: 'relative'
