@@ -15,6 +15,7 @@ import bote from './sponsoren/bote.png'
 import bs from './sponsoren/swisslos-bs.jpg'
 import bl from './sponsoren/swisslos-bl.jpg'
 import lu from './sponsoren/swisslos-lu.png'
+import importakustik from './sponsoren/import-akustik.png'
 
 
 const LogoDivider = () => (
@@ -30,6 +31,8 @@ export default function Sponsoring() {
 
       Vielen Dank für die Unterstützung!
 
+      <Box sx={{marginTop: 2}} />
+
       <Subtitle>
         GOLDSPONSOREN
       </Subtitle>
@@ -41,6 +44,11 @@ export default function Sponsoring() {
 
       <a href="https://victorinox.com" target="_blank" rel="noreferrer">
         <img src={victorinox} alt="Victorinox" style={{ width: 200 }} />
+      </a>
+      <LogoDivider />
+
+      <a href="https://www.import-akustik.ch/import-akustik-goldau" target="_blank" rel="noreferrer">
+        <img src={importakustik} alt="Import Akustik" style={{ width: 200 }} />
       </a>
       <LogoDivider />
 
@@ -99,23 +107,28 @@ export default function Sponsoring() {
         GÖNNER
       </Subtitle>
 
-      <Typography component="div" sx={{ width: 200 }} >
-        Stiftung Pfarreiheim St. Georg, Arth
+      <Typography component="div" sx={{ width: 200, 'a': {textDecoration: "none"} }} >
+        <a target="_blank" rel="noreferrer" href="https://www.kath-arth-goldau.ch/pfarrei/arth/georgsheim">Stiftung Pfarreiheim St. Georg, Arth</a>
       </Typography>
       <LogoDivider />
 
-      <Typography component="div" sx={{ width: 200 }} >
-        Stiftung Pflegezentren Gemeinde Arth
+      <Typography component="div" sx={{ width: 200, 'a': {textDecoration: "none"} }} >
+        <a target="_blank" rel="noreferrer" href="https://pflegezentren-arth.ch/">Stiftung Pflegezentren Gemeinde Arth</a>
       </Typography>
       <LogoDivider />
 
-      <Typography component="div" sx={{ width: 200 }} >
-        Theater Arth
+      <Typography component="div" sx={{ width: 200, 'a': {textDecoration: "none"} }} >
+        <a target="_blank" rel="noreferrer" href="https://www.theaterarth.ch/">Theater Arth</a>
       </Typography>
       <LogoDivider />
 
-      <Typography component="div" sx={{ width: 200 }} >
-        Wilhelm Schmidlin AG
+      <Typography component="div" sx={{ width: 200, 'a': {textDecoration: "none"} }} >
+        <a target="_blank" rel="noreferrer" href="https://www.schmidlin.ch/">Wilhelm Schmidlin AG</a>
+      </Typography>
+      <LogoDivider />
+
+      <Typography component="div" sx={{ width: 200, 'a': {textDecoration: "none"} }} >
+        <a target="_blank" rel="noreferrer" href="https://www.kaufmann-ag.ch/">Kaufmann AG</a>
       </Typography>
       <LogoDivider />
 
