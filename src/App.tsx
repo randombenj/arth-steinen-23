@@ -51,11 +51,11 @@ function App() {
           }}>23. - 24. September 2023</Typography>
         </Button>
 
-        <Button sx={{ marginTop: 1, marginRight: 2 }} variant="outlined" href='https://www.ztpv.ch/zjtpf-arth-steinen-2023-anmeldung-ist-online/' target='_blank'>
+        <Button sx={{ marginTop: 1, marginRight: 2 }} variant="outlined" href='https://www.ztpv.ch/portfolio/zjtpf-arth-steinen-2023/' target='_blank'>
           <Typography sx={{
             fontSize: 16,
             fontWeight: 600
-          }}>Anmeldung</Typography>
+          }}>Zeitplan</Typography>
         </Button>
 
         <Button sx={{ marginTop: 1, marginRight: 2 }} variant="outlined" href='https://www.ztpv.ch/wettspielprogramm-zjtpf-steinen-arth-2023/' target='_blank'>
