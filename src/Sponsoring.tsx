@@ -132,6 +132,11 @@ export default function Sponsoring() {
       </Typography>
       <LogoDivider />
 
+      <Typography component="div" sx={{ width: 200, 'a': {textDecoration: "none"} }} >
+        <a target="_blank" rel="noreferrer" href="http://www.kennelgoldau.ch/getraenke.html">Kennel Getränke</a>
+      </Typography>
+      <LogoDivider />
+
       <Box sx={{ marginTop: 3 }} />
       <Button sx={{ marginTop: 1 }} variant="outlined" href='mailto:info@arth-steinen-23.ch'>
         <MailOutlineIcon sx={{ marginRight: 1, fontSize: 16 }} />
