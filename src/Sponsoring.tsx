@@ -16,6 +16,7 @@ import bs from './sponsoren/swisslos-bs.jpg'
 import bl from './sponsoren/swisslos-bl.jpg'
 import lu from './sponsoren/swisslos-lu.png'
 import importakustik from './sponsoren/import-akustik.png'
+import alfacom from './sponsoren/alfacom.png'
 
 
 const LogoDivider = () => (
@@ -91,6 +92,11 @@ export default function Sponsoring() {
 
       <a href="https://www.riwag.ch/" target="_blank" rel="noreferrer">
         <img src={riwag} alt="Riwag Türen" style={{ width: 200 }} />
+      </a>
+      <LogoDivider />
+
+      <a href="https://www.alfacom.ch/" target="_blank" rel="noreferrer">
+        <img src={alfacom} alt="Alfacom" style={{ width: 200 }} />
       </a>
       <LogoDivider />
 
