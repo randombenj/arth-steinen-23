@@ -34,6 +34,7 @@ export default function Sponsoring() {
 
       <Box sx={{marginTop: 2}} />
 
+      <Box sx={{ marginTop: 5 }} />
       <Subtitle>
         GOLDSPONSOREN
       </Subtitle>
@@ -53,6 +54,7 @@ export default function Sponsoring() {
       </a>
       <LogoDivider />
 
+      <Box sx={{ marginTop: 5 }} />
       <Subtitle>
         INSTITUTIONELLE SPONSOREN
       </Subtitle>
@@ -81,6 +83,7 @@ export default function Sponsoring() {
       <img src={bezirkSchwyz} alt="Bezirk Schwyz" style={{ width: 200 }} />
       <LogoDivider />
 
+      <Box sx={{ marginTop: 5 }} />
       <Subtitle>
         SPONSOREN
       </Subtitle>
@@ -100,6 +103,7 @@ export default function Sponsoring() {
       </a>
       <LogoDivider />
 
+      <Box sx={{ marginTop: 5 }} />
       <Subtitle>
         MEDIENPATRONAT
       </Subtitle>
@@ -109,6 +113,7 @@ export default function Sponsoring() {
       </a>
       <LogoDivider />
 
+      <Box sx={{ marginTop: 5 }} />
       <Subtitle>
         GÖNNER
       </Subtitle>
