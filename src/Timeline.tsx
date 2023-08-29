@@ -16,13 +16,15 @@ export default function FestTimeline() {
     { from: new Date(2023, 9, 23, 8, 0), to: new Date(2023, 9, 23, 18, 55), event: 'Einzelwettspiel Tambouren' },
     { from: new Date(2023, 9, 23, 9, 0), to: new Date(2023, 9, 23, 15, 30), event: 'Einzelwettspiel Pfeifer' },
     { from: new Date(2023, 9, 23, 11, 30), to: new Date(2023, 9, 23, 13, 30), event: 'Mittagessen' },
+    { from: new Date(2023, 9, 23, 14, 0), to: undefined, event: 'Bekanntgabe Finalteilnehmer T1, P1, T2' },
+
     { from: new Date(2023, 9, 23, 15, 30), to: new Date(2023, 9, 23, 16, 45), event: 'Wettspiel SoloDuo' },
     { from: new Date(2023, 9, 23, 16, 30), to: new Date(2023, 9, 23, 18, 0), event: 'Veteranenehrung' },
     { from: new Date(2023, 9, 23, 17, 0), to: new Date(2023, 9, 23, 19, 0), event: 'Nachtessen' },
-    { from: new Date(2023, 9, 23, 18, 0), to: undefined, event: 'Bekanntgabe Finalteilnehmer' },
-    { from: new Date(2023, 9, 23, 19, 0), to: new Date(2023, 9, 23, 20, 30), event: 'Finalwettspiele' },
+    { from: new Date(2023, 9, 23, 18, 0), to: undefined, event: 'Bekanntgabe Finalteilnehmer T3, T4' },
+    { from: new Date(2023, 9, 23, 19, 0), to: new Date(2023, 9, 23, 20, 40), event: 'Finalwettspiele' },
     { from: new Date(2023, 9, 23, 19, 0), to: new Date(2023, 9, 23, 22, 0), event: 'freies Gässeln in den Gassen von Arth' },
-    { from: new Date(2023, 9, 23, 20, 30), to: new Date(2023, 9, 23, 24, 0), event: 'Start Unterhaltungsabend' }
+    { from: new Date(2023, 9, 23, 21, 0), to: new Date(2023, 9, 23, 22, 0), event: 'Unterhaltungsabend' }
   ]
 
   const sunday = [
