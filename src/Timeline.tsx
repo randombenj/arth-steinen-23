@@ -31,7 +31,7 @@ export default function FestTimeline() {
     { from: new Date(2023, 9, 24, 6, 30), to: new Date(2023, 9, 24, 8, 30), event: 'Morgenessen', location: 'Turnhalle Zwygarten' },
     { from: new Date(2023, 9, 24, 8, 30), to: new Date(2023, 9, 24, 12, 0), event: 'Sektionswettspiele S1-S3' },
     { from: new Date(2023, 9, 24, 9, 0), to: new Date(2023, 9, 24, 10, 15), event: 'Sektionswettspiele Pfeifer' },
-    { from: new Date(2023, 9, 24, 10, 30), to: undefined, event: 'Empfang Ehrengäste', location: 'Foyer/Turnhalle Zwygarten' },
+    { from: new Date(2023, 9, 24, 11, 0), to: undefined, event: 'Empfang Ehrengäste', location: 'Foyer/Turnhalle Zwygarten' },
     { from: new Date(2023, 9, 24, 11, 30), to: new Date(2023, 9, 24, 13, 15), event: 'Mittagessen und Bankett', location: 'Turnhalle Zwygarten' },
     { from: new Date(2023, 9, 24, 11, 48), to: new Date(2023, 9, 24, 12, 55), event: 'Sektionswettspiele Tambouren und Pfeifer', location: 'Turnhalle Zwygarten' },
     { from: new Date(2023, 9, 24, 13, 30), to: undefined, event: 'Bereitstellen für Festumzug', location: 'Schulweg Arth' },
