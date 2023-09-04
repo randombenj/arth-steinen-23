@@ -42,7 +42,6 @@ function App() {
 
       <Container maxWidth="md" sx={{
         paddingLeft: 5,
-        overflowX: 'hidden',
         marginLeft: {
           lg: 30
         }
@@ -94,7 +93,7 @@ function App() {
           position: 'relative'
         }} />
 
-        <Map src="https://www.google.com/maps/d/embed?mid=1kkRY4LWj6bS_93cKTBPiKdoKx0GSFdsE&hl=en&ehbc=FFFFFF" width="100%" height="720" />
+        <Map src="https://www.google.com/maps/d/u/1/embed?mid=1BCXcbSCUchfzwHkv8W48Q-UJmncfa9I&hl=en&ehbc=FFFFFF" width="100%" height="720" />
 
       <Container maxWidth="md" sx={{
         paddingLeft: 5,
