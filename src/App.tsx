@@ -10,6 +10,7 @@ import FestTimeline from './Timeline';
 import { Subtitle, Title } from './Typography';
 import People from './People';
 import Sponsoring from './Sponsoring';
+import Umzug from './Umzug';
 
 const Logo = styled('img')({
   width: 200
@@ -108,6 +109,8 @@ function App() {
 
 
         <FestTimeline />
+
+        <Umzug />
 
         <Box sx={{ marginTop: 2 }} />
         <Title title='DIE VERANSTALTER' fontSize={20} />
