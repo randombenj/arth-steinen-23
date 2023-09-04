@@ -66,6 +66,18 @@ function MyFestCategory({ name, participation, ondelete }: MyFestCategoryProps) 
     return time;
   }
 
+  const timeToDateTime = (time: string): number => {
+
+    if (time.length === 3) {
+      return Date.parse(`2023-01-01T0${time.substring(0, 1)}:${time.substring(1, 3)}:00.000Z`)
+    }
+    if (time.length === 4) {
+      return Date.parse(`2023-01-01T${time.substring(0, 2)}:${time.substring(2, 4)}:00.000Z`)
+    }
+
+    return Date.parse(`2023-01-01T${time}:00.000Z`);
+  }
+
   return (
     <Card sx={{ marginBottom: 2, height: 'calc(100% - 2px)' }}>
       <CardHeader
@@ -104,7 +116,7 @@ function MyFestCategory({ name, participation, ondelete }: MyFestCategoryProps) 
             }
           }}
         >
-          {participation.map((entry, i) => (
+          {participation.sort((a, b) => timeToDateTime(a.zeit) - timeToDateTime(b.zeit)).map((entry, i) => (
             <TimelineItem sx={{ minHeight: 20 }}>
               <TimelineOppositeContent sx={{ paddingLeft: 0 }} color="textSecondary">
                 {parseTime(entry.zeit)}
