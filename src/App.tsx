@@ -11,6 +11,7 @@ import { Subtitle, Title } from './Typography';
 import People from './People';
 import Sponsoring from './Sponsoring';
 import Umzug from './Umzug';
+// import MyFest from './MyFest';
 
 const Logo = styled('img')({
   width: 200
@@ -18,6 +19,10 @@ const Logo = styled('img')({
 
 const Schlegel = styled('img')({});
 
+const Map = styled('iframe')({
+  // marginTop: '-78px',
+  border: 0,
+});
 
 function App() {
   return (
@@ -37,7 +42,6 @@ function App() {
 
       <Container maxWidth="md" sx={{
         paddingLeft: 5,
-        overflowX: 'hidden',
         marginLeft: {
           lg: 30
         }
@@ -73,19 +77,31 @@ function App() {
           }}>Kontakt</Typography>
         </Button>
 
+        {/* <Box sx={{ marginTop: 4 }} />
+        <Title title='DIGITALER FESTFÜHRER' fontSize={20} />
+        <MyFest /> */}
 
+      </Container>
 
-        {/* <Box sx={{
-          marginTop: 2,
-          padding: 2,
-          marginRight: -2,
-          height: '500px'
-        }}>
-          TODO: (mein fest)
-        </Box> */}
+        <Box sx={{
+          marginLeft: '308px',
+          marginTop: '16px',
+          marginBottom: '-60px',
+          height: '60px',
+          backgroundColor: 'white',
+          zIndex: 1,
+          position: 'relative'
+        }} />
 
+        <Map src="https://www.google.com/maps/d/u/1/embed?mid=1BCXcbSCUchfzwHkv8W48Q-UJmncfa9I&hl=en&ehbc=FFFFFF" width="100%" height="720" />
 
-
+      <Container maxWidth="md" sx={{
+        paddingLeft: 5,
+        overflowX: 'hidden',
+        marginLeft: {
+          lg: 30
+        }
+      }}>
         {/* CONTENT */}
         <Box sx={{ marginTop: 4 }} />
         <Title title='DAS FEST' fontSize={20} />
@@ -187,7 +203,7 @@ function App() {
         {/* FOOTER */}
 
         <Box sx={{ height: 60, marginTop: 6, color: '#c3c3c3' }} >
-          Created with <FavoriteBorderIcon sx={{ marginBottom: -0.5, height: 20 }} /> by Benj Fassbind
+          Created with <FavoriteBorderIcon sx={{ marginBottom: -0.5, height: 20 }} /> by <a href="https://github.com/randombenj/arth-steinen-23">Benj Fassbind</a>
         </Box>
       </Container>
 
