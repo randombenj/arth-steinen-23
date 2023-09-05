@@ -3,7 +3,7 @@ import teaser from './teaser.jpg';
 import teaserGoldau from './teaser-goldau.jpg';
 import schlegel from './piccolo_trommelschlegel.png'
 
-import { Box, Button, Container, Hidden, styled, Typography } from '@mui/material';
+import { Box, Button, Container, styled, Typography } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import FestTimeline from './Timeline';
@@ -77,9 +77,9 @@ function App() {
           }}>Kontakt</Typography>
         </Button>
 
-        <Box sx={{ marginTop: 4 }} />
+        {/* <Box sx={{ marginTop: 4 }} />
         <Title title='DIGITALER FESTFÜHRER' fontSize={20} />
-        <MyFest />
+        <MyFest /> */}
 
       </Container>
 
