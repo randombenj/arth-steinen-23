@@ -11,7 +11,7 @@ import { Subtitle, Title } from './Typography';
 import People from './People';
 import Sponsoring from './Sponsoring';
 import Umzug from './Umzug';
-import MyFest from './MyFest';
+// import MyFest from './MyFest';
 
 const Logo = styled('img')({
   width: 200
