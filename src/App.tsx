@@ -24,6 +24,11 @@ const Logo = styled('img')({
 
 const Schlegel = styled('img')({});
 
+const List = styled('ul')({
+  listStyleType: 'none',
+  paddingLeft: 6,
+});
+
 function App() {
   return (
     <Box sx={{
@@ -96,22 +101,29 @@ function App() {
         <Box sx={{ marginTop: 4 }} />
         <Title title='DAS FEST' fontSize={20} />
 
-        Jährlich sucht der Zentralschweizerische Tambouren- und Pfeiferverband
-        (ZTPV) einen Organisator für ein Jungtambouren- und Pfeiferfest.
-        Dieses Jahr hat sich leider trotz intensiven Bemühungen des
-        Verbandes niemand gemeldet.
-        Um nach Corona ein weiteres Jahr ohne Wettspiel
-        und somit ohne Ziel für die auszubildenden Tambouren- und Pfeifer
-        zu verhindern, haben sich die beiden benachbarten Vereine
-        Arth-Goldau und Steinen zur gemeinsamen Ausrichtung eines
-        Festes entschlossen. Die Konzeption basiert auf dem
-        erfolgreichen Fest von 2018 in Arth.
-        Steinen steuert durch die hohe Anzahl
-        Mitglieder einen entscheidenden Beitrag an Know-How und Helfern bei.
-        Aus 10 Kantonen der Deutschschweiz
-        (AG, BE, BL, BS, FR, LU, NW, SO, SZ, ZG)
-        nehmen über 500 Jungtambouren und -Pfeifer im Alter von
-        8-19 Jahren am Wettbewerb teil.
+        Am Samstag, 23.9.2023 und Sonntag 24.9.2023 findet das
+        Zentralschweizerische Jungtambouren- und Pfeiferfest in Arth statt. Die
+        beiden Tambourenvereine Arth-Goldau und Steinen organisieren dieses
+        Fest gemeinsam und haben für diesen Anlass einen eigenen Verein mit
+        dem Namen <Blacker>«ARTH-STEINEN 2023»</Blacker> gegründet. Die Zusammenarbeit
+        über Vereinsgrenzen mit einem kurzen Organisationszeitraum hat
+        Signalwirkung.
+
+        Es haben sich rund 600 Jungtrommler und -pfeifer aus 40 Vereinen von
+        zehn Kantonen angemeldet.
+
+        <Box sx={{ marginTop: 2 }} />
+        Ein paar generelle Informationen zum Fest ...
+
+        <List>
+          <li>... bei Fragen hilft unser <Blacker>Infopoint</Blacker> bei der Turnhalle Zwygarten gerne weiter. Dieser ist ab <Blacker>7:30 Uhr</Blacker> geöffnet.</li>
+          <li>... <Blacker>Individuell angepasste Gehörschütze</Blacker> können beim Import Akustik Stand gegossen werden.</li>
+          <li>... die Instrumentendepot sind am <Blacker>Samstag von 7:00 Uhr - 23:00 Uhr</Blacker> und am  <Blacker>Sonntag von 6:30 Uhr - 17:00 Uhr</Blacker> geöffnet.</li>
+          <li>... die Unterkunft kann ab <Blacker>Samstag, 15:00 Uhr</Blacker> bezogen werden und muss bis <Blacker>Sonntag, 9:30 Uhr</Blacker> geräumt sein. </li>
+          <li>
+            ... die Unterkunft ist in <a href="https://goo.gl/maps/8fG2i2E6JkDCwwiy7" target="_blank" rel="noreferrer">Oberarth</a>, zirka 2 km vom Festgelände entfernt. Sie sind entweder mit dem
+            Bus in 5 Minuten oder zu Fuss in ca. 20 Minuten erreichbar.</li>
+        </List>
 
         <LocationsLegend />
       </Container>
