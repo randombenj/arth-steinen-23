@@ -11,6 +11,11 @@ const Map = styled('iframe')({
 const List = styled('ul')({
   listStyleType: 'none',
   paddingLeft: 6,
+  [`& li`]: {
+    textIndent: '-1.1em',
+    marginLeft: 15,
+    paddingBottom: 5
+  }
 });
 
 export function LocationsLegend() {
