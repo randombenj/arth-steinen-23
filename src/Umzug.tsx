@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Timeline from '@mui/lab/Timeline';
 import TimelineItem from '@mui/lab/TimelineItem';
 import TimelineSeparator from '@mui/lab/TimelineSeparator';
@@ -7,7 +6,8 @@ import TimelineDot from '@mui/lab/TimelineDot';
 import TimelineOppositeContent, {
   timelineOppositeContentClasses,
 } from '@mui/lab/TimelineOppositeContent';
-import { Typography } from '@mui/material';
+import {  Box, Typography } from '@mui/material';
+import { Blacker } from './Typography';
 
 export default function Umzug() {
 
@@ -54,6 +54,9 @@ export default function Umzug() {
       <Typography sx={{ marginTop: 2, color: '#505050' }}>
         REIHENFOLGE UMZUG
       </Typography>
+
+      <Box sx={{ marginTop: 2 }} />
+      Am <Blacker>Sonntagmorgen ab 8:30 Uhr</Blacker> wird hier auf der Website informiert, ob der Umzug oder das Schlechtwetterprogramm in der Turnhalle Zwygarten stattfindet.
 
       <Timeline
         sx={{

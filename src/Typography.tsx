@@ -1,5 +1,12 @@
-import { Box, Typography } from "@mui/material"
+import { Box, Typography, styled } from "@mui/material"
 
+const Bolder = styled('span')({
+  fontWeight: 500
+})
+
+const Blacker = ({ children }: { children?: string }) => (
+  <Typography component="span" sx={{ color: '#505050' }}>{children}</Typography>
+)
 
 const Title = ({ title, fontSize, variant }: {
   title: string,
@@ -33,4 +40,4 @@ const Subtitle = ({ children }: { children?: string }) => (
 )
 
 
-export { Subtitle, Title }
+export { Subtitle, Title, Bolder, Blacker }

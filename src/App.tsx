@@ -3,26 +3,26 @@ import teaser from './teaser.jpg';
 import teaserGoldau from './teaser-goldau.jpg';
 import schlegel from './piccolo_trommelschlegel.png'
 
-import { Box, Button, Container, styled, Typography } from '@mui/material';
+import { Alert, Box, Button, Container, styled, Typography } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import FestTimeline from './Timeline';
-import { Subtitle, Title } from './Typography';
+import { Blacker, Bolder, Subtitle, Title } from './Typography';
 import People from './People';
 import Sponsoring from './Sponsoring';
 import Umzug from './Umzug';
+import Locations, { LocationsLegend } from './Locations';
 // import MyFest from './MyFest';
+
+// @ts-ignore
+import festfuehrer from './data/festfuehrer.pdf';
+
 
 const Logo = styled('img')({
   width: 200
 });
 
 const Schlegel = styled('img')({});
-
-const Map = styled('iframe')({
-  // marginTop: '-78px',
-  border: 0,
-});
 
 function App() {
   return (
@@ -56,6 +56,13 @@ function App() {
           }}>23. - 24. September 2023</Typography>
         </Button>
 
+        <Button sx={{ marginTop: 1, marginRight: 2 }} variant="outlined" href={festfuehrer} target='_blank'>
+          <Typography sx={{
+            fontSize: 16,
+            fontWeight: 600
+          }}>Festführer</Typography>
+        </Button>
+
         <Button sx={{ marginTop: 1, marginRight: 2 }} variant="outlined" href='https://www.ztpv.ch/portfolio/zjtpf-arth-steinen-2023/' target='_blank'>
           <Typography sx={{
             fontSize: 16,
@@ -77,32 +84,15 @@ function App() {
           }}>Kontakt</Typography>
         </Button>
 
+        <Alert variant="outlined" severity="info" sx={{backgroundColor: 'white', marginTop: 2}}>
+          Die Festkarten werden nächsten <Bolder>Montag, 11. September 2023</Bolder> versendet.
+          Der Festführer kann bereits als PDF heruntergeladen werden (siehe oben).
+        </Alert>
+
         {/* <Box sx={{ marginTop: 4 }} />
         <Title title='DIGITALER FESTFÜHRER' fontSize={20} />
         <MyFest /> */}
 
-      </Container>
-
-        <Box sx={{
-          marginLeft: '308px',
-          marginTop: '16px',
-          marginBottom: '-60px',
-          height: '60px',
-          backgroundColor: 'white',
-          zIndex: 1,
-          position: 'relative'
-        }} />
-
-        <Map src="https://www.google.com/maps/d/u/1/embed?mid=1BCXcbSCUchfzwHkv8W48Q-UJmncfa9I&hl=en&ehbc=FFFFFF" width="100%" height="720" />
-
-      <Container maxWidth="md" sx={{
-        paddingLeft: 5,
-        overflowX: 'hidden',
-        marginLeft: {
-          lg: 30
-        }
-      }}>
-        {/* CONTENT */}
         <Box sx={{ marginTop: 4 }} />
         <Title title='DAS FEST' fontSize={20} />
 
@@ -123,6 +113,30 @@ function App() {
         nehmen über 500 Jungtambouren und -Pfeifer im Alter von
         8-19 Jahren am Wettbewerb teil.
 
+        <LocationsLegend />
+      </Container>
+
+        <Box sx={{
+          marginLeft: '308px',
+          marginTop: '16px',
+          marginBottom: '-60px',
+          height: '60px',
+          backgroundColor: 'white',
+          zIndex: 1,
+          position: 'relative'
+        }} />
+
+        <Locations />
+
+      <Container maxWidth="md" sx={{
+        paddingLeft: 5,
+        overflowX: 'hidden',
+        marginLeft: {
+          lg: 30
+        }
+      }}>
+        {/* CONTENT */}
+
 
         <FestTimeline />
 
@@ -133,7 +147,7 @@ function App() {
 
         Die beiden Tambourenvereine Arth-Goldau und Steinen
         haben als Trägervereine für diesen Anlass einen
-        eigenen Verein mit dem Namen <Typography component="span" sx={{ color: '#505050' }}>«ARTH-STEINEN 2023»</Typography> gegründet.
+        eigenen Verein mit dem Namen <Blacker>«ARTH-STEINEN 2023»</Blacker> gegründet.
         Die Zusammenarbeit über Vereinsgrenzen mit einem kurzen Organisationszeitraum hat Signalwirkung.
 
         <Box sx={{
