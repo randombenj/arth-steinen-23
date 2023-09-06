@@ -37,7 +37,7 @@ export default function FestTimeline() {
     { from: new Date(2023, 9, 24, 13, 30), to: undefined, event: 'Bereitstellen für Festumzug', location: 'Schulweg Arth' },
     { from: new Date(2023, 9, 24, 14, 0), to: undefined, event: 'Start Festumzug', location: 'Gotthardstrasse - Rathausplatz - Hofmatt' },
     { from: new Date(2023, 9, 24, 16, 0), to: undefined, event: 'Rangverkündigung', location: 'Turnhalle Zwygarten' },
-    { from: new Date(2023, 9, 24, 16, 30), to: undefined, event: 'Abgabe Sektionspakete mit Ranglisten und Einheitspreisen', location: 'Juryraum' },
+    { from: new Date(2023, 9, 24, 16, 30), to: undefined, event: 'Abgabe Sektionspakete mit Ranglisten und Einheitspreisen', location: 'Turnhalle Zwygarten' },
     { from: new Date(2023, 9, 24, 17, 0), to: undefined, event: 'Festausklang' }
   ]
 
