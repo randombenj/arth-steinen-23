@@ -31,7 +31,7 @@ export function LocationsLegend() {
           <li>... mit dem Auto — Ausfahrt Arth (nur aus Richtung Luzern/Zürich) oder Goldau.</li>
         </List>
 
-        <Blacker>E3 — Asco Bettwaren</Blacker> kann am Samstag von 10:00 - 14:30 nicht als Einspielort gebraucht werden.
+        <Blacker>E2 — Asco Bettwaren</Blacker> kann am Samstag von 10:00 - 14:30 nicht als Einspielort gebraucht werden.
     </>
   );
 }
