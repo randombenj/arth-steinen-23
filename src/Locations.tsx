@@ -27,7 +27,7 @@ export function LocationsLegend() {
         Anfahrt ...
 
         <List>
-          <li>... mit dem ÖV — <a href="https://www.sbb.ch/de/bahnhof-services/am-bahnhof/bahnhoefe/bahnhof.5004.arth-goldau.html" >Bahnhof Arth-Goldau</a>.</li>
+          <li>... mit dem ÖV — <a href="https://www.sbb.ch/de/bahnhof-services/am-bahnhof/bahnhoefe/bahnhof.5004.arth-goldau.html" target="_blank" rel="noreferrer" >Bahnhof Arth-Goldau</a>, anschliessend mit dem Bus bis <a href="https://goo.gl/maps/umRSw4tnSDwzgssM7" target="_blank" rel="noreferrer">Arth, Dorf</a>.</li>
           <li>... mit dem Auto — Ausfahrt Arth (nur aus Richtung Luzern/Zürich) oder Goldau.</li>
         </List>
 
