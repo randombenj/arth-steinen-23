@@ -18,6 +18,31 @@ import lu from './sponsoren/swisslos-lu.png'
 import importakustik from './sponsoren/import-akustik.png'
 import alfacom from './sponsoren/alfacom.png'
 
+// gaben
+
+import alpamare from './gabensponsoren/alpamare.png'
+import antik from './gabensponsoren/antik.jpg'
+import avanches from './gabensponsoren/avanches.png'
+import baseltattoo from './gabensponsoren/basel-tattoo.png'
+import buechlertrommelbau from './gabensponsoren/buechler.png'
+import dfb from './gabensponsoren/dfb.png'
+import glanzmann from './gabensponsoren/glanzmann.png'
+import grevitambour from './gabensponsoren/grevi-tambour.jpg'
+import hochybrig from './gabensponsoren/hoch-ybrig.jpg'
+import imperial from './gabensponsoren/imperial.jpg'
+import migros from './gabensponsoren/migros.png'
+import mythen from './gabensponsoren/mythen.jpg'
+import oesch from './gabensponsoren/oesch.jpg'
+import rigi from './gabensponsoren/rigi.png'
+import sgv from './gabensponsoren/sgv.jpg'
+import stoos from './gabensponsoren/stoos.jpg'
+import swissminiatur from './gabensponsoren/swissminiatur.jpg'
+import technorama from './gabensponsoren/technorama.png'
+import trommelmanufaktur from './gabensponsoren/trommelmanufaktur.png'
+import wasserfallen from './gabensponsoren/wasserfallen.png'
+import zoobasel from './gabensponsoren/zoo-basel.png'
+import zoozuerich from './gabensponsoren/zoo-zuerich.png'
+
 
 const LogoDivider = () => (
   <Divider sx={{ width: 40, paddingBottom: 1, marginBottom: 3 }} component="div" />
@@ -25,6 +50,37 @@ const LogoDivider = () => (
 
 
 export default function Sponsoring() {
+
+  const gabensponsoren = [
+    { name: 'Antik Schreinerei Ulrich Bucher', url: 'https://www.ulrichbucher.ch/', img: antik },
+    { name: 'Büchler Trommelbau GmbH', url: 'https://www.trommelbau.ch/', img: buechlertrommelbau },
+    { name: 'Imperial Drums GmbH ', url: 'https://www.swissdrums.com/', img: imperial },
+    { name: 'Oesch Musikinstrumente AG', url: 'https://www.musikoesch.ch/', img: oesch },
+    { name: 'Urs Senn' },
+    { name: 'Godi und Rita Weber' },
+    { name: 'Walti und Leni Fässler' },
+    { name: 'Trommelmanufaktur Ostschweiz', url: 'https://www.trommelmanufaktur.ch/', img: trommelmanufaktur },
+    { name: 'Grevi - Tambour', url: 'http://www.grevitambour.ch/ACCUEIL.html', img: grevitambour },
+    { name: 'Schlagzeug Shop Glanzmann AG', url: 'https://www.musik-glanzmann.ch/', img: glanzmann },
+    { name: 'Victorinox AG', url: 'https://www.victorinox.com/ch/de/', img: victorinox },
+    { name: 'Import Akustik GmbH', url: 'https://www.import-akustik.ch/', img: importakustik },
+    { name: 'Avenches Tattoo', url: 'https://avenchestattoo.ch/de/', img: avanches },
+    { name: 'Basel Tattoo', url: 'https://www.baseltattoo.ch/', img: baseltattoo },
+    { name: 'Zoo Basel', url: 'https://www.zoobasel.ch/de/', img: zoobasel },
+    { name: 'Zoo Zürich', url: 'https://www.zoo.ch/de', img: zoozuerich },
+    { name: 'Stoosbahnen AG', url: 'https://www.stoos.ch/de/', img: stoos },
+    { name: 'Rotenfluebahn Mythenregion AG', url: 'https://www.mythenregion.ch/sommer/', img: mythen },
+    { name: 'Swissminiatur AG', url: 'https://www.swissminiatur.ch/?lang=de', img: swissminiatur },
+    { name: 'Alpamare', url: 'https://www.alpamare.ch/', img: alpamare },
+    { name: 'Rigibahnen AG', url: 'https://www.rigi.ch/', img: rigi },
+    { name: 'Migros-Kulturprozent', url: 'https://engagement.migros.ch/de', img: migros },
+    { name: 'Ferien- und Sportzentrum Hoch-Ybrig AG', url: 'https://www.hoch-ybrig.ch/sommer/', img: hochybrig },
+    { name: 'DFB Dampfbahn Furka-Bergstrecke AG', url: 'https://www.dfb.ch/de/', img: dfb },
+    { name: 'Swiss Science Center Technorama', url: 'https://www.technorama.ch/de/home', img: technorama },
+    { name: 'Schifffahrtsgesellschaft des Vierwaldstättersees (SGV) AG', url: 'https://www.lakelucerne.ch/de/', img: sgv },
+    { name: 'Wasserfallen Bergbahnen', url: 'https://www.region-wasserfallen.ch/', img: wasserfallen },
+  ]
+
   return (
     <>
       <Box sx={{ marginTop: 2 }} />
@@ -32,7 +88,7 @@ export default function Sponsoring() {
 
       Vielen Dank für die Unterstützung!
 
-      <Box sx={{marginTop: 2}} />
+      <Box sx={{ marginTop: 2 }} />
 
       <Box sx={{ marginTop: 5 }} />
       <Subtitle>
@@ -118,35 +174,55 @@ export default function Sponsoring() {
         GÖNNER
       </Subtitle>
 
-      <Typography component="div" sx={{ width: 200, 'a': {textDecoration: "none"} }} >
+      <Typography component="div" sx={{ width: 200, 'a': { textDecoration: "none" } }} >
         <a target="_blank" rel="noreferrer" href="https://www.kath-arth-goldau.ch/pfarrei/arth/georgsheim">Stiftung Pfarreiheim St. Georg, Arth</a>
       </Typography>
       <LogoDivider />
 
-      <Typography component="div" sx={{ width: 200, 'a': {textDecoration: "none"} }} >
+      <Typography component="div" sx={{ width: 200, 'a': { textDecoration: "none" } }} >
         <a target="_blank" rel="noreferrer" href="https://pflegezentren-arth.ch/">Stiftung Pflegezentren Gemeinde Arth</a>
       </Typography>
       <LogoDivider />
 
-      <Typography component="div" sx={{ width: 200, 'a': {textDecoration: "none"} }} >
+      <Typography component="div" sx={{ width: 200, 'a': { textDecoration: "none" } }} >
         <a target="_blank" rel="noreferrer" href="https://www.theaterarth.ch/">Theater Arth</a>
       </Typography>
       <LogoDivider />
 
-      <Typography component="div" sx={{ width: 200, 'a': {textDecoration: "none"} }} >
+      <Typography component="div" sx={{ width: 200, 'a': { textDecoration: "none" } }} >
         <a target="_blank" rel="noreferrer" href="https://www.schmidlin.ch/">Wilhelm Schmidlin AG</a>
       </Typography>
       <LogoDivider />
 
-      <Typography component="div" sx={{ width: 200, 'a': {textDecoration: "none"} }} >
+      <Typography component="div" sx={{ width: 200, 'a': { textDecoration: "none" } }} >
         <a target="_blank" rel="noreferrer" href="https://www.kaufmann-ag.ch/">Kaufmann AG</a>
       </Typography>
       <LogoDivider />
 
-      <Typography component="div" sx={{ width: 200, 'a': {textDecoration: "none"} }} >
+      <Typography component="div" sx={{ width: 200, 'a': { textDecoration: "none" } }} >
         <a target="_blank" rel="noreferrer" href="http://www.kennelgoldau.ch/getraenke.html">Kennel Getränke</a>
       </Typography>
       <LogoDivider />
+
+      <Box sx={{ marginTop: 5 }} />
+      <Subtitle>
+        GABENSPONSOREN
+      </Subtitle>
+
+      {gabensponsoren.map((sponsor, index) => (
+        <>
+          <Typography component="div" sx={{ width: 200, 'a': { textDecoration: "none" } }} >
+            {
+              sponsor.url ?
+                <a target="_blank" rel="noreferrer" href={sponsor.url}>
+                  {sponsor.img ? <img src={sponsor.img} alt={sponsor.name} style={{ width: 200 }} /> : sponsor.name}
+                </a> :
+                sponsor.name
+            }
+          </Typography>
+          <LogoDivider />
+        </>
+      ))}
 
       <Box sx={{ marginTop: 3 }} />
       <Button sx={{ marginTop: 1 }} variant="outlined" href='mailto:info@arth-steinen-23.ch'>
