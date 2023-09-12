@@ -204,6 +204,12 @@ export default function Sponsoring() {
       </Typography>
       <LogoDivider />
 
+      <Typography component="div" sx={{ width: 200, 'a': { textDecoration: "none" } }} >
+        <a target="_blank" rel="noreferrer" href="https://www.gasser-elektro.ch/">Gasser Elektro-Unternehmung AG</a>
+      </Typography>
+      <LogoDivider />
+
+
       <Box sx={{ marginTop: 5 }} />
       <Subtitle>
         GABENSPONSOREN
