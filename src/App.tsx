@@ -3,11 +3,11 @@ import teaser from './teaser.jpg';
 import teaserGoldau from './teaser-goldau.jpg';
 import schlegel from './piccolo_trommelschlegel.png'
 
-import { Alert, Box, Button, Container, styled, Typography } from '@mui/material';
+import { Box, Button, Container, styled, Typography } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import FestTimeline from './Timeline';
-import { Blacker, Bolder, Subtitle, Title } from './Typography';
+import { Blacker, Subtitle, Title } from './Typography';
 import People from './People';
 import Sponsoring from './Sponsoring';
 import Umzug from './Umzug';
@@ -16,6 +16,7 @@ import Locations, { LocationsLegend } from './Locations';
 
 // @ts-ignore
 import festfuehrer from './data/festfuehrer.pdf';
+import MyFest from './MyFest';
 
 
 const Logo = styled('img')({
@@ -94,14 +95,16 @@ function App() {
           }}>Kontakt</Typography>
         </Button>
 
-        <Alert variant="outlined" severity="info" sx={{backgroundColor: 'white', marginTop: 2}}>
+        {/* <Alert variant="outlined" severity="info" sx={{backgroundColor: 'white', marginTop: 2}}>
           Die Festkarten werden nächsten <Bolder>Montag, 11. September 2023</Bolder> versendet.
           Der Festführer kann bereits als PDF heruntergeladen werden (siehe oben).
-        </Alert>
+        </Alert> */}
 
-        {/* <Box sx={{ marginTop: 4 }} />
+        <Box sx={{ marginTop: 4 }} />
         <Title title='DIGITALER FESTFÜHRER' fontSize={20} />
-        <MyFest /> */}
+        <Box sx={{ marginTop: 2 }} />
+
+        <MyFest />
 
         <Box sx={{ marginTop: 4 }} />
         <Title title='DAS FEST' fontSize={20} />
