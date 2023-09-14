@@ -180,7 +180,7 @@ export default function MyFest() {
         }}
         id="search"
         options={search}
-        sx={{ width: 300 }}
+        sx={{ width: 300, boxShadow: '3px 4px 16px #959595', backgroundColor: 'white' }}
         renderInput={(params: any) => <TextField {...params} sx={{color: 'red'}} label="Suche deinen Namen oder Verein ..." />}
       />}
 
