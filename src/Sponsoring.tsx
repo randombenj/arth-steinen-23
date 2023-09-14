@@ -209,6 +209,11 @@ export default function Sponsoring() {
       </Typography>
       <LogoDivider />
 
+      <Typography component="div" sx={{ width: 200, 'a': { textDecoration: "none" } }} >
+        <a target="_blank" rel="noreferrer" href="https://www.horseshoe.ch/">Horseshoe Event Bar</a>
+      </Typography>
+      <LogoDivider />
+
 
       <Box sx={{ marginTop: 5 }} />
       <Subtitle>
