@@ -1,5 +1,5 @@
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import { Autocomplete, Avatar, Box, Card, CardContent, CardHeader, Grid, IconButton, TextField } from "@mui/material";
+import { Autocomplete, Avatar, Box, Card, CardContent, CardHeader, Grid, IconButton, TextField, Typography } from "@mui/material";
 import Papa from 'papaparse';
 import { useEffect, useState } from "react";
 import MyFestService, { NameCategoryIndex, ParticipationEntry } from "./my-fest-service";
@@ -52,32 +52,31 @@ type MyFestCategoryProps = {
   ondelete: () => void
 }
 
+const parseTime = (time: string): string => {
+  if (time.length === 3) {
+    return `${time.substring(0, 1)}:${time.substring(1, 3)}`
+  }
+  if (time.length === 4) {
+    return `${time.substring(0, 2)}:${time.substring(2, 4)}`
+  }
+
+  return time;
+}
+
+const timeToDateTime = (time: string): number => {
+
+  if (time.length === 3) {
+    return Date.parse(`2023-01-01T0${time.substring(0, 1)}:${time.substring(1, 3)}:00.000Z`)
+  }
+  if (time.length === 4) {
+    return Date.parse(`2023-01-01T${time.substring(0, 2)}:${time.substring(2, 4)}:00.000Z`)
+  }
+
+  return Date.parse(`2023-01-01T${time}:00.000Z`);
+}
+
 
 function MyFestCategory({ name, participation, ondelete }: MyFestCategoryProps) {
-
-  const parseTime = (time: string): string => {
-    if (time.length === 3) {
-      return `${time.substring(0, 1)}:${time.substring(1, 3)}`
-    }
-    if (time.length === 4) {
-      return `${time.substring(0, 2)}:${time.substring(2, 4)}`
-    }
-
-    return time;
-  }
-
-  const timeToDateTime = (time: string): number => {
-
-    if (time.length === 3) {
-      return Date.parse(`2023-01-01T0${time.substring(0, 1)}:${time.substring(1, 3)}:00.000Z`)
-    }
-    if (time.length === 4) {
-      return Date.parse(`2023-01-01T${time.substring(0, 2)}:${time.substring(2, 4)}:00.000Z`)
-    }
-
-    return Date.parse(`2023-01-01T${time}:00.000Z`);
-  }
-
   return (
     <Card sx={{ marginBottom: 2, height: 'calc(100% - 2px)' }}>
       <CardHeader
@@ -137,10 +136,13 @@ function MyFestCategory({ name, participation, ondelete }: MyFestCategoryProps) 
 }
 
 export default function MyFest() {
+  const groupLookup = ['S1', 'S2', 'S3', 'SP']
+
   const [data, setData] = useState<NameCategoryIndex | undefined>(undefined)
   const [search, setSearch] = useState<AutocompleteOption[] | undefined>(undefined)
 
   const [selected, setSelected] = useState<NameCategoryIndex | undefined>(undefined)
+  const [value, setValue] = useState<AutocompleteOption | undefined>(undefined);
 
   useEffect(() => {
     (async () => {
@@ -162,8 +164,9 @@ export default function MyFest() {
   }, [setData, setSearch, setSelected]);
 
   return (
-    <Box sx={{ marginTop: 2 }}>
+    <Box sx={{ marginTop: 4 }}>
       {(data && search && selected) && <Autocomplete
+        value={value}
         disablePortal
         onChange={(event: any, value: AutocompleteOption | null) => {
           if (value === null) {
@@ -172,18 +175,52 @@ export default function MyFest() {
 
           MyFestService.saveCagegory({ [value.label]: data[value.label] } as NameCategoryIndex)
           setSelected(MyFestService.getSavedCategories());
+
+          setValue(undefined);
         }}
         id="search"
         options={search}
         sx={{ width: 300 }}
-        renderInput={(params: any) => <TextField {...params} label="Suche deinen Namen oder Verein ..." />}
+        renderInput={(params: any) => <TextField {...params} sx={{color: 'red'}} label="Suche deinen Namen oder Verein ..." />}
       />}
 
-      <Box sx={{ marginTop: 2 }} />
+      {/* -- SAMSTAG */}
+      {(selected && Object.keys(selected).filter(s => !groupLookup.includes(selected[s][0].kategorie)).length !== 0) && <Typography sx={{ fontSize: '1.2em', marginTop: 4, color: '#505050' }}>
+        SAMSTAG <Box sx={{ width: '60px', borderBottom: '1px solid #8d1e1f40', marginBottom: 1 }}></Box>
+      </Typography>}
 
-      <Grid container spacing={2} sx={{ marginTop: 2 }} >
+      <Grid container spacing={2} sx={{ marginTop: 0 }} >
 
-        {selected && Object.keys(selected).sort().map((key, i) => (
+        { selected && Object.keys(selected)
+          .filter(s => !groupLookup.includes(selected[s][0].kategorie))
+          .sort((a, b) => timeToDateTime(selected[a][0].zeit) - timeToDateTime(selected[b][0].zeit))
+          .map((key, i) => (
+          <Grid item xs={12} md={6}>
+            <MyFestCategory
+              name={key}
+              participation={selected[key]}
+              ondelete={() => {
+                MyFestService.removeCategory({ [key]: selected[key] } as NameCategoryIndex)
+                setSelected(MyFestService.getSavedCategories())
+              }}
+            />
+          </Grid>
+        ))}
+      </Grid>
+
+      {/* -- SONNTAG */}
+
+      {/* <Box sx={{ marginTop: 2 }} /> */}
+      {(selected && Object.keys(selected).filter(s => groupLookup.includes(selected[s][0].kategorie)).length !== 0) && <Typography sx={{ fontSize: '1.2em', marginTop: 4, color: '#505050' }}>
+        SONNTAG <Box sx={{ width: '60px', borderBottom: '1px solid #8d1e1f40', marginBottom: 1 }}></Box>
+      </Typography>}
+
+      <Grid container spacing={2} sx={{ marginTop: 0 }} >
+
+        { selected && Object.keys(selected)
+          .filter(s => groupLookup.includes(selected[s][0].kategorie))
+          .sort((a, b) => timeToDateTime(selected[a][0].zeit) - timeToDateTime(selected[b][0].zeit))
+          .map((key, i) => (
           <Grid item xs={12} md={6}>
             <MyFestCategory
               name={key}
