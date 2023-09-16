@@ -38,6 +38,24 @@ const getSearchables = (data: ParticipationEntry[]): NameCategoryIndex => {
 
 }
 
+const navigationLookup = {
+  'J1': 'https://maps.app.goo.gl/2nHQ9ooQeC3XbBtL7',
+  'J2': 'https://maps.app.goo.gl/dt7wWBCFWV31ESSv7',
+  'J3': 'https://maps.app.goo.gl/b1V5oZeSp67xYk8a8',
+  'J4': 'https://maps.app.goo.gl/vLBxZq5ehsMXmJqY9',
+  'J5': 'https://maps.app.goo.gl/np5FoUguJnTcZ1ce6',
+  'J6': 'https://maps.app.goo.gl/cuESMrSdRD3bHPzA8',
+  'J7': 'https://maps.app.goo.gl/2nHQ9ooQeC3XbBtL7',
+  'J8': 'https://maps.app.goo.gl/h2MaLZduUU1hyEEGA',
+  'J9': 'https://maps.app.goo.gl/2nHQ9ooQeC3XbBtL7',
+  'J10': 'https://maps.app.goo.gl/np5FoUguJnTcZ1ce6',
+  'J11': 'https://maps.app.goo.gl/np5FoUguJnTcZ1ce6',
+  'J12': 'https://maps.app.goo.gl/np5FoUguJnTcZ1ce6',
+  'J14': 'https://maps.app.goo.gl/2nHQ9ooQeC3XbBtL7',
+  'J15': 'https://maps.app.goo.gl/czLr1Cz7aYASSqeA8',
+  'J16': 'https://maps.app.goo.gl/czLr1Cz7aYASSqeA8'
+} as { [key: string]: string }
+
 interface AutocompleteOption {
   label: string;
 }
@@ -125,7 +143,7 @@ function MyFestCategory({ name, participation, ondelete }: MyFestCategoryProps) 
                 {i === (participation.length - 1) || <TimelineConnector sx={{ bgcolor: 'primary.main' }} />}
               </TimelineSeparator>
               <TimelineContent sx={{ color: "#505050" }}>
-                <strong>{entry.platz_name} ({entry.platz_abk.trim()})</strong> — {entry.jury_platz}
+                <a href={navigationLookup[entry.platz_abk.trim()]} target="_blank" rel="noreferrer"><strong>{entry.platz_name} ({entry.platz_abk.trim()}) </strong></a> — {entry.jury_platz}
               </TimelineContent>
             </TimelineItem>
           ))}
