@@ -194,6 +194,20 @@ export default function MyFest() {
         ref={inputRef}
         key={key}
         disablePortal
+        componentsProps={{
+          popper: {
+            modifiers: [
+              {
+                name: 'flip',
+                enabled: false
+              },
+              {
+                 name: 'preventOverflow',
+                 enabled: false
+               }
+            ]
+          }
+        }}
         onOpen={executeScroll}
         onChange={(event: any, value: AutocompleteOption | null) => {
           if (value === null) {
