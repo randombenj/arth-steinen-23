@@ -164,9 +164,13 @@ export default function MyFest() {
 
   const inputRef = useRef<LegacyRef<typeof Autocomplete> | undefined>(undefined)
 
-  const executeScroll = () => {
+  const executeScroll = (e: any) => {
+    e.preventDefault();
+    // FIXME: the setTimeout is required in chrome due to some bug
+    // https://github.com/facebook/react/issues/23396#issuecomment-1376887787
     // @ts-ignore
-    inputRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    setTimeout(() => inputRef.current?.scrollIntoView({ block: 'start' }), 0)
+    console.log('scroll?')
   }
 
   useEffect(() => {
@@ -202,9 +206,9 @@ export default function MyFest() {
                 enabled: false
               },
               {
-                 name: 'preventOverflow',
-                 enabled: false
-               }
+                name: 'preventOverflow',
+                enabled: false
+              }
             ]
           }
         }}
@@ -225,7 +229,7 @@ export default function MyFest() {
         id="search"
         options={search}
         sx={{ width: 300, boxShadow: '3px 4px 16px #959595', backgroundColor: 'white', borderRadius: '5px', scrollMargin: 30 }}
-        renderInput={(params: any) => <TextField {...params} sx={{color: 'red'}} label="Suche deinen Namen oder Verein ..." />}
+        renderInput={(params: any) => <TextField {...params} sx={{ color: 'red' }} label="Suche deinen Namen oder Verein ..." />}
       />}
 
       {/* -- SAMSTAG */}
@@ -235,21 +239,21 @@ export default function MyFest() {
 
       <Grid container spacing={2} sx={{ marginTop: 0 }} >
 
-        { selected && Object.keys(selected)
+        {selected && Object.keys(selected)
           .filter(s => !groupLookup.includes(selected[s][0].kategorie))
           .sort((a, b) => timeToDateTime(selected[a][0].zeit) - timeToDateTime(selected[b][0].zeit))
           .map((key, i) => (
-          <Grid item xs={12} md={6}>
-            <MyFestCategory
-              name={key}
-              participation={selected[key]}
-              ondelete={() => {
-                MyFestService.removeCategory({ [key]: selected[key] } as NameCategoryIndex)
-                setSelected(MyFestService.getSavedCategories())
-              }}
-            />
-          </Grid>
-        ))}
+            <Grid item xs={12} md={6}>
+              <MyFestCategory
+                name={key}
+                participation={selected[key]}
+                ondelete={() => {
+                  MyFestService.removeCategory({ [key]: selected[key] } as NameCategoryIndex)
+                  setSelected(MyFestService.getSavedCategories())
+                }}
+              />
+            </Grid>
+          ))}
       </Grid>
 
       {/* -- SONNTAG */}
@@ -261,21 +265,21 @@ export default function MyFest() {
 
       <Grid container spacing={2} sx={{ marginTop: 0 }} >
 
-        { selected && Object.keys(selected)
+        {selected && Object.keys(selected)
           .filter(s => groupLookup.includes(selected[s][0].kategorie))
           .sort((a, b) => timeToDateTime(selected[a][0].zeit) - timeToDateTime(selected[b][0].zeit))
           .map((key, i) => (
-          <Grid item xs={12} md={6}>
-            <MyFestCategory
-              name={key}
-              participation={selected[key]}
-              ondelete={() => {
-                MyFestService.removeCategory({ [key]: selected[key] } as NameCategoryIndex)
-                setSelected(MyFestService.getSavedCategories())
-              }}
-            />
-          </Grid>
-        ))}
+            <Grid item xs={12} md={6}>
+              <MyFestCategory
+                name={key}
+                participation={selected[key]}
+                ondelete={() => {
+                  MyFestService.removeCategory({ [key]: selected[key] } as NameCategoryIndex)
+                  setSelected(MyFestService.getSavedCategories())
+                }}
+              />
+            </Grid>
+          ))}
       </Grid>
     </Box>
   )
