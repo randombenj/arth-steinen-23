@@ -164,14 +164,14 @@ export default function MyFest() {
 
   const inputRef = useRef<LegacyRef<typeof Autocomplete> | undefined>(undefined)
 
-  const executeScroll = (e: any) => {
-    e.preventDefault();
-    // FIXME: the setTimeout is required in chrome due to some bug
-    // https://github.com/facebook/react/issues/23396#issuecomment-1376887787
-    // @ts-ignore
-    setTimeout(() => inputRef.current?.scrollIntoView({ block: 'start' }), 0)
-    console.log('scroll?')
-  }
+  // const executeScroll = (e: any) => {
+  //   e.preventDefault();
+  //   // FIXME: the setTimeout is required in chrome due to some bug
+  //   // https://github.com/facebook/react/issues/23396#issuecomment-1376887787
+  //   // @ts-ignore
+  //   setTimeout(() => inputRef.current?.scrollIntoView({ block: 'start' }), 0)
+  //   console.log('scroll?')
+  // }
 
   useEffect(() => {
     (async () => {
@@ -212,7 +212,7 @@ export default function MyFest() {
             ]
           }
         }}
-        onOpen={executeScroll}
+        // onFocus={executeScroll}
         onChange={(event: any, value: AutocompleteOption | null) => {
           if (value === null) {
             return
