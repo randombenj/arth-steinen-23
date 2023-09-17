@@ -6,6 +6,10 @@ body,
   color: #7f8283;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 a {
   color: #8d1e1f;
 }

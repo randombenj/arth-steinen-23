@@ -1,7 +1,7 @@
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { Autocomplete, Avatar, Box, Card, CardContent, CardHeader, Grid, IconButton, TextField, Typography } from "@mui/material";
 import Papa from 'papaparse';
-import { useEffect, useState } from "react";
+import React, { LegacyRef, useEffect, useRef, useState } from "react";
 import MyFestService, { NameCategoryIndex, ParticipationEntry } from "./my-fest-service";
 import { Timeline, TimelineConnector, TimelineContent, TimelineDot, TimelineItem, TimelineOppositeContent, TimelineSeparator, timelineOppositeContentClasses } from "@mui/lab";
 
@@ -160,7 +160,14 @@ export default function MyFest() {
   const [search, setSearch] = useState<AutocompleteOption[] | undefined>(undefined)
 
   const [selected, setSelected] = useState<NameCategoryIndex | undefined>(undefined)
-  const [value, setValue] = useState<AutocompleteOption | undefined>(undefined);
+  const [key, setKey] = useState(0);
+
+  const inputRef = useRef<LegacyRef<typeof Autocomplete> | undefined>(undefined)
+
+  const executeScroll = () => {
+    // @ts-ignore
+    inputRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
 
   useEffect(() => {
     (async () => {
@@ -184,8 +191,10 @@ export default function MyFest() {
   return (
     <Box sx={{ marginTop: 4 }}>
       {(data && search && selected) && <Autocomplete
-        value={value}
+        ref={inputRef}
+        key={key}
         disablePortal
+        onOpen={executeScroll}
         onChange={(event: any, value: AutocompleteOption | null) => {
           if (value === null) {
             return
@@ -194,11 +203,14 @@ export default function MyFest() {
           MyFestService.saveCagegory({ [value.label]: data[value.label] } as NameCategoryIndex)
           setSelected(MyFestService.getSavedCategories());
 
-          setValue(undefined);
+          // FIXME: this is a hack to force the component to re-render
+          // and the only way to clear the input field after selecting a value
+          // https://stackoverflow.com/a/59845474
+          setKey(key + 1);
         }}
         id="search"
         options={search}
-        sx={{ width: 300, boxShadow: '3px 4px 16px #959595', backgroundColor: 'white', borderRadius: '5px' }}
+        sx={{ width: 300, boxShadow: '3px 4px 16px #959595', backgroundColor: 'white', borderRadius: '5px', scrollMargin: 30 }}
         renderInput={(params: any) => <TextField {...params} sx={{color: 'red'}} label="Suche deinen Namen oder Verein ..." />}
       />}
 
