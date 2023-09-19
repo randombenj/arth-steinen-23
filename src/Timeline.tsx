@@ -21,7 +21,7 @@ export default function FestTimeline() {
     { from: new Date(2023, 9, 23, 15, 30), to: new Date(2023, 9, 23, 16, 45), event: 'Wettspiel SoloDuo', location: 'Theater Arth' },
     { from: new Date(2023, 9, 23, 16, 30), to: new Date(2023, 9, 23, 18, 0), event: 'Veteranenehrung', location: 'Foyer/Turnhalle Zwygarten' },
     { from: new Date(2023, 9, 23, 17, 0), to: new Date(2023, 9, 23, 19, 0), event: 'Nachtessen', location: 'Turnhalle Zwygarten' },
-    { from: new Date(2023, 9, 23, 18, 0), to: undefined, event: 'Bekanntgabe Finalteilnehmer T3, T4', location: 'Turnhalle Zwygarten' },
+    { from: new Date(2023, 9, 23, 18, 0), to: undefined, event: 'Bekanntgabe Finalteilnehmer T3, T4, P2', location: 'Turnhalle Zwygarten' },
     { from: new Date(2023, 9, 23, 19, 0), to: new Date(2023, 9, 23, 20, 40), event: 'Finalwettspiele' },
     { from: new Date(2023, 9, 23, 19, 0), to: new Date(2023, 9, 23, 22, 0), event: 'freies Gässeln in den Gassen von Arth' },
     { from: new Date(2023, 9, 23, 21, 0), to: new Date(2023, 9, 23, 22, 0), event: 'Unterhaltungsabend', location: 'Turnhalle Zwygarten' }
