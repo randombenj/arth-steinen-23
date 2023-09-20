@@ -3,11 +3,11 @@ import teaser from './teaser.jpg';
 import teaserGoldau from './teaser-goldau.jpg';
 import schlegel from './piccolo_trommelschlegel.png'
 
-import { Box, Button, Container, styled, Typography } from '@mui/material';
+import { Alert, Box, Button, Container, styled, Typography } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import FestTimeline from './Timeline';
-import { Blacker, Subtitle, Title } from './Typography';
+import { Blacker, Bolder, Subtitle, Title } from './Typography';
 import People from './People';
 import Sponsoring from './Sponsoring';
 import Umzug from './Umzug';
@@ -81,13 +81,6 @@ function App() {
           }}>Zeitplan</Typography>
         </Button>
 
-        <Button sx={{ marginTop: 1, marginRight: 2 }} variant="outlined" href='https://www.ztpv.ch/wettspielprogramm-zjtpf-steinen-arth-2023/' target='_blank'>
-          <Typography sx={{
-            fontSize: 16
-          }}>Wettspielprogramm</Typography>
-        </Button>
-
-
         <Button sx={{ marginTop: 1 }} variant="outlined" href='mailto:info@arth-steinen-23.ch'>
           <MailOutlineIcon sx={{ marginRight: 1 }} />
           <Typography sx={{
@@ -95,10 +88,10 @@ function App() {
           }}>Kontakt</Typography>
         </Button>
 
-        {/* <Alert variant="outlined" severity="info" sx={{backgroundColor: 'white', marginTop: 2}}>
-          Die Festkarten werden nächsten <Bolder>Montag, 11. September 2023</Bolder> versendet.
-          Der Festführer kann bereits als PDF heruntergeladen werden (siehe oben).
-        </Alert> */}
+        <Alert severity="info" sx={{ marginTop: 2 }}>
+          Der ZTPV hat am 18. September 2023 entschieden ein <Bolder>Finalwettspiel P2</Bolder> durchzuführen.
+          Als Veranstalter stellen wir kurzfristig die Juryplätze des T2 nach deren Finalwettspiel zur Verfügung.
+        </Alert>
 
         <Box sx={{ marginTop: 4 }} />
         <Title title='DIGITALER FESTFÜHRER' fontSize={20} />
