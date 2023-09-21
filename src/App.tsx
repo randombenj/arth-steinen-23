@@ -98,8 +98,8 @@ function App() {
         </Button>
 
         <Alert severity="info" sx={{ marginTop: 2 }}>
-          Der ZTPV hat am 18. September 2023 entschieden ein <Bolder>Finalwettspiel P2</Bolder> durchzuführen.
-          Als Veranstalter stellen wir kurzfristig die Juryplätze des T2 nach deren Finalwettspiel zur Verfügung.
+          Der ZTPV hat entschieden aufgrund der erfreulichen Anzahl Anmeldungen in der <Bolder>Kategorie P2 ebenfalls einen Final durchzuführen</Bolder>.
+          Die Finalbekanntgabe findet gemeinsam mit den Kategorien <Bolder>T3 und T4 um 18.00 Uhr</Bolder> statt.
         </Alert>
 
         <Box sx={{ marginTop: 4 }} />
