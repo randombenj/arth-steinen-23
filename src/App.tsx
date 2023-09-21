@@ -16,6 +16,8 @@ import Locations, { LocationsLegend } from './Locations';
 
 // @ts-ignore
 import festfuehrer from './data/festfuehrer.pdf';
+// @ts-ignore
+import unterkunft from './data/unterkunft-id.pdf'
 import MyFest from './MyFest';
 
 
@@ -81,6 +83,13 @@ function App() {
           }}>Zeitplan</Typography>
         </Button>
 
+        <Button sx={{ marginTop: 1, marginRight: 2 }} variant="outlined" href={unterkunft} target='_blank'>
+          <Typography sx={{
+            fontSize: 16,
+            fontWeight: 600
+          }}>Unterkunft / Instrumentendepot</Typography>
+        </Button>
+
         <Button sx={{ marginTop: 1 }} variant="outlined" href='mailto:info@arth-steinen-23.ch'>
           <MailOutlineIcon sx={{ marginRight: 1 }} />
           <Typography sx={{
@@ -120,7 +129,7 @@ function App() {
           <li>... bei Fragen hilft unser <Blacker>Infopoint</Blacker> bei der Turnhalle Zwygarten gerne weiter. Dieser ist ab <Blacker>7:30 Uhr</Blacker> geöffnet.</li>
           <li>... <Blacker>Individuell angepasste Gehörschütze</Blacker> können beim Import Akustik Stand gegossen werden.</li>
           <li>... die Instrumentendepot sind am <Blacker>Samstag von 7:00 Uhr - 23:00 Uhr</Blacker> und am  <Blacker>Sonntag von 6:30 Uhr - 17:00 Uhr</Blacker> geöffnet.</li>
-          <li>... die Unterkunft kann ab <Blacker>Samstag, 15:00 Uhr</Blacker> bezogen werden und muss bis <Blacker>Sonntag, 9:30 Uhr</Blacker> geräumt sein. </li>
+          <li>... die Unterkunft kann ab <Blacker>Samstag, 15:00 Uhr</Blacker> bezogen werden und muss bis <Blacker>Sonntag, 9:30 Uhr</Blacker> geräumt sein. <br /><a target="_blank" href={unterkunft} rel="noreferrer"><Bolder>🛈</Bolder> Unterkunftseinteilung</a></li>
           <li>
             ... die Unterkunft ist in <a href="https://goo.gl/maps/8fG2i2E6JkDCwwiy7" target="_blank" rel="noreferrer">Oberarth</a>, zirka 2 km vom Festgelände entfernt. Sie sind entweder mit dem
             Bus in 5 Minuten oder zu Fuss in ca. 20 Minuten erreichbar.</li>
