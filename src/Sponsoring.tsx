@@ -42,6 +42,9 @@ import trommelmanufaktur from './gabensponsoren/trommelmanufaktur.png'
 import wasserfallen from './gabensponsoren/wasserfallen.png'
 import zoobasel from './gabensponsoren/zoo-basel.png'
 import zoozuerich from './gabensponsoren/zoo-zuerich.png'
+import sattel from './gabensponsoren/sattel.png'
+import connyland from './gabensponsoren/connyland.png'
+import pilatus from './gabensponsoren/pilatus.png'
 
 
 const LogoDivider = () => (
@@ -79,6 +82,10 @@ export default function Sponsoring() {
     { name: 'Swiss Science Center Technorama', url: 'https://www.technorama.ch/de/home', img: technorama },
     { name: 'Schifffahrtsgesellschaft des Vierwaldstättersees (SGV) AG', url: 'https://www.lakelucerne.ch/de/', img: sgv },
     { name: 'Wasserfallen Bergbahnen', url: 'https://www.region-wasserfallen.ch/', img: wasserfallen },
+    { name: 'Sattel Hochstuckli', url: 'https://www.sattel-hochstuckli.ch/', img: sattel },
+    { name: 'Pilatus Luzern', url: 'https://www.pilatus.ch/', img: pilatus },
+    { name: 'Conny-Land', url: 'https://www.connyland.ch/', img: connyland },
+    { name: 'ENSEMBLE PICCOLO' }
   ]
 
   return (
