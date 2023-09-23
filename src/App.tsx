@@ -12,12 +12,16 @@ import People from './People';
 import Sponsoring from './Sponsoring';
 import Umzug from './Umzug';
 import Locations, { LocationsLegend } from './Locations';
+import DownloadIcon from '@mui/icons-material/Download';
 // import MyFest from './MyFest';
 
 // @ts-ignore
 import festfuehrer from './data/festfuehrer.pdf';
 // @ts-ignore
 import unterkunft from './data/unterkunft-id.pdf'
+// @ts-ignore
+
+import finale from './data/finale.pdf'
 import MyFest from './MyFest';
 import Photos from './Photos';
 
@@ -114,7 +118,9 @@ function App() {
             <li><Bolder>P1:</Bolder> SPICHTY Salome, WOLFELSPERGER Anna, BRAUN Valentina</li>
             <li><Bolder>T2:</Bolder> KÜNZLER Kimon, MORGENROTH Luan, BACHMANN Julian, STIRNEMANN Alyssa, STALDER Lars, HACKEL Simona, JEKER Lars, ISELI Timo, HACKEL Claudio, SCHMID Lorin</li>
 
-            Der Zeitplan wird in kürze veröffentlicht.
+            <Button sx={{ marginTop: 1, marginRight: 1, color: 'rgb(1, 67, 97)', borderColor: 'rgb(1, 67, 97)' }} variant="outlined" href={finale} target='_blank'>
+              <DownloadIcon sx={{ marginRight: 2}}/><Bolder>Zeitplan FInale</Bolder>
+            </Button>
           </List>
         </Alert>
 
