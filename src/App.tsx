@@ -19,6 +19,7 @@ import festfuehrer from './data/festfuehrer.pdf';
 // @ts-ignore
 import unterkunft from './data/unterkunft-id.pdf'
 import MyFest from './MyFest';
+import Photos from './Photos';
 
 
 const Logo = styled('img')({
@@ -134,6 +135,8 @@ function App() {
             ... die Unterkunft ist in <a href="https://goo.gl/maps/8fG2i2E6JkDCwwiy7" target="_blank" rel="noreferrer">Oberarth</a>, zirka 2 km vom Festgelände entfernt. Sie sind entweder mit dem
             Bus in 5 Minuten oder zu Fuss in ca. 20 Minuten erreichbar.</li>
         </List>
+
+        <Photos />
 
         <LocationsLegend />
       </Container>
