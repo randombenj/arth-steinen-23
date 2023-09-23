@@ -13,7 +13,6 @@ import Sponsoring from './Sponsoring';
 import Umzug from './Umzug';
 import Locations, { LocationsLegend } from './Locations';
 import DownloadIcon from '@mui/icons-material/Download';
-// import MyFest from './MyFest';
 
 // @ts-ignore
 import festfuehrer from './data/festfuehrer.pdf';
@@ -104,6 +103,11 @@ function App() {
             fontSize: 16
           }}>Kontakt</Typography>
         </Button>
+
+        <Box sx={{marginTop: 4 }} />
+
+        <Blacker>Folge </Blacker><a href="https://www.instagram.com/tambourenvereinarthgoldau/" target='_blank' rel="noreferrer">@tambourenvereinarthgoldau</a><Blacker> und </Blacker><a href="https://www.instagram.com/tvsteinen/" target='_blank' rel="noreferrer">@tvsteinen</a><Blacker> auf Instagram für die neusten Infos.</Blacker>
+
 
         <Alert severity="info" sx={{ marginTop: 2 }}>
           <Bolder>Finalwettspieler:</Bolder>
