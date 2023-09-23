@@ -119,8 +119,11 @@ function App() {
             }
           }}>
             <li><Bolder>T1:</Bolder> SCHAUB Loris, AMHERD Yannick, HESS Salome, REIST Simon, WITTWER Laurin, SCHMID Sven, STOFFLER Brian, HESS Matthias, BISCHOF Fabian, MÜLLER Maurice</li>
-            <li><Bolder>P1:</Bolder> SPICHTY Salome, WOLFELSPERGER Anna, BRAUN Valentina</li>
             <li><Bolder>T2:</Bolder> KÜNZLER Kimon, MORGENROTH Luan, BACHMANN Julian, STIRNEMANN Alyssa, STALDER Lars, HACKEL Simona, JEKER Lars, ISELI Timo, HACKEL Claudio, SCHMID Lorin</li>
+            <li><Bolder>T3:</Bolder> BALTISBERGER Samuel, MEISTER Luke, BAGDASARJANZ Emma, SCHÄFER Andrin, EVANS Vincent, SCHMID Andrin, HUBER Loris, TROVATORI Siro, KOHLER Nayla, HÜBNER Levi</li>
+            <li><Bolder>T4:</Bolder> VAN GEENEN Sean, SCHALLBERGER Lorin, MARTY Nino, DIETERLEN Jacob, ZUBLER Konrad, STEINER Robin, HACKEL Olivia, SCHULER Samuel, ZAUGG Xenia, SCHMID Anic</li>
+            <li><Bolder>P1:</Bolder> SPICHTY Salome, WOLFELSPERGER Anna, BRAUN Valentina</li>
+            <li><Bolder>P2:</Bolder> COMINOTTI Alessia, PETRETTA Nerea, STOFFLER Audrey</li>
 
             <Button sx={{
               marginTop: 1,
@@ -132,7 +135,7 @@ function App() {
                 borderColor: 'rgb(1, 67, 97)'
               }
             }} variant="outlined" href={finale} target='_blank'>
-              <DownloadIcon sx={{ marginRight: 2}}/><Bolder>Zeitplan FInale</Bolder>
+              <DownloadIcon sx={{ marginRight: 2}}/><Bolder>Zeitplan Finale (Aktualisiert)</Bolder>
             </Button>
 
             <Box sx={{ marginTop: 2 }} />
