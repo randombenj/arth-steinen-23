@@ -38,6 +38,9 @@ const List = styled('ul')({
   }
 });
 
+
+
+
 function App() {
   return (
     <Box sx={{
@@ -99,8 +102,20 @@ function App() {
         </Button>
 
         <Alert severity="info" sx={{ marginTop: 2 }}>
-          Der ZTPV hat entschieden aufgrund der erfreulichen Anzahl Anmeldungen in der <Bolder>Kategorie P2 ebenfalls einen Final durchzuführen</Bolder>.
-          Die Finalbekanntgabe findet gemeinsam mit den Kategorien <Bolder>T3 und T4 um 18.00 Uhr</Bolder> statt.
+          <Bolder>Finalwettspieler:</Bolder>
+
+          <List sx={{
+            [`& li`]: {
+              paddingLeft: 1,
+              textIndent: '-1.75em',
+            }
+          }}>
+            <li><Bolder>T1:</Bolder> SCHAUB Loris, AMHERD Yannick, HESS Salome, REIST Simon, WITTWER Laurin, SCHMID Sven, STOFFLER Brian, HESS Matthias, BISCHOF Fabian, MÜLLER Maurice</li>
+            <li><Bolder>P1:</Bolder> SPICHTY Salome, WOLFELSPERGER Anna, BRAUN Valentina</li>
+            <li><Bolder>T2:</Bolder> KÜNZLER Kimon, MORGENROTH Luan, BACHMANN Julian, STIRNEMANN Alyssa, STALDER Lars, HACKEL Simona, JEKER Lars, ISELI Timo, HACKEL Claudio, SCHMID Lorin</li>
+
+            Der Zeitplan wird in kürze veröffentlicht.
+          </List>
         </Alert>
 
         <Box sx={{ marginTop: 4 }} />
