@@ -24,9 +24,9 @@ const getSearchables = (data: ParticipationEntry[]): NameCategoryIndex => {
       name = `${entry.name.trim()} (${entry.kategorie.trim()})`
     }
 
-    if (entry.kategorie.trim().endsWith('F')) {
-      return // ignore finale entries
-    }
+    // if (entry.kategorie.trim().endsWith('F')) {
+    //   return // ignore finale entries
+    // }
 
     if (names[name] === undefined) {
       names[name] = []

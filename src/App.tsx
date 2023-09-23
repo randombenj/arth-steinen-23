@@ -121,6 +121,10 @@ function App() {
             <Button sx={{ marginTop: 1, marginRight: 1, color: 'rgb(1, 67, 97)', borderColor: 'rgb(1, 67, 97)' }} variant="outlined" href={finale} target='_blank'>
               <DownloadIcon sx={{ marginRight: 2}}/><Bolder>Zeitplan FInale</Bolder>
             </Button>
+
+            <Box sx={{ marginTop: 2 }} />
+
+            Die Wettspielzeiten der Finalisten sind auch unten im <Bolder>Digitalen Festführer</Bolder> ersichtlich.
           </List>
         </Alert>
 
