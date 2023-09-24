@@ -6,21 +6,19 @@ import schlegel from './piccolo_trommelschlegel.png'
 import { Alert, Box, Button, Container, styled, Typography } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
-import FestTimeline from './Timeline';
 import { Blacker, Bolder, Subtitle, Title } from './Typography';
 import People from './People';
 import Sponsoring from './Sponsoring';
-import Umzug from './Umzug';
-import Locations, { LocationsLegend } from './Locations';
+import DownloadIcon from '@mui/icons-material/Download';
 
 // @ts-ignore
 import festfuehrer from './data/festfuehrer.pdf';
 // @ts-ignore
-import unterkunft from './data/unterkunft-id.pdf'
+import rangliste from './data/rangliste.pdf'
 // @ts-ignore
+import jurybericht from './data/jurybericht.pdf'
 
 // import finale from './data/finale.pdf'
-import MyFest from './MyFest';
 import Photos from './Photos';
 
 
@@ -29,18 +27,6 @@ const Logo = styled('img')({
 });
 
 const Schlegel = styled('img')({});
-
-const List = styled('ul')({
-  listStyleType: 'none',
-  paddingLeft: 6,
-  [`& li`]: {
-    textIndent: '-1.1em',
-    marginLeft: 15,
-    paddingBottom: 5
-  }
-});
-
-
 
 
 function App() {
@@ -82,20 +68,6 @@ function App() {
           }}>Festführer</Typography>
         </Button>
 
-        <Button sx={{ marginTop: 1, marginRight: 2 }} variant="outlined" href='https://www.ztpv.ch/portfolio/zjtpf-arth-steinen-2023/' target='_blank'>
-          <Typography sx={{
-            fontSize: 16,
-            fontWeight: 600
-          }}>Zeitplan</Typography>
-        </Button>
-
-        <Button sx={{ marginTop: 1, marginRight: 2 }} variant="outlined" href={unterkunft} target='_blank'>
-          <Typography sx={{
-            fontSize: 16,
-            fontWeight: 600
-          }}>Unterkunft / Instrumentendepot</Typography>
-        </Button>
-
         <Button sx={{ marginTop: 1 }} variant="outlined" href='mailto:info@arth-steinen-23.ch'>
           <MailOutlineIcon sx={{ marginRight: 1 }} />
           <Typography sx={{
@@ -103,78 +75,50 @@ function App() {
           }}>Kontakt</Typography>
         </Button>
 
-        <Box sx={{marginTop: 4 }} />
-
-        <Blacker>Folge </Blacker><a href="https://www.instagram.com/tambourenvereinarthgoldau/" target='_blank' rel="noreferrer">@tambourenvereinarthgoldau</a><Blacker> und </Blacker><a href="https://www.instagram.com/tvsteinen/" target='_blank' rel="noreferrer">@tvsteinen</a><Blacker> auf Instagram für die neusten Infos.</Blacker>
+        <Box sx={{ marginTop: 4 }} />
 
 
         <Alert severity="info" sx={{ marginTop: 2 }}>
-          <Bolder>Der Umzug findet bei bestem Wetter statt!</Bolder>
+          Die <Bolder>Rangliste und der Jurybericht</Bolder> können nun heruntergeladen werden:
+
+          <Box sx={{ marginTop: 2 }}/>
+
+          <Button sx={{
+            marginTop: 1,
+            marginRight: 1,
+            color: 'rgb(1, 67, 97)',
+            borderColor: 'rgb(1, 67, 97)',
+            [`&:hover`]: {
+              color: 'rgb(1, 67, 97)',
+              borderColor: 'rgb(1, 67, 97)'
+            }
+          }} variant="outlined" href={rangliste} target='_blank'>
+            <DownloadIcon sx={{ marginRight: 2 }} /><Bolder>Rangliste</Bolder>
+          </Button>
+
+          <Button sx={{
+            marginTop: 1,
+            marginRight: 1,
+            color: 'rgb(1, 67, 97)',
+            borderColor: 'rgb(1, 67, 97)',
+            [`&:hover`]: {
+              color: 'rgb(1, 67, 97)',
+              borderColor: 'rgb(1, 67, 97)'
+            }
+          }} variant="outlined" href={jurybericht} target='_blank'>
+            <DownloadIcon sx={{ marginRight: 2 }} /><Bolder>Jurybericht</Bolder>
+          </Button>
         </Alert>
 
         <Box sx={{ marginTop: 4 }} />
-        <Title title='DIGITALER FESTFÜHRER' fontSize={20} />
-        <Box sx={{ marginTop: 2 }} />
+        <Title title='VIELEN DANK!' fontSize={20} />
 
-        <MyFest />
+        <Blacker>ARTH-STEINEN 23</Blacker> ist leider schon wieder vorbei.
+        Wir hoffen ihr hattet ein tolles Wochenende und konntet die Zeit mit euren Vereinskollegen geniessen.
+        Auf der <a href="https://photos.app.goo.gl/ALqNcc6poSNn7oQc8" target="_blank" rel="noreferrer">Festfotogalerie</a> findet ihr noch einige Impressionen vom Fest.
 
-        <Box sx={{ marginTop: 4 }} />
-        <Title title='DAS FEST' fontSize={20} />
-
-        Am Samstag, 23.9.2023 und Sonntag 24.9.2023 findet das
-        Zentralschweizerische Jungtambouren- und Pfeiferfest in Arth statt. Die
-        beiden Tambourenvereine Arth-Goldau und Steinen organisieren dieses
-        Fest gemeinsam und haben für diesen Anlass einen eigenen Verein mit
-        dem Namen <Blacker>«ARTH-STEINEN 2023»</Blacker> gegründet. Die Zusammenarbeit
-        über Vereinsgrenzen mit einem kurzen Organisationszeitraum hat
-        Signalwirkung.
-
-        Es haben sich rund 600 Jungtrommler und -pfeifer aus 40 Vereinen von
-        zehn Kantonen angemeldet.
-
-        <Box sx={{ marginTop: 2 }} />
-        Ein paar generelle Informationen zum Fest ...
-
-        <List>
-          <li>... bei Fragen hilft unser <Blacker>Infopoint</Blacker> bei der Turnhalle Zwygarten gerne weiter. Dieser ist ab <Blacker>7:30 Uhr</Blacker> geöffnet.</li>
-          <li>... <Blacker>Individuell angepasste Gehörschütze</Blacker> können beim Import Akustik Stand gegossen werden.</li>
-          <li>... die Instrumentendepot sind am <Blacker>Samstag von 7:00 Uhr - 23:00 Uhr</Blacker> und am  <Blacker>Sonntag von 6:30 Uhr - 17:00 Uhr</Blacker> geöffnet.</li>
-          <li>... die Unterkunft kann ab <Blacker>Samstag, 15:00 Uhr</Blacker> bezogen werden und muss bis <Blacker>Sonntag, 9:30 Uhr</Blacker> geräumt sein. <br /><a target="_blank" href={unterkunft} rel="noreferrer"><Bolder>🛈</Bolder> Unterkunftseinteilung</a></li>
-          <li>
-            ... die Unterkunft ist in <a href="https://goo.gl/maps/8fG2i2E6JkDCwwiy7" target="_blank" rel="noreferrer">Oberarth</a>, zirka 2 km vom Festgelände entfernt. Sie sind entweder mit dem
-            Bus in 5 Minuten oder zu Fuss in ca. 20 Minuten erreichbar.</li>
-        </List>
-
+        Wir bedanken uns recht herzlich bei allen Teilnehmenden für das gelungene Fest.
         <Photos />
-
-        <LocationsLegend />
-      </Container>
-
-        <Box sx={{
-          marginLeft: '308px',
-          marginTop: '16px',
-          marginBottom: '-60px',
-          height: '60px',
-          backgroundColor: 'white',
-          zIndex: 1,
-          position: 'relative'
-        }} />
-
-        <Locations />
-
-      <Container maxWidth="md" sx={{
-        paddingLeft: 5,
-        overflowX: 'hidden',
-        marginLeft: {
-          lg: 30
-        }
-      }}>
-        {/* CONTENT */}
-
-
-        <FestTimeline />
-
-        <Umzug />
 
         <Box sx={{ marginTop: 2 }} />
         <Title title='DIE VERANSTALTER' fontSize={20} />
