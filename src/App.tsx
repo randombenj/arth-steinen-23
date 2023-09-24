@@ -12,7 +12,6 @@ import People from './People';
 import Sponsoring from './Sponsoring';
 import Umzug from './Umzug';
 import Locations, { LocationsLegend } from './Locations';
-import DownloadIcon from '@mui/icons-material/Download';
 
 // @ts-ignore
 import festfuehrer from './data/festfuehrer.pdf';
@@ -20,7 +19,7 @@ import festfuehrer from './data/festfuehrer.pdf';
 import unterkunft from './data/unterkunft-id.pdf'
 // @ts-ignore
 
-import finale from './data/finale.pdf'
+// import finale from './data/finale.pdf'
 import MyFest from './MyFest';
 import Photos from './Photos';
 
@@ -110,38 +109,7 @@ function App() {
 
 
         <Alert severity="info" sx={{ marginTop: 2 }}>
-          <Bolder>Finalwettspieler:</Bolder>
-
-          <List sx={{
-            [`& li`]: {
-              paddingLeft: 1,
-              textIndent: '-1.75em',
-            }
-          }}>
-            <li><Bolder>T1:</Bolder> SCHAUB Loris, AMHERD Yannick, HESS Salome, REIST Simon, WITTWER Laurin, SCHMID Sven, STOFFLER Brian, HESS Matthias, BISCHOF Fabian, MÜLLER Maurice</li>
-            <li><Bolder>T2:</Bolder> KÜNZLER Kimon, MORGENROTH Luan, BACHMANN Julian, STIRNEMANN Alyssa, STALDER Lars, HACKEL Simona, JEKER Lars, ISELI Timo, HACKEL Claudio, SCHMID Lorin</li>
-            <li><Bolder>T3:</Bolder> BALTISBERGER Samuel, MEISTER Luke, BAGDASARJANZ Emma, SCHÄFER Andrin, EVANS Vincent, SCHMID Andrin, HUBER Loris, TROVATORI Siro, KOHLER Nayla, HÜBNER Levi</li>
-            <li><Bolder>T4:</Bolder> VAN GEENEN Sean, SCHALLBERGER Lorin, MARTY Nino, DIETERLEN Jacob, ZUBLER Konrad, STEINER Robin, HACKEL Olivia, SCHULER Samuel, ZAUGG Xenia, SCHMID Anic</li>
-            <li><Bolder>P1:</Bolder> SPICHTY Salome, WOLFELSPERGER Anna, BRAUN Valentina</li>
-            <li><Bolder>P2:</Bolder> COMINOTTI Alessia, PETRETTA Nerea, STOFFLER Audrey</li>
-
-            <Button sx={{
-              marginTop: 1,
-              marginRight: 1,
-              color: 'rgb(1, 67, 97)',
-              borderColor: 'rgb(1, 67, 97)',
-              [`&:hover`]: {
-                color: 'rgb(1, 67, 97)',
-                borderColor: 'rgb(1, 67, 97)'
-              }
-            }} variant="outlined" href={finale} target='_blank'>
-              <DownloadIcon sx={{ marginRight: 2}}/><Bolder>Zeitplan Finale (Aktualisiert)</Bolder>
-            </Button>
-
-            <Box sx={{ marginTop: 2 }} />
-
-            Die Wettspielzeiten der Finalisten sind auch unten im <Bolder>Digitalen Festführer</Bolder> ersichtlich.
-          </List>
+          <Bolder>Der Umzug findet bei bestem Wetter statt!</Bolder>
         </Alert>
 
         <Box sx={{ marginTop: 4 }} />
