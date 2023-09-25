@@ -3,10 +3,10 @@ import teaser from './teaser.jpg';
 import teaserGoldau from './teaser-goldau.jpg';
 import schlegel from './piccolo_trommelschlegel.png'
 
-import { Alert, Box, Button, Container, styled, Typography } from '@mui/material';
+import { Box, Button, Container, styled, Typography } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
-import { Blacker, Bolder, Subtitle, Title } from './Typography';
+import { Blacker, Subtitle, Title } from './Typography';
 import People from './People';
 import Sponsoring from './Sponsoring';
 import DownloadIcon from '@mui/icons-material/Download';
@@ -61,6 +61,20 @@ function App() {
           }}>23. - 24. September 2023</Typography>
         </Button>
 
+        <Button sx={{ marginTop: 1, marginRight: 2 }} variant="outlined" href={rangliste} target='_blank'>
+          <DownloadIcon sx={{ marginRight: 1 }} /><Typography sx={{
+            fontSize: 16,
+            fontWeight: 600
+          }}>Rangliste</Typography>
+        </Button>
+
+        <Button sx={{ marginTop: 1, marginRight: 2 }} variant="outlined" href={jurybericht} target='_blank'>
+          <DownloadIcon sx={{ marginRight: 1 }} /><Typography sx={{
+            fontSize: 16,
+            fontWeight: 600
+          }}>Jurybericht</Typography>
+        </Button>
+
         <Button sx={{ marginTop: 1, marginRight: 2 }} variant="outlined" href={festfuehrer} target='_blank'>
           <Typography sx={{
             fontSize: 16,
@@ -76,39 +90,6 @@ function App() {
         </Button>
 
         <Box sx={{ marginTop: 4 }} />
-
-
-        <Alert severity="info" sx={{ marginTop: 2 }}>
-          Die <Bolder>Rangliste und der Jurybericht</Bolder> können nun heruntergeladen werden:
-
-          <Box sx={{ marginTop: 2 }}/>
-
-          <Button sx={{
-            marginTop: 1,
-            marginRight: 1,
-            color: 'rgb(1, 67, 97)',
-            borderColor: 'rgb(1, 67, 97)',
-            [`&:hover`]: {
-              color: 'rgb(1, 67, 97)',
-              borderColor: 'rgb(1, 67, 97)'
-            }
-          }} variant="outlined" href={rangliste} target='_blank'>
-            <DownloadIcon sx={{ marginRight: 2 }} /><Bolder>Rangliste</Bolder>
-          </Button>
-
-          <Button sx={{
-            marginTop: 1,
-            marginRight: 1,
-            color: 'rgb(1, 67, 97)',
-            borderColor: 'rgb(1, 67, 97)',
-            [`&:hover`]: {
-              color: 'rgb(1, 67, 97)',
-              borderColor: 'rgb(1, 67, 97)'
-            }
-          }} variant="outlined" href={jurybericht} target='_blank'>
-            <DownloadIcon sx={{ marginRight: 2 }} /><Bolder>Jurybericht</Bolder>
-          </Button>
-        </Alert>
 
         <Box sx={{ marginTop: 4 }} />
         <Title title='VIELEN DANK!' fontSize={20} />

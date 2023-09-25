@@ -3,6 +3,8 @@ import { Blacker } from './Typography';
 
 import freitagTeaser from './teaser-freitag.png'
 import festTeaser from './teaser-fest.png'
+import umzugTeaser from './teaser-video-umzug.png'
+// import abendTeaser from './teaser-video-abend.png'
 
 
 const PhotosLink = styled('a')({
@@ -68,6 +70,68 @@ export default function Photos() {
                     }
                   }}>
                     Auf- und Abbau <Blacker>(Freitag / Montag)</Blacker>
+                  </Typography>
+                </CardContent>
+              </PhotosLink>
+            </CardActionArea>
+          </Card>
+        </Grid>
+
+      </Grid>
+      <Typography sx={{ fontSize: '1.2em', marginTop: 4, color: '#505050' }}>
+        VIDEOS VOM FEST <Box sx={{ width: '60px', borderBottom: '1px solid #8d1e1f40', marginBottom: 1 }}></Box>
+      </Typography>
+
+
+      <Grid container spacing={2} sx={{ marginTop: 0 }} >
+
+        {/* VIDEO ABEND */}
+        {/* <Grid item xs={12} md={6}>
+          <Card>
+            <CardActionArea>
+              <PhotosLink href="" target="_blank" rel="noreferrer">
+                <CardMedia
+                  component="img"
+                  image={abendTeaser}
+                  alt="Fest auf und Abau"
+                />
+                <CardContent sx={{ padding: '8px !important' }}>
+                  <Typography gutterBottom sx={{
+                    textDecoration: 'none',
+                    color: '#060606',
+                    fontSize: '1.4em',
+                    [`> span`]: {
+                      fontSize: '1em',
+                    }
+                  }}>
+                    Abendunterhaltung
+                  </Typography>
+                </CardContent>
+              </PhotosLink>
+            </CardActionArea>
+          </Card>
+        </Grid> */}
+
+        {/* VIDEO UMZUG */}
+        <Grid item xs={12} md={6}>
+          <Card>
+            <CardActionArea>
+              <PhotosLink href="https://www.youtube.com/watch?v=NkPDXG3vGr4" target="_blank" rel="noreferrer">
+                <CardMedia
+                  component="img"
+                  image={umzugTeaser}
+                  alt="Fest auf und Abau"
+                />
+                <CardContent sx={{ padding: '8px !important' }}>
+                  <Typography gutterBottom sx={{
+                    textDecoration: 'none',
+                    color: '#060606',
+                    fontSize: '1.4em',
+                    [`> span`]: {
+                      fontSize: '1em',
+                    }
+                  }}>
+                    Umzug
                   </Typography>
                 </CardContent>
               </PhotosLink>
