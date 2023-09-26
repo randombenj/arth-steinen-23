@@ -4,7 +4,7 @@ import { Blacker } from './Typography';
 import freitagTeaser from './teaser-freitag.png'
 import festTeaser from './teaser-fest.png'
 import umzugTeaser from './teaser-video-umzug.png'
-// import abendTeaser from './teaser-video-abend.png'
+import abendTeaser from './teaser-video-abend.png'
 
 
 const PhotosLink = styled('a')({
@@ -86,10 +86,10 @@ export default function Photos() {
       <Grid container spacing={2} sx={{ marginTop: 0 }} >
 
         {/* VIDEO ABEND */}
-        {/* <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={6}>
           <Card>
             <CardActionArea>
-              <PhotosLink href="" target="_blank" rel="noreferrer">
+              <PhotosLink href="https://www.youtube.com/watch?v=qNyVa1pXahc" target="_blank" rel="noreferrer">
                 <CardMedia
                   component="img"
                   image={abendTeaser}
@@ -110,7 +110,7 @@ export default function Photos() {
               </PhotosLink>
             </CardActionArea>
           </Card>
-        </Grid> */}
+        </Grid>
 
         {/* VIDEO UMZUG */}
         <Grid item xs={12} md={6}>
