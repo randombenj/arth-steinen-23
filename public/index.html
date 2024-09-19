@@ -65,6 +65,26 @@
       gtag('js', new Date());
 
       gtag('config', 'G-6SM63688E3');
+
+
+      // -- cross domain iframe resizing --
+
+      // Create browser compatible event handler.
+      const eventMethod = window.addEventListener ? "addEventListener" : "attachEvent"
+      const eventer = window[eventMethod];
+      const messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message"
+
+      // Listen for a message from the iframe.
+      eventer(messageEvent, (e) => {
+        if (isNaN(e.data)) {
+          return
+        }
+
+        if (parent.postMessage) {
+          const height = document.getElementById('container').offsetHeight
+          parent.postMessage(height, '*')
+        }
+      }, false);
     </script>
   </body>
 </html>

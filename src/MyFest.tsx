@@ -175,7 +175,7 @@ export default function MyFest() {
   }, [setData, setSearch, setSelected, setWettspielorte]);
 
   return (
-    <Box sx={{ marginTop: 4 }}>
+    <Box>
       {(data && search && selected) && <Autocomplete
         ref={inputRef}
         key={key}

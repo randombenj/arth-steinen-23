@@ -4,7 +4,9 @@ import MyFest from './MyFest';
 
 function DigitalTimeguide() {
   return (
-    <MyFest />
+    <div id="container">
+      <MyFest />
+    </div>
   );
 }
 
