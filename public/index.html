@@ -68,23 +68,12 @@
 
 
       // -- cross domain iframe resizing --
+      const resizeObserver = new ResizeObserver((entries) => {
+        const height = document.getElementById('container').offsetHeight
+        parent.postMessage(`resize::${height}`, '*')
+      });
 
-      // Create browser compatible event handler.
-      const eventMethod = window.addEventListener ? "addEventListener" : "attachEvent"
-      const eventer = window[eventMethod];
-      const messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message"
-
-      // Listen for a message from the iframe.
-      eventer(messageEvent, (e) => {
-        if (isNaN(e.data)) {
-          return
-        }
-
-        if (parent.postMessage) {
-          const height = document.getElementById('container').offsetHeight
-          parent.postMessage(height, '*')
-        }
-      }, false);
+      resizeObserver.observe(document.getElementById('container'));
     </script>
   </body>
 </html>
