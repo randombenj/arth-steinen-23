@@ -1,9 +1,9 @@
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import { Timeline, TimelineConnector, TimelineContent, TimelineDot, TimelineItem, TimelineOppositeContent, TimelineSeparator, timelineOppositeContentClasses } from "@mui/lab";
 import { Autocomplete, Avatar, Box, Card, CardContent, CardHeader, Grid, IconButton, TextField, Typography } from "@mui/material";
 import Papa from 'papaparse';
-import React, { LegacyRef, useEffect, useRef, useState } from "react";
+import { LegacyRef, useEffect, useRef, useState } from "react";
 import MyFestService, { NameCategoryIndex, ParticipationEntry } from "./my-fest-service";
-import { Timeline, TimelineConnector, TimelineContent, TimelineDot, TimelineItem, TimelineOppositeContent, TimelineSeparator, timelineOppositeContentClasses } from "@mui/lab";
 
 
 /**
@@ -24,9 +24,9 @@ const getSearchables = (data: ParticipationEntry[]): NameCategoryIndex => {
       name = `${entry.name.trim()} (${entry.kategorie.trim()})`
     }
 
-    // if (entry.kategorie.trim().endsWith('F')) {
-    //   return // ignore finale entries
-    // }
+    if (entry.kategorie.trim().endsWith('F')) {
+      return // ignore finale entries
+    }
 
     if (names[name] === undefined) {
       names[name] = []
@@ -38,26 +38,12 @@ const getSearchables = (data: ParticipationEntry[]): NameCategoryIndex => {
 
 }
 
-const navigationLookup = {
-  'J1': 'https://maps.app.goo.gl/2nHQ9ooQeC3XbBtL7',
-  'J2': 'https://maps.app.goo.gl/dt7wWBCFWV31ESSv7',
-  'J3': 'https://maps.app.goo.gl/b1V5oZeSp67xYk8a8',
-  'J4': 'https://maps.app.goo.gl/vLBxZq5ehsMXmJqY9',
-  'J5': 'https://maps.app.goo.gl/np5FoUguJnTcZ1ce6',
-  'J6': 'https://maps.app.goo.gl/cuESMrSdRD3bHPzA8',
-  'J7': 'https://maps.app.goo.gl/2nHQ9ooQeC3XbBtL7',
-  'J8': 'https://maps.app.goo.gl/h2MaLZduUU1hyEEGA',
-  'J9': 'https://maps.app.goo.gl/2nHQ9ooQeC3XbBtL7',
-  'J10': 'https://maps.app.goo.gl/np5FoUguJnTcZ1ce6',
-  'J11': 'https://maps.app.goo.gl/np5FoUguJnTcZ1ce6',
-  'J12': 'https://maps.app.goo.gl/np5FoUguJnTcZ1ce6',
-  'J14': 'https://maps.app.goo.gl/2nHQ9ooQeC3XbBtL7',
-  'J15': 'https://maps.app.goo.gl/czLr1Cz7aYASSqeA8',
-  'J16': 'https://maps.app.goo.gl/czLr1Cz7aYASSqeA8'
-} as { [key: string]: string }
-
 interface AutocompleteOption {
   label: string;
+}
+
+interface Wettspielorte {
+  [key: string]: string
 }
 
 const getAutocompleteOptions = (data: NameCategoryIndex): AutocompleteOption[] => {
@@ -67,6 +53,7 @@ const getAutocompleteOptions = (data: NameCategoryIndex): AutocompleteOption[] =
 type MyFestCategoryProps = {
   name: string
   participation: ParticipationEntry[]
+  wettspielorte: Wettspielorte
   ondelete: () => void
 }
 
@@ -82,7 +69,6 @@ const parseTime = (time: string): string => {
 }
 
 const timeToDateTime = (time: string): number => {
-
   if (time.length === 3) {
     return Date.parse(`2023-01-01T0${time.substring(0, 1)}:${time.substring(1, 3)}:00.000Z`)
   }
@@ -94,7 +80,7 @@ const timeToDateTime = (time: string): number => {
 }
 
 
-function MyFestCategory({ name, participation, ondelete }: MyFestCategoryProps) {
+function MyFestCategory({ name, participation, wettspielorte, ondelete }: MyFestCategoryProps) {
   return (
     <Card sx={{ marginBottom: 2, height: 'calc(100% - 2px)' }}>
       <CardHeader
@@ -143,7 +129,7 @@ function MyFestCategory({ name, participation, ondelete }: MyFestCategoryProps) 
                 {i === (participation.length - 1) || <TimelineConnector sx={{ bgcolor: 'primary.main' }} />}
               </TimelineSeparator>
               <TimelineContent sx={{ color: "#505050" }}>
-                <a href={navigationLookup[entry.platz_abk.trim()]} target="_blank" rel="noreferrer"><strong>{entry.platz_name} ({entry.platz_abk.trim()}) </strong></a> — {entry.jury_platz}
+                <a href={wettspielorte[entry.platz_abk.trim()]} target="_blank" rel="noreferrer"><strong>{entry.platz_name} ({entry.platz_abk.trim()}) </strong></a> — {entry.jury_platz}
               </TimelineContent>
             </TimelineItem>
           ))}
@@ -156,6 +142,7 @@ function MyFestCategory({ name, participation, ondelete }: MyFestCategoryProps) 
 export default function MyFest() {
   const groupLookup = ['S1', 'S2', 'S3', 'SP']
 
+  const [wettspielorte, setWettspielorte] = useState<Wettspielorte | undefined>(undefined)
   const [data, setData] = useState<NameCategoryIndex | undefined>(undefined)
   const [search, setSearch] = useState<AutocompleteOption[] | undefined>(undefined)
 
@@ -164,19 +151,14 @@ export default function MyFest() {
 
   const inputRef = useRef<LegacyRef<typeof Autocomplete> | undefined>(undefined)
 
-  // const executeScroll = (e: any) => {
-  //   e.preventDefault();
-  //   // FIXME: the setTimeout is required in chrome due to some bug
-  //   // https://github.com/facebook/react/issues/23396#issuecomment-1376887787
-  //   // @ts-ignore
-  //   setTimeout(() => inputRef.current?.scrollIntoView({ block: 'start' }), 0)
-  //   console.log('scroll?')
-  // }
 
   useEffect(() => {
     (async () => {
 
       // -- load all data from api
+      const orte = await (await fetch('/wettspielorte.json')).json() as Wettspielorte
+      setWettspielorte(orte)
+
       const csv = await (await fetch('/zeitplan.csv')).text()
       const data = Papa.parse<ParticipationEntry>(csv, {
         header: true, delimiter: ","
@@ -190,7 +172,7 @@ export default function MyFest() {
       setSelected(MyFestService.getSavedCategories())
 
     })();
-  }, [setData, setSearch, setSelected]);
+  }, [setData, setSearch, setSelected, setWettspielorte]);
 
   return (
     <Box sx={{ marginTop: 4 }}>
@@ -247,6 +229,7 @@ export default function MyFest() {
               <MyFestCategory
                 name={key}
                 participation={selected[key]}
+                wettspielorte={wettspielorte || {}}
                 ondelete={() => {
                   MyFestService.removeCategory({ [key]: selected[key] } as NameCategoryIndex)
                   setSelected(MyFestService.getSavedCategories())
@@ -273,6 +256,7 @@ export default function MyFest() {
               <MyFestCategory
                 name={key}
                 participation={selected[key]}
+                wettspielorte={wettspielorte || {}}
                 ondelete={() => {
                   MyFestService.removeCategory({ [key]: selected[key] } as NameCategoryIndex)
                   setSelected(MyFestService.getSavedCategories())
