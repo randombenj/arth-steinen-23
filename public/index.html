@@ -65,15 +65,6 @@
       gtag('js', new Date());
 
       gtag('config', 'G-6SM63688E3');
-
-
-      // -- cross domain iframe resizing --
-      const resizeObserver = new ResizeObserver((entries) => {
-        const height = document.getElementById('container').offsetHeight
-        parent.postMessage(`resize::${height}`, '*')
-      });
-
-      resizeObserver.observe(document.getElementById('container'));
     </script>
   </body>
 </html>
