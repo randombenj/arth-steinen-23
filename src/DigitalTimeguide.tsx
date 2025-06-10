@@ -1,4 +1,5 @@
 
+import { createTheme, ThemeProvider } from '@mui/material';
 import { useEffect, useRef } from 'react';
 import MyFest from './MyFest';
 
@@ -6,9 +7,21 @@ type DigitalTimeguideProps = {
   name: string
   timetable: string
   competitionVenues: string
+  primaryColor?: string
 }
 
-function DigitalTimeguide({name, timetable, competitionVenues}: DigitalTimeguideProps) {
+function DigitalTimeguide({name, timetable, competitionVenues, primaryColor}: DigitalTimeguideProps) {
+  // styling
+
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: primaryColor || '#8d1e1f'
+      },
+    },
+  });
+
+
   const observedElementRef = useRef(null);
 
   useEffect(() => {
@@ -31,7 +44,9 @@ function DigitalTimeguide({name, timetable, competitionVenues}: DigitalTimeguide
 
   return (
     <div ref={observedElementRef}>
-      <MyFest name={name} timetable={timetable} competitionVenues={competitionVenues} />
+      <ThemeProvider theme={theme}>
+        <MyFest name={name} timetable={timetable} competitionVenues={competitionVenues} />
+      </ThemeProvider>
     </div>
   );
 }

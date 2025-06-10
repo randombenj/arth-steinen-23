@@ -128,7 +128,15 @@ function MyFestCategory({ name, participation, wettspielorte, ondelete }: MyFest
                 <TimelineDot variant="outlined" color="primary" />
                 {i === (participation.length - 1) || <TimelineConnector sx={{ bgcolor: 'primary.main' }} />}
               </TimelineSeparator>
-              <TimelineContent sx={{ color: "#505050" }}>
+              <TimelineContent sx={{
+                  color: "#505050",
+                  '& a': {
+                    color: 'primary.main',
+                  },
+                  '& a:hover': {
+                    color: 'primary.light',
+                  }
+                }}>
                 <a href={wettspielorte[entry.platz_abk.trim()]} target="_blank" rel="noreferrer"><strong>{entry.platz_name} ({entry.platz_abk.trim()}) </strong></a> — {entry.jury_platz}
               </TimelineContent>
             </TimelineItem>
@@ -222,7 +230,7 @@ export default function MyFest({name, timetable, competitionVenues}: MyFestProps
 
       {/* -- SAMSTAG */}
       {(selected && Object.keys(selected).filter(s => !groupLookup.includes(selected[s][0].kategorie)).length !== 0) && <Typography sx={{ fontSize: '1.2em', marginTop: 4, color: '#505050' }}>
-        SAMSTAG <Box sx={{ width: '60px', borderBottom: '1px solid #8d1e1f40', marginBottom: 1 }}></Box>
+        SAMSTAG <Box sx={{ width: '60px', borderBottom: '1px solid rgb(228, 228, 228)', marginBottom: 1 }}></Box>
       </Typography>}
 
       <Grid container spacing={2} sx={{ marginTop: 0 }} >
@@ -249,7 +257,7 @@ export default function MyFest({name, timetable, competitionVenues}: MyFestProps
 
       {/* <Box sx={{ marginTop: 2 }} /> */}
       {(selected && Object.keys(selected).filter(s => groupLookup.includes(selected[s][0].kategorie)).length !== 0) && <Typography sx={{ fontSize: '1.2em', marginTop: 4, color: '#505050' }}>
-        SONNTAG <Box sx={{ width: '60px', borderBottom: '1px solid #8d1e1f40', marginBottom: 1 }}></Box>
+        SONNTAG <Box sx={{ width: '60px', borderBottom: '1px solid rgb(228, 228, 228)', marginBottom: 1 }}></Box>
       </Typography>}
 
       <Grid container spacing={2} sx={{ marginTop: 0 }} >
