@@ -2,8 +2,13 @@
 import { useEffect, useRef } from 'react';
 import MyFest from './MyFest';
 
+type DigitalTimeguideProps = {
+  name: string
+  timetable: string
+  competitionVenues: string
+}
 
-function DigitalTimeguide() {
+function DigitalTimeguide({name, timetable, competitionVenues}: DigitalTimeguideProps) {
   const observedElementRef = useRef(null);
 
   useEffect(() => {
@@ -26,7 +31,7 @@ function DigitalTimeguide() {
 
   return (
     <div ref={observedElementRef}>
-      <MyFest />
+      <MyFest name={name} timetable={timetable} competitionVenues={competitionVenues} />
     </div>
   );
 }
