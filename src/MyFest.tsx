@@ -2,7 +2,7 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { Timeline, TimelineConnector, TimelineContent, TimelineDot, TimelineItem, TimelineOppositeContent, TimelineSeparator, timelineOppositeContentClasses } from "@mui/lab";
 import { Autocomplete, Avatar, Box, Card, CardContent, CardHeader, Grid, IconButton, TextField, Typography } from "@mui/material";
 import Papa from 'papaparse';
-import { LegacyRef, useEffect, useRef, useState } from "react";
+import { LegacyRef, useEffect, useMemo, useRef, useState } from "react";
 import MyFestService, { NameCategoryIndex, ParticipationEntry } from "./my-fest-service";
 
 
@@ -35,7 +35,6 @@ const getSearchables = (data: ParticipationEntry[]): NameCategoryIndex => {
   })
 
   return names
-
 }
 
 interface AutocompleteOption {
@@ -50,13 +49,6 @@ const getAutocompleteOptions = (data: NameCategoryIndex): AutocompleteOption[] =
   return Object.keys(data).map<AutocompleteOption>((key, i) => ({ label: key, value: i }));
 }
 
-type MyFestCategoryProps = {
-  name: string
-  participation: ParticipationEntry[]
-  wettspielorte: Wettspielorte
-  ondelete: () => void
-}
-
 const parseTime = (time: string): string => {
   if (time.length === 3) {
     return `${time.substring(0, 1)}:${time.substring(1, 3)}`
@@ -68,19 +60,28 @@ const parseTime = (time: string): string => {
   return time;
 }
 
-const timeToDateTime = (time: string): number => {
+const timeToDateTime = (date: string, time: string): number => {
+  const [month, day, year] = date.split('/')
+  // A robust way to parse, handles different time formats
+  const isoDateString = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+
   if (time.length === 3) {
-    return Date.parse(`2023-01-01T0${time.substring(0, 1)}:${time.substring(1, 3)}:00.000Z`)
+    return new Date(`${isoDateString}T0${time.substring(0, 1)}:${time.substring(1, 3)}:00`).getTime();
   }
   if (time.length === 4) {
-    return Date.parse(`2023-01-01T${time.substring(0, 2)}:${time.substring(2, 4)}:00.000Z`)
+    return new Date(`${isoDateString}T${time.substring(0, 2)}:${time.substring(2, 4)}:00`).getTime();
   }
 
-  return Date.parse(`2023-01-01T${time}:00.000Z`);
+  return new Date(`${isoDateString}T${time}`).getTime();
 }
 
 
-function MyFestCategory({ name, participation, wettspielorte, ondelete }: MyFestCategoryProps) {
+function MyFestCategory({ name, participation, wettspielorte, ondelete }: {
+  name: string
+  participation: ParticipationEntry[]
+  wettspielorte: Wettspielorte
+  ondelete: () => void
+}) {
   return (
     <Card sx={{ marginBottom: 2, height: 'calc(100% - 2px)' }}>
       <CardHeader
@@ -119,8 +120,8 @@ function MyFestCategory({ name, participation, wettspielorte, ondelete }: MyFest
             }
           }}
         >
-          {participation.sort((a, b) => timeToDateTime(a.zeit) - timeToDateTime(b.zeit)).map((entry, i) => (
-            <TimelineItem sx={{ minHeight: 20 }}>
+          {participation.sort((a, b) => timeToDateTime(a.datum, a.zeit) - timeToDateTime(b.datum, b.zeit)).map((entry, i) => (
+            <TimelineItem key={i} sx={{ minHeight: 20 }}>
               <TimelineOppositeContent sx={{ paddingLeft: 0 }} color="textSecondary">
                 {parseTime(entry.zeit)}
               </TimelineOppositeContent>
@@ -147,6 +148,58 @@ function MyFestCategory({ name, participation, wettspielorte, ondelete }: MyFest
   )
 }
 
+/**
+ * Converts a date string (e.g., "06/15/2024") to a full weekday name in German.
+ * @param dateString The date to convert.
+ */
+const getWeekday = (dateString: string): string => {
+    const [month, day, year] = dateString.split('/');
+    const date = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+    return date.toLocaleDateString('de-DE', { weekday: 'long' });
+}
+
+
+type FestDayProps = {
+    date: string;
+    entries: NameCategoryIndex;
+    wettspielorte: Wettspielorte;
+    onDelete: (key: string) => void;
+}
+
+/**
+ * Renders the heading and grid for a single day of the festival.
+ */
+function FestDay({ date, entries, wettspielorte, onDelete }: FestDayProps) {
+    if (Object.keys(entries).length === 0) {
+        return null;
+    }
+
+    return (
+        <Box>
+            <Typography sx={{ fontSize: '1.2em', marginTop: 4, color: '#505050' }}>
+                {getWeekday(date).toUpperCase()}
+                <Box sx={{ width: '60px', borderBottom: '1px solid rgb(228, 228, 228)', marginBottom: 1 }}></Box>
+            </Typography>
+
+            <Grid container spacing={2} sx={{ marginTop: 0 }}>
+                {Object.keys(entries)
+                    .sort((a, b) => timeToDateTime(entries[a][0].datum, entries[a][0].zeit) - timeToDateTime(entries[b][0].datum, entries[b][0].zeit))
+                    .map(key => (
+                        <Grid item xs={12} md={6} key={key}>
+                            <MyFestCategory
+                                name={key}
+                                participation={entries[key]}
+                                wettspielorte={wettspielorte}
+                                ondelete={() => onDelete(key)}
+                            />
+                        </Grid>
+                    ))}
+            </Grid>
+        </Box>
+    );
+}
+
+
 type MyFestProps = {
   name: string
   timetable: string
@@ -154,39 +207,64 @@ type MyFestProps = {
 }
 
 export default function MyFest({name, timetable, competitionVenues}: MyFestProps) {
-  const groupLookup = ['S1', 'S2', 'S3', 'SP']
-
   const [wettspielorte, setWettspielorte] = useState<Wettspielorte | undefined>(undefined)
   const [data, setData] = useState<NameCategoryIndex | undefined>(undefined)
   const [search, setSearch] = useState<AutocompleteOption[] | undefined>(undefined)
-
   const [selected, setSelected] = useState<NameCategoryIndex | undefined>(undefined)
   const [key, setKey] = useState(0);
 
   const inputRef = useRef<LegacyRef<typeof Autocomplete> | undefined>(undefined)
 
-
   useEffect(() => {
     (async () => {
-
       // -- load all data from api
       const orte = await (await fetch(competitionVenues)).json() as Wettspielorte
       setWettspielorte(orte)
 
       const csv = await (await fetch(timetable)).text()
-      const data = Papa.parse<ParticipationEntry>(csv, {
+      const parsedData = Papa.parse<ParticipationEntry>(csv, {
         header: true, delimiter: ","
       }).data
 
-      const searchableData = getSearchables(data)
+      const searchableData = getSearchables(parsedData)
       setData(searchableData);
-      setSearch(getAutocompleteOptions(searchableData).sort())
+      setSearch(getAutocompleteOptions(searchableData).sort((a,b) => a.label.localeCompare(b.label)))
 
       // -- load saved data from local storage
       setSelected(MyFestService.getSavedCategories(name))
-
     })();
-  }, [setData, setSearch, setSelected, setWettspielorte, name, timetable, competitionVenues]);
+  }, [name, timetable, competitionVenues]);
+
+
+  // Group selected entries by day using useMemo for performance
+  const groupedByDay = useMemo(() => {
+    const groups: { [date: string]: NameCategoryIndex } = {};
+    if (!selected) {
+      return groups;
+    }
+
+    for (const key in selected) {
+      const entryArray = selected[key];
+      if (entryArray && entryArray.length > 0) {
+        const date = entryArray[0].datum;
+        if (!groups[date]) {
+          groups[date] = {};
+        }
+        groups[date][key] = entryArray;
+      }
+    }
+    return groups;
+  }, [selected]);
+
+
+  const handleDelete = (keyToDelete: string) => {
+    if (!selected) return;
+    MyFestService.removeCategory(name, { [keyToDelete]: selected[keyToDelete] } as NameCategoryIndex);
+    setSelected(MyFestService.getSavedCategories(name));
+  }
+
+  // Sort the days chronologically
+  const sortedDays = Object.keys(groupedByDay).sort((a, b) => timeToDateTime(a, '00:00') - timeToDateTime(b, '00:00'));
 
   return (
     <Box>
@@ -197,18 +275,11 @@ export default function MyFest({name, timetable, competitionVenues}: MyFestProps
         componentsProps={{
           popper: {
             modifiers: [
-              {
-                name: 'flip',
-                enabled: false
-              },
-              {
-                name: 'preventOverflow',
-                enabled: false
-              }
+              { name: 'flip', enabled: false },
+              { name: 'preventOverflow', enabled: false }
             ]
           }
         }}
-        // onFocus={executeScroll}
         onChange={(event: any, value: AutocompleteOption | null) => {
           if (value === null) {
             return
@@ -225,60 +296,18 @@ export default function MyFest({name, timetable, competitionVenues}: MyFestProps
         id="search"
         options={search}
         sx={{ width: 300, boxShadow: '3px 4px 16px #959595', backgroundColor: 'white', borderRadius: '5px', scrollMargin: 30 }}
-        renderInput={(params: any) => <TextField {...params} sx={{ color: 'red' }} label="Suche deinen Namen oder Verein ..." />}
+        renderInput={(params: any) => <TextField {...params} label="Suche deinen Namen oder Verein ..." />}
       />}
 
-      {/* -- SAMSTAG */}
-      {(selected && Object.keys(selected).filter(s => !groupLookup.includes(selected[s][0].kategorie)).length !== 0) && <Typography sx={{ fontSize: '1.2em', marginTop: 4, color: '#505050' }}>
-        SAMSTAG <Box sx={{ width: '60px', borderBottom: '1px solid rgb(228, 228, 228)', marginBottom: 1 }}></Box>
-      </Typography>}
-
-      <Grid container spacing={2} sx={{ marginTop: 0 }} >
-
-        {selected && Object.keys(selected)
-          .filter(s => !groupLookup.includes(selected[s][0].kategorie))
-          .sort((a, b) => timeToDateTime(selected[a][0].zeit) - timeToDateTime(selected[b][0].zeit))
-          .map((key, i) => (
-            <Grid item xs={12} md={6}>
-              <MyFestCategory
-                name={key}
-                participation={selected[key]}
-                wettspielorte={wettspielorte || {}}
-                ondelete={() => {
-                  MyFestService.removeCategory(name, { [key]: selected[key] } as NameCategoryIndex)
-                  setSelected(MyFestService.getSavedCategories(name))
-                }}
-              />
-            </Grid>
-          ))}
-      </Grid>
-
-      {/* -- SONNTAG */}
-
-      {/* <Box sx={{ marginTop: 2 }} /> */}
-      {(selected && Object.keys(selected).filter(s => groupLookup.includes(selected[s][0].kategorie)).length !== 0) && <Typography sx={{ fontSize: '1.2em', marginTop: 4, color: '#505050' }}>
-        SONNTAG <Box sx={{ width: '60px', borderBottom: '1px solid rgb(228, 228, 228)', marginBottom: 1 }}></Box>
-      </Typography>}
-
-      <Grid container spacing={2} sx={{ marginTop: 0 }} >
-
-        {selected && Object.keys(selected)
-          .filter(s => groupLookup.includes(selected[s][0].kategorie))
-          .sort((a, b) => timeToDateTime(selected[a][0].zeit) - timeToDateTime(selected[b][0].zeit))
-          .map((key, i) => (
-            <Grid item xs={12} md={6}>
-              <MyFestCategory
-                name={key}
-                participation={selected[key]}
-                wettspielorte={wettspielorte || {}}
-                ondelete={() => {
-                  MyFestService.removeCategory(name, { [key]: selected[key] } as NameCategoryIndex)
-                  setSelected(MyFestService.getSavedCategories(name))
-                }}
-              />
-            </Grid>
-          ))}
-      </Grid>
+      {sortedDays.map(date => (
+        <FestDay
+            key={date}
+            date={date}
+            entries={groupedByDay[date]}
+            wettspielorte={wettspielorte || {}}
+            onDelete={handleDelete}
+        />
+      ))}
     </Box>
   )
 }
