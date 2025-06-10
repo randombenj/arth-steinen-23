@@ -128,7 +128,15 @@ function MyFestCategory({ name, participation, wettspielorte, ondelete }: MyFest
                 <TimelineDot variant="outlined" color="primary" />
                 {i === (participation.length - 1) || <TimelineConnector sx={{ bgcolor: 'primary.main' }} />}
               </TimelineSeparator>
-              <TimelineContent sx={{ color: "#505050" }}>
+              <TimelineContent sx={{
+                  color: "#505050",
+                  '& a': {
+                    color: 'primary.main',
+                  },
+                  '& a:hover': {
+                    color: 'primary.light',
+                  }
+                }}>
                 <a href={wettspielorte[entry.platz_abk.trim()]} target="_blank" rel="noreferrer"><strong>{entry.platz_name} ({entry.platz_abk.trim()}) </strong></a> — {entry.jury_platz}
               </TimelineContent>
             </TimelineItem>
@@ -139,7 +147,13 @@ function MyFestCategory({ name, participation, wettspielorte, ondelete }: MyFest
   )
 }
 
-export default function MyFest() {
+type MyFestProps = {
+  name: string
+  timetable: string
+  competitionVenues: string
+}
+
+export default function MyFest({name, timetable, competitionVenues}: MyFestProps) {
   const groupLookup = ['S1', 'S2', 'S3', 'SP']
 
   const [wettspielorte, setWettspielorte] = useState<Wettspielorte | undefined>(undefined)
@@ -156,10 +170,10 @@ export default function MyFest() {
     (async () => {
 
       // -- load all data from api
-      const orte = await (await fetch('/wettspielorte.json')).json() as Wettspielorte
+      const orte = await (await fetch(competitionVenues)).json() as Wettspielorte
       setWettspielorte(orte)
 
-      const csv = await (await fetch('/zeitplan.csv')).text()
+      const csv = await (await fetch(timetable)).text()
       const data = Papa.parse<ParticipationEntry>(csv, {
         header: true, delimiter: ","
       }).data
@@ -169,10 +183,10 @@ export default function MyFest() {
       setSearch(getAutocompleteOptions(searchableData).sort())
 
       // -- load saved data from local storage
-      setSelected(MyFestService.getSavedCategories())
+      setSelected(MyFestService.getSavedCategories(name))
 
     })();
-  }, [setData, setSearch, setSelected, setWettspielorte]);
+  }, [setData, setSearch, setSelected, setWettspielorte, name, timetable, competitionVenues]);
 
   return (
     <Box>
@@ -200,8 +214,8 @@ export default function MyFest() {
             return
           }
 
-          MyFestService.saveCagegory({ [value.label]: data[value.label] } as NameCategoryIndex)
-          setSelected(MyFestService.getSavedCategories());
+          MyFestService.saveCagegory(name, { [value.label]: data[value.label] } as NameCategoryIndex)
+          setSelected(MyFestService.getSavedCategories(name));
 
           // FIXME: this is a hack to force the component to re-render
           // and the only way to clear the input field after selecting a value
@@ -216,7 +230,7 @@ export default function MyFest() {
 
       {/* -- SAMSTAG */}
       {(selected && Object.keys(selected).filter(s => !groupLookup.includes(selected[s][0].kategorie)).length !== 0) && <Typography sx={{ fontSize: '1.2em', marginTop: 4, color: '#505050' }}>
-        SAMSTAG <Box sx={{ width: '60px', borderBottom: '1px solid #8d1e1f40', marginBottom: 1 }}></Box>
+        SAMSTAG <Box sx={{ width: '60px', borderBottom: '1px solid rgb(228, 228, 228)', marginBottom: 1 }}></Box>
       </Typography>}
 
       <Grid container spacing={2} sx={{ marginTop: 0 }} >
@@ -231,8 +245,8 @@ export default function MyFest() {
                 participation={selected[key]}
                 wettspielorte={wettspielorte || {}}
                 ondelete={() => {
-                  MyFestService.removeCategory({ [key]: selected[key] } as NameCategoryIndex)
-                  setSelected(MyFestService.getSavedCategories())
+                  MyFestService.removeCategory(name, { [key]: selected[key] } as NameCategoryIndex)
+                  setSelected(MyFestService.getSavedCategories(name))
                 }}
               />
             </Grid>
@@ -243,7 +257,7 @@ export default function MyFest() {
 
       {/* <Box sx={{ marginTop: 2 }} /> */}
       {(selected && Object.keys(selected).filter(s => groupLookup.includes(selected[s][0].kategorie)).length !== 0) && <Typography sx={{ fontSize: '1.2em', marginTop: 4, color: '#505050' }}>
-        SONNTAG <Box sx={{ width: '60px', borderBottom: '1px solid #8d1e1f40', marginBottom: 1 }}></Box>
+        SONNTAG <Box sx={{ width: '60px', borderBottom: '1px solid rgb(228, 228, 228)', marginBottom: 1 }}></Box>
       </Typography>}
 
       <Grid container spacing={2} sx={{ marginTop: 0 }} >
@@ -258,8 +272,8 @@ export default function MyFest() {
                 participation={selected[key]}
                 wettspielorte={wettspielorte || {}}
                 ondelete={() => {
-                  MyFestService.removeCategory({ [key]: selected[key] } as NameCategoryIndex)
-                  setSelected(MyFestService.getSavedCategories())
+                  MyFestService.removeCategory(name, { [key]: selected[key] } as NameCategoryIndex)
+                  setSelected(MyFestService.getSavedCategories(name))
                 }}
               />
             </Grid>

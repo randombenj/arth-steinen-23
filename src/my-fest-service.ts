@@ -28,32 +28,32 @@ const MyFestService = {
    * Removes a category from the local storage
    * @param category The category to remove
    */
-  removeCategory: (category: NameCategoryIndex) => {
-    const categories = MyFestService.getSavedCategories()
+  removeCategory: (name: string, category: NameCategoryIndex) => {
+    const categories = MyFestService.getSavedCategories(name)
     for (const key in category) {
       delete categories[key]
     }
-    localStorage.setItem("myFest", JSON.stringify(categories))
+    localStorage.setItem(`myFest-${name}`, JSON.stringify(categories))
   },
 
   /**
    * Saves a new categorie to the local storage
    * @param categorie The categorie to add
    */
-  saveCagegory: (category: NameCategoryIndex) => {
-    const categories = MyFestService.getSavedCategories()
+  saveCagegory: (name: string, category: NameCategoryIndex) => {
+    const categories = MyFestService.getSavedCategories(name)
     for (const key in category) {
       categories[key] = category[key]
     }
-    localStorage.setItem("myFest", JSON.stringify(categories))
+    localStorage.setItem(`myFest-${name}`, JSON.stringify(categories))
   },
 
 
   /**
    * Gets all saved categories from the local storage
    */
-  getSavedCategories: (): NameCategoryIndex => {
-    const myFest = localStorage.getItem("myFest");
+  getSavedCategories: (name: string): NameCategoryIndex => {
+    const myFest = localStorage.getItem(`myFest-${name}`);
     if (myFest === null) {
       return {};
     }

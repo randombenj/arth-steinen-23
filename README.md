@@ -4,6 +4,12 @@
 
 Website für das Tambourenfest *ARTH-STEINEN 2023* in Arth vom 23. - 24. September 2023.
 
+## Local Dev
+
+```
+npm run start
+```
+
 ## Zeitplan Enbetten
 
 Um den Zeitplan via `iframe` in eine Website einzubetten, kann der folgende

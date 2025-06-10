@@ -31,8 +31,13 @@ const router = createHashRouter([
     element: <App />,
   },
   {
-    path: "/zeitplan",
-    element: <DigitalTimeguide />
+    path: "/langenthal-25",
+    element: <DigitalTimeguide
+      primaryColor='#3e82c4'
+      name='langenthal-25'
+      timetable='/langenthal-25/zeitplan.csv'
+      competitionVenues='/langenthal-25/wettspielorte.json'
+    />
   }
 ]);
 
