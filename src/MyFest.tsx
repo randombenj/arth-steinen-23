@@ -1,4 +1,5 @@
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { Timeline, TimelineConnector, TimelineContent, TimelineDot, TimelineItem, TimelineOppositeContent, TimelineSeparator, timelineOppositeContentClasses } from "@mui/lab";
 import { Autocomplete, Avatar, Box, Card, CardContent, CardHeader, Grid, IconButton, TextField, Typography } from "@mui/material";
 import Papa from 'papaparse';
@@ -308,6 +309,27 @@ export default function MyFest({name, timetable, competitionVenues}: MyFestProps
             onDelete={handleDelete}
         />
       ))}
+
+      {selected && Object.keys(selected).length === 0 && (
+        <Box sx={{ marginTop: 3}}>
+            <Typography sx={{
+              marginTop: 1,
+              color: '#505050',
+              fontSize: '1em',
+              maxWidth: '350px',
+              fontStyle: 'italic'
+            }}>
+              Suche nach Einzel- oder Sektionsteilnehmern. Beim Klicken auf den Wettspielort wirst du per Maps direkt dorthin geleitet.
+              <br />
+              <br />
+              <strong>Viel Erfolg am Wettspiel!</strong>
+            </Typography>
+        </Box>
+      )}
+
+      <Typography sx={{marginTop: 2, fontSize: 10}}>
+        Made with <FavoriteBorderIcon sx={{ marginBottom: -0.1, marginLeft: -0.5, marginRight: -0.5, height: 12 }} /> by Benj Fassbind
+      </Typography>
     </Box>
   )
 }

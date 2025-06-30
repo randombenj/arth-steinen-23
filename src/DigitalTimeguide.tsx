@@ -1,5 +1,5 @@
 
-import { createTheme, ThemeProvider, Typography } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material';
 import { useEffect, useRef } from 'react';
 import MyFest from './MyFest';
 
@@ -46,8 +46,6 @@ function DigitalTimeguide({name, timetable, competitionVenues, primaryColor}: Di
     <div ref={observedElementRef}>
       <ThemeProvider theme={theme}>
         <MyFest name={name} timetable={timetable} competitionVenues={competitionVenues} />
-
-        <Typography sx={{marginTop: 2, fontSize: 10}}>Zeitplan von Benj Fassbind</Typography>
       </ThemeProvider>
     </div>
   );
