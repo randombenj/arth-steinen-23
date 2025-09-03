@@ -38,6 +38,15 @@ const router = createHashRouter([
       timetable='/langenthal-25/zeitplan.csv'
       competitionVenues='/langenthal-25/wettspielorte.json'
     />
+  },
+  {
+    path: "/lenzburg-25",
+    element: <DigitalTimeguide
+      primaryColor='#78bdda'
+      name='lenzburg-25'
+      timetable='/lenzburg-25/zeitplan.csv'
+      competitionVenues='/lenzburg-25/wettspielorte.json'
+    />
   }
 ]);
 

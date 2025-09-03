@@ -51,6 +51,10 @@ const getAutocompleteOptions = (data: NameCategoryIndex): AutocompleteOption[] =
 }
 
 const parseTime = (time: string): string => {
+  if (time.includes(":")) {
+    const [hours, minutes] = time.split(":").map(Number);
+    return `${hours}:${minutes}`
+  }
   if (time.length === 3) {
     return `${time.substring(0, 1)}:${time.substring(1, 3)}`
   }
@@ -62,15 +66,27 @@ const parseTime = (time: string): string => {
 }
 
 const timeToDateTime = (date: string, time: string): number => {
-  const [month, day, year] = date.split('/')
-  // A robust way to parse, handles different time formats
-  const isoDateString = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
-
-  if (time.length === 3) {
-    return new Date(`${isoDateString}T0${time.substring(0, 1)}:${time.substring(1, 3)}:00`).getTime();
+  let month, day, year
+  if (date.includes("/")) {
+    [month, day, year] = date.split('/')
+  } else {
+    [day, month, year] = date.split('.')
   }
-  if (time.length === 4) {
-    return new Date(`${isoDateString}T${time.substring(0, 2)}:${time.substring(2, 4)}:00`).getTime();
+  const isoDateString = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+  console.error(isoDateString)
+
+  if (time.includes(":")) {
+    const [hours, minutes] = time.split(":")
+    console.log(`${isoDateString}T${hours}:${minutes}:00`)
+
+    return new Date(`${isoDateString}T${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}:00`).getTime();
+  } else {
+    if (time.length === 3) {
+      return new Date(`${isoDateString}T0${time.substring(0, 1)}:${time.substring(1, 3)}:00`).getTime();
+    }
+    if (time.length === 4) {
+      return new Date(`${isoDateString}T${time.substring(0, 2)}:${time.substring(2, 4)}:00`).getTime();
+    }
   }
 
   return new Date(`${isoDateString}T${time}`).getTime();
@@ -154,7 +170,13 @@ function MyFestCategory({ name, participation, wettspielorte, ondelete }: {
  * @param dateString The date to convert.
  */
 const getWeekday = (dateString: string): string => {
-    const [month, day, year] = dateString.split('/');
+    let month, day, year
+    if (dateString.includes("/")) {
+      [month, day, year] = dateString.split('/')
+    } else {
+      [day, month, year] = dateString.split('.')
+    }
+
     const date = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
     return date.toLocaleDateString('de-DE', { weekday: 'long' });
 }
