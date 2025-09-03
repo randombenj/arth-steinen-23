@@ -155,7 +155,7 @@ function MyFestCategory({ name, participation, wettspielorte, ondelete }: {
                     color: 'primary.light',
                   }
                 }}>
-                <a href={wettspielorte[entry.platz_abk.trim()]} target="_blank" rel="noreferrer"><strong>{entry.platz_name} ({entry.platz_abk.trim()}) </strong></a> — {entry.vortrag}
+                <a href={wettspielorte[entry.platz_abk.trim()]} target="_blank" rel="noreferrer"><strong>{entry.platz_name} ({entry.platz_abk.trim()}) </strong></a> — {entry.vortrag || entry.jury_platz}
               </TimelineContent>
             </TimelineItem>
           ))}
