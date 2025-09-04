@@ -52,8 +52,8 @@ const getAutocompleteOptions = (data: NameCategoryIndex): AutocompleteOption[] =
 
 const parseTime = (time: string): string => {
   if (time.includes(":")) {
-    const [hours, minutes] = time.split(":").map(Number);
-    return `${hours}:${minutes}`
+    const [hours, minutes] = time.split(":");
+    return `${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}`
   }
   if (time.length === 3) {
     return `${time.substring(0, 1)}:${time.substring(1, 3)}`
