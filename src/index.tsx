@@ -7,6 +7,7 @@ import reportWebVitals from './reportWebVitals';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { createHashRouter, RouterProvider } from 'react-router-dom';
 import DigitalTimeguide from './DigitalTimeguide';
+import Admin from './Admin';
 
 const theme = createTheme({
   palette: {
@@ -29,6 +30,10 @@ const router = createHashRouter([
   {
     path: "/",
     element: <App />,
+  },
+  {
+    path: "/admin",
+    element: <Admin />
   },
   {
     path: "/langenthal-25",
