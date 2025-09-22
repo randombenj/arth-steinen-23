@@ -6,8 +6,8 @@ import reportWebVitals from './reportWebVitals';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { createHashRouter, RouterProvider } from 'react-router-dom';
-import DigitalTimeguide from './DigitalTimeguide';
 import Admin from './Admin';
+import DigitalTimeguide from './DigitalTimeguide';
 
 const theme = createTheme({
   palette: {

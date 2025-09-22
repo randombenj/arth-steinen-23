@@ -125,7 +125,7 @@ export default function Admin() {
     // Find the router configuration and add new route
     const routerStart = currentContent.indexOf('const router = createHashRouter([');
     const routerEnd = currentContent.indexOf(']);', routerStart);
-    
+
     if (routerStart === -1 || routerEnd === -1) {
       throw new Error('Router-Konfiguration nicht gefunden');
     }
@@ -140,7 +140,7 @@ export default function Admin() {
         `{\\s*path:\\s*"/${eventName}",[^}]*}`,
         'g'
       );
-      
+
       const newRoute = `{
     path: "/${eventName}",
     element: <DigitalTimeguide
@@ -296,14 +296,14 @@ export default function Admin() {
       // Step 4: Get current index.tsx and prepare update
       setProcessing(prev => ({ ...prev, step: 4, message: 'Aktualisiere Routen...' }));
       const indexFileInfo = await getFileInfo(octokit, 'src/index.tsx');
-      
+
       if (indexFileInfo) {
         const updatedIndexContent = updateIndexFile(
           indexFileInfo.content,
           formData.eventName,
           formData.primaryColor
         );
-        
+
         // Only add index.tsx to changes if it actually changed
         if (updatedIndexContent !== indexFileInfo.content) {
           changes.push({
@@ -319,21 +319,22 @@ export default function Admin() {
       // Step 5: Create atomic commit with all changes
       setProcessing(prev => ({ ...prev, step: 5, message: 'Committe alle Änderungen...' }));
       const isUpdate = indexFileInfo.content.includes(`path: "/${formData.eventName}"`);
-      const commitMessage = isUpdate 
+      const commitMessage = isUpdate
         ? `Update event ${formData.eventName}`
         : `Add new event ${formData.eventName}`;
-      
+
       await createAtomicCommit(octokit, changes, commitMessage);
 
       // Complete
-      setProcessing(prev => ({ 
-        ...prev, 
-        step: 5, 
-        message: 'Event erfolgreich erstellt/aktualisiert!',
-        isProcessing: false 
+      setProcessing(prev => ({
+        ...prev,
+        step: 5,
+        message: `Event erfolgreich ${isUpdate ? 'aktualisiert' : 'erstellt'}!`,
+        isProcessing: false
       }));
 
-      // Reset form
+      // Reset form but keep eventName for the success message
+      const completedEventName = formData.eventName;
       setFormData({
         eventName: '',
         primaryColor: '#3e82c4',
@@ -342,7 +343,14 @@ export default function Admin() {
         githubToken: ''
       });
 
-    } catch (error: any) {
+      // Show success message with link after a short delay
+      setTimeout(() => {
+        setProcessing(prev => ({
+          ...prev,
+          message: `Event "${completedEventName}" wurde erfolgreich ${isUpdate ? 'aktualisiert' : 'erstellt'}! Die Änderungen werden in ca. 10 Minuten verfügbar sein.`,
+          error: null
+        }));
+      }, 1000);    } catch (error: any) {
       setProcessing(prev => ({
         ...prev,
         error: error.message || 'Ein unbekannter Fehler ist aufgetreten',
@@ -353,13 +361,13 @@ export default function Admin() {
 
   return (
     <Box sx={{ maxWidth: 800, margin: '0 auto', padding: 3 }}>
-      <Typography variant="h4" gutterBottom sx={{ textAlign: 'center', marginBottom: 4 }}>
+      <Typography variant="h4" gutterBottom sx={{ marginBottom: 4 }}>
         Event Administration
       </Typography>
 
       <Card sx={{ marginBottom: 3 }}>
         <CardHeader
-          title="Neues Event erstellen oder aktualisieren"
+          title="Zeitplan erstellen oder aktualisieren"
           subheader="Lade Excel-Dateien hoch und erstelle automatisch ein neues Event"
         />
         <CardContent>
@@ -471,8 +479,28 @@ export default function Admin() {
           {processing.isProcessing && <LinearProgress sx={{ marginBottom: 2 }} />}
 
           {processing.message && (
-            <Alert severity="info" sx={{ marginBottom: 2 }}>
+            <Alert
+              severity={processing.step === 5 && !processing.isProcessing ? "success" : "info"}
+              sx={{ marginBottom: 2 }}
+            >
               {processing.message}
+              {processing.step === 5 && !processing.isProcessing && processing.message.includes('wurde erfolgreich') && (
+                <Box sx={{ marginTop: 1 }}>
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    href={`/#/${processing.message.match(/"([^"]+)"/)?.[1] || ''}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    sx={{ marginRight: 1 }}
+                  >
+                    Event öffnen
+                  </Button>
+                  <Typography variant="caption" display="block" sx={{ marginTop: 1, color: 'text.secondary' }}>
+                    ⏱️ Die Änderungen werden in ca. 10 Minuten bereitgestellt.
+                  </Typography>
+                </Box>
+              )}
             </Alert>
           )}
 
@@ -495,21 +523,22 @@ export default function Admin() {
             <br />
             Die Anwendung wird automatisch alle notwendigen Dateien erstellen und die Routen konfigurieren.
           </Typography>
-          
+
           <Typography variant="h6" sx={{ marginTop: 2, marginBottom: 1 }}>
             Beispiel: Wettspielorte Excel Format
           </Typography>
-          <Box component="img" 
-               src="/wettspielorte-sample.png" 
+          <Box component="img"
+               src="/wettspielorte-sample.png"
                alt="Beispiel für Wettspielorte Excel Format"
-               sx={{ 
-                 maxWidth: '100%', 
+               sx={{
+                 maxWidth: '100%',
                  height: 'auto',
                  border: '1px solid #ddd',
                  borderRadius: 1,
                  marginBottom: 1
-               }} 
+               }}
           />
+          <br />
           <Typography variant="caption" color="text.secondary">
             Die Excel-Datei sollte genau zwei Spalten haben: "Abkürzung" und "Google Maps URL"
           </Typography>
