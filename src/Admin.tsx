@@ -185,7 +185,7 @@ export default function Admin() {
 
       if ('content' in file) {
         return {
-          content: Buffer.from(file.content, 'base64').toString(),
+          content: atob(file.content.replace(/\s/g, '')), // Use atob instead of Buffer
           sha: file.sha
         };
       }
@@ -221,7 +221,7 @@ export default function Admin() {
         path: change.path,
         mode: '100644' as const,
         type: 'blob' as const,
-        content: change.content
+        content: change.content // GitHub API accepts string content directly
       }));
 
       // Create new tree
