@@ -53,7 +53,16 @@ const router = createHashRouter([
       competitionVenues='/lenzburg-25/wettspielorte.json'
     />
   }
-]);
+,
+  {
+    path: "/test-25",
+    element: <DigitalTimeguide
+      primaryColor='#b540c4'
+      name='test-25'
+      timetable='/test-25/zeitplan.csv'
+      competitionVenues='/test-25/wettspielorte.json'
+    />
+  }]);
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
