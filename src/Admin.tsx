@@ -789,6 +789,42 @@ export default function Admin() {
           <Typography variant="caption" color="text.secondary">
             Die Excel-Datei sollte genau zwei Spalten haben: "Abkürzung" und "Google Maps URL"
           </Typography>
+
+          <Typography variant="h6" sx={{ marginTop: 3, marginBottom: 1 }}>
+            Zeitplan in andere Website einbetten
+          </Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ marginBottom: 2 }}>
+            Um den Zeitplan in eine andere Website einzubetten, verwende den folgenden HTML-Code.
+            <strong>Ersetze <code>{"{ZEITPLAN-JAHR}"}</code> durch den Namen deines Zeitplans (z.B. "lenzburg-25"):</strong>
+          </Typography>
+          <Box
+            component="pre"
+            sx={{
+              backgroundColor: '#f5f5f5',
+              padding: 2,
+              borderRadius: 1,
+              border: '1px solid #ddd',
+              fontSize: '0.875rem',
+              fontFamily: 'monospace',
+              overflow: 'auto',
+              whiteSpace: 'pre-wrap'
+            }}
+          >
+{`<iframe id="zeitplan" src="https://arth-steinen-23.ch/#/ZEITPLAN-JAHR"
+        style="border: 0px; min-height: 400px; height: 680px;"
+        width="100%"></iframe>
+<script>
+window.addEventListener("message", (event) => {
+  if (event.data.startsWith('resize::')) {
+    const height = event.data.replace('resize::', '');
+    document.getElementById('zeitplan').style.height = \`\${height}px\`;
+  }
+}, false);
+</script>`}
+          </Box>
+          <Typography variant="caption" color="text.secondary" sx={{ marginTop: 1, display: 'block' }}>
+            💡 Das Script sorgt dafür, dass die Höhe des iframes automatisch an den Inhalt angepasst wird.
+          </Typography>
         </CardContent>
       </Card>
     </Box>
