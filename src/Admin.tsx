@@ -105,8 +105,8 @@ export default function Admin() {
   };
 
   const validateForm = (): string | null => {
-    if (!formData.eventName.trim()) return 'Event-Name ist erforderlich';
-    if (!/^[a-z0-9-]+$/.test(formData.eventName)) return 'Event-Name darf nur Kleinbuchstaben, Zahlen und Bindestriche enthalten';
+    if (!formData.eventName.trim()) return 'Zeitplan-Name ist erforderlich';
+    if (!/^[a-z0-9-]+$/.test(formData.eventName)) return 'Zeitplan-Name darf nur Kleinbuchstaben, Zahlen und Bindestriche enthalten';
     if (!formData.primaryColor.match(/^#[0-9A-Fa-f]{6}$/)) return 'Ungültiger Hex-Farbcode';
     if (!formData.zeitplanFile) return 'Zeitplan-Datei ist erforderlich';
     if (!formData.wettspielorteFile) return 'Wettspielorte-Datei ist erforderlich';
@@ -125,15 +125,33 @@ export default function Admin() {
           const worksheet = workbook.Sheets[sheetName];
 
           if (isZeitplan) {
-            // Convert to JSON first to handle date formatting
-            const json = XLSX.utils.sheet_to_json(worksheet, { header: 1, raw: false, dateNF: 'dd.mm.yyyy' });
+            // Convert to JSON first, keeping raw values to detect dates
+            const json = XLSX.utils.sheet_to_json(worksheet, { header: 1, raw: true });
 
-            // Convert JSON to CSV with proper formatting
+            // Convert JSON to CSV with proper date formatting
             const csvLines: string[] = [];
-            json.forEach((row: any) => {
+            json.forEach((row: any, rowIndex: number) => {
               if (Array.isArray(row)) {
                 // Process each cell in the row
-                const processedRow = row.map((cell: any) => {
+                const processedRow = row.map((cell: any, colIndex: number) => {
+                  // Check if this cell might be a date
+                  const cellRef = XLSX.utils.encode_cell({ r: rowIndex, c: colIndex });
+                  const cellObj = worksheet[cellRef];
+
+                  // If it's a number and the cell has date formatting or looks like a date serial number
+                  if (typeof cell === 'number' && cellObj) {
+                    // Check if it's likely a date (Excel dates are typically > 25000 for recent dates)
+                    if (cell > 25000 && cell < 100000) {
+                      // Convert Excel serial date to JavaScript Date
+                      const excelDate = new Date((cell - 25569) * 86400 * 1000);
+                      // Format as dd.mm.yyyy
+                      const day = String(excelDate.getDate()).padStart(2, '0');
+                      const month = String(excelDate.getMonth() + 1).padStart(2, '0');
+                      const year = excelDate.getFullYear();
+                      return `${day}.${month}.${year}`;
+                    }
+                  }
+
                   // Handle potential comma-containing values by quoting them
                   if (typeof cell === 'string' && (cell.includes(',') || cell.includes('"'))) {
                     return `"${cell.replace(/"/g, '""')}"`;
@@ -194,17 +212,17 @@ export default function Admin() {
 
   const deleteEvent = async () => {
     if (!formData.eventName || !formData.githubToken) {
-      setProcessing(prev => ({ ...prev, error: 'Event-Name und GitHub Token sind erforderlich' }));
+      setProcessing(prev => ({ ...prev, error: 'Zeitplan-Name und GitHub Token sind erforderlich' }));
       return;
     }
 
-    const confirmed = window.confirm(`Möchten Sie das Event "${formData.eventName}" wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.`);
+    const confirmed = window.confirm(`Möchten Sie den Zeitplan "${formData.eventName}" wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.`);
     if (!confirmed) return;
 
     setIsDeleting(true);
     setProcessing({
       step: 0,
-      message: `Lösche Event "${formData.eventName}"...`,
+      message: `Lösche Zeitplan "${formData.eventName}"...`,
       error: null,
       isProcessing: true
     });
@@ -226,7 +244,7 @@ export default function Admin() {
       const eventExists = currentEvents.some(event => event.name === formData.eventName);
 
       if (!eventExists) {
-        throw new Error(`Event "${formData.eventName}" nicht gefunden`);
+        throw new Error(`Zeitplan "${formData.eventName}" nicht gefunden`);
       }
 
       // Get files to delete from the event folder
@@ -262,7 +280,7 @@ export default function Admin() {
       });
 
       // Filter out files to delete and update events.json in one atomic operation
-      setProcessing(prev => ({ ...prev, step: 4, message: 'Erstelle neuen Git-Tree ohne Event-Dateien...' }));
+      setProcessing(prev => ({ ...prev, step: 4, message: 'Erstelle neuen Git-Tree ohne Zeitplan-Dateien...' }));
 
       // Update events.json content
       const updatedEvents = currentEvents.filter(event => event.name !== formData.eventName);
@@ -301,7 +319,7 @@ export default function Admin() {
       const { data: newCommit } = await octokit.rest.git.createCommit({
         owner: 'randombenj',
         repo: 'arth-steinen-23',
-        message: `Delete event ${formData.eventName}`,
+        message: `Delete zeitplan ${formData.eventName}`,
         tree: newTree.sha,
         parents: [currentCommitSha]
       });
@@ -321,7 +339,7 @@ export default function Admin() {
       setProcessing(prev => ({
         ...prev,
         step: 5,
-        message: `Event "${formData.eventName}" erfolgreich gelöscht!`,
+        message: `Zeitplan "${formData.eventName}" erfolgreich gelöscht!`,
         isProcessing: false
       }));
 
@@ -337,7 +355,7 @@ export default function Admin() {
     } catch (error: any) {
       setProcessing(prev => ({
         ...prev,
-        error: error.message || 'Fehler beim Löschen des Events',
+        error: error.message || 'Fehler beim Löschen des Zeitplans',
         isProcessing: false
       }));
     } finally {
@@ -473,8 +491,8 @@ export default function Admin() {
       });
 
       const commitMessage = isUpdate
-        ? `Update event ${formData.eventName}`
-        : `Add new event ${formData.eventName}`;
+        ? `Update zeitplan ${formData.eventName}`
+        : `Add new zeitplan ${formData.eventName}`;
 
       // Create single atomic commit
       const { data: newCommit } = await octokit.rest.git.createCommit({
@@ -497,7 +515,7 @@ export default function Admin() {
       setProcessing(prev => ({
         ...prev,
         step: 5,
-        message: `Event erfolgreich ${isUpdate ? 'aktualisiert' : 'erstellt'}!`,
+        message: `Zeitplan erfolgreich ${isUpdate ? 'aktualisiert' : 'erstellt'}!`,
         isProcessing: false
       }));
 
@@ -515,7 +533,7 @@ export default function Admin() {
       setTimeout(() => {
         setProcessing(prev => ({
           ...prev,
-          message: `Event "${completedEventName}" wurde erfolgreich ${isUpdate ? 'aktualisiert' : 'erstellt'}! Die Änderungen werden in ca. 10 Minuten verfügbar sein.`,
+          message: `Zeitplan "${completedEventName}" wurde erfolgreich ${isUpdate ? 'aktualisiert' : 'erstellt'}! Die Änderungen werden in ca. 10 Minuten verfügbar sein.`,
           error: null
         }));
       }, 1000);    } catch (error: any) {
@@ -530,13 +548,13 @@ export default function Admin() {
   return (
     <Box sx={{ maxWidth: 800, margin: '0 auto', padding: 3 }}>
       <Typography variant="h4" gutterBottom sx={{ marginBottom: 4 }}>
-        Event Administration
+        Zeitplan Administration
       </Typography>
 
       <Card sx={{ marginBottom: 3 }}>
         <CardHeader
           title="Zeitplan erstellen oder aktualisieren"
-          subheader="Lade Excel-Dateien hoch und erstelle automatisch ein neues Event"
+          subheader="Lade Excel-Dateien hoch und erstelle automatisch einen neuen Zeitplan"
         />
         <CardContent>
           <Grid container spacing={3}>
@@ -568,8 +586,8 @@ export default function Admin() {
                 renderInput={(params) => (
                   <TextField
                     {...params}
-                    label="Event Name (z.B. lenzburg-25)"
-                    helperText="Wähle ein bestehendes Event oder erstelle ein neues"
+                    label="Zeitplan Name (z.B. lenzburg-25)"
+                    helperText="Wähle einen bestehenden Zeitplan oder erstelle einen neuen"
                     error={!!(formData.eventName && !/^[a-z0-9-]+$/.test(formData.eventName))}
                   />
                 )}
@@ -604,7 +622,7 @@ export default function Admin() {
                     onClick={deleteEvent}
                     disabled={processing.isProcessing || isDeleting || !formData.githubToken}
                   >
-                    Event löschen
+                    Zeitplan löschen
                   </Button>
                 </Box>
               )}
@@ -687,7 +705,7 @@ export default function Admin() {
               onClick={processForm}
               disabled={processing.isProcessing || isDeleting}
             >
-              {processing.isProcessing || isDeleting ? 'Verarbeitung läuft...' : 'Event erstellen/aktualisieren'}
+              {processing.isProcessing || isDeleting ? 'Verarbeitung läuft...' : 'Zeitplan erstellen/aktualisieren'}
             </Button>
           </Box>
         </CardContent>
@@ -723,7 +741,7 @@ export default function Admin() {
                     rel="noopener noreferrer"
                     sx={{ marginRight: 1 }}
                   >
-                    Event öffnen
+                    Zeitplan öffnen
                   </Button>
                   <Typography variant="caption" display="block" sx={{ marginTop: 1, color: 'text.secondary' }}>
                     ⏱️ Die Änderungen werden in ca. 10 Minuten bereitgestellt.
@@ -745,7 +763,7 @@ export default function Admin() {
         <CardHeader title="Anleitung" />
         <CardContent>
           <Typography variant="body2" color="text.secondary">
-            1. <strong>Event Name:</strong> Wähle ein bestehendes Event aus der Liste oder erstelle ein neues im Format "ort-jahr" (z.B. lenzburg-25)<br />
+            1. <strong>Zeitplan Name:</strong> Wähle einen bestehenden Zeitplan aus der Liste oder erstelle einen neuen im Format "ort-jahr" (z.B. lenzburg-25)<br />
             2. <strong>Zeitplan Excel:</strong> Excel-Datei mit Spalten für Datum, Zeit, Teilnehmer, etc.<br />
             3. <strong>Wettspielorte Excel:</strong> Excel-Datei mit Spalten: <b>Abkürzung, Google Maps URL</b><br />
             4. <strong>GitHub Token:</strong> Personal Access Token mit 'repo' Berechtigung für randombenj/arth-steinen-23<br />
