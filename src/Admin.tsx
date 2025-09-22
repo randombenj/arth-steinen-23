@@ -1,6 +1,7 @@
-import { Add, CloudUpload } from '@mui/icons-material';
+import { Add, CloudUpload, Delete } from '@mui/icons-material';
 import {
   Alert,
+  Autocomplete,
   Box,
   Button,
   Card,
@@ -16,7 +17,7 @@ import {
   Typography
 } from '@mui/material';
 import { Octokit } from '@octokit/rest';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as XLSX from 'xlsx';
 
 interface FormData {
@@ -34,15 +35,23 @@ interface ProcessingState {
   isProcessing: boolean;
 }
 
+interface ExistingEvent {
+  name: string;
+  primaryColor: string;
+}
+
 const STEPS = [
   'Formulardaten validieren',
   'Excel-Dateien verarbeiten',
   'GitHub Repository vorbereiten',
-  'Route zu index.tsx hinzufügen',
+  'Event-Liste aktualisieren',
   'Alle Änderungen atomisch committen'
 ];
 
 export default function Admin() {
+  const [existingEvents, setExistingEvents] = useState<ExistingEvent[]>([]);
+  const [isLoadingEvents, setIsLoadingEvents] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const [formData, setFormData] = useState<FormData>({
     eventName: '',
     primaryColor: '#3e82c4',
@@ -57,6 +66,28 @@ export default function Admin() {
     error: null,
     isProcessing: false
   });
+
+  // Load events when component mounts
+  useEffect(() => {
+    const loadEventsFromJson = async () => {
+      setIsLoadingEvents(true);
+      try {
+        const response = await fetch('/events.json');
+        if (response.ok) {
+          const events: ExistingEvent[] = await response.json();
+          setExistingEvents(events);
+        } else {
+          console.error('Failed to load events.json');
+        }
+      } catch (error) {
+        console.error('Error loading events from JSON:', error);
+      } finally {
+        setIsLoadingEvents(false);
+      }
+    };
+
+    loadEventsFromJson();
+  }, []); // Load events on component mount
 
   const handleInputChange = (field: keyof FormData) => (event: React.ChangeEvent<HTMLInputElement>) => {
     setFormData(prev => ({
@@ -94,9 +125,26 @@ export default function Admin() {
           const worksheet = workbook.Sheets[sheetName];
 
           if (isZeitplan) {
-            // Convert to CSV
-            const csv = XLSX.utils.sheet_to_csv(worksheet);
-            resolve(csv);
+            // Convert to JSON first to handle date formatting
+            const json = XLSX.utils.sheet_to_json(worksheet, { header: 1, raw: false, dateNF: 'dd.mm.yyyy' });
+
+            // Convert JSON to CSV with proper formatting
+            const csvLines: string[] = [];
+            json.forEach((row: any) => {
+              if (Array.isArray(row)) {
+                // Process each cell in the row
+                const processedRow = row.map((cell: any) => {
+                  // Handle potential comma-containing values by quoting them
+                  if (typeof cell === 'string' && (cell.includes(',') || cell.includes('"'))) {
+                    return `"${cell.replace(/"/g, '""')}"`;
+                  }
+                  return cell || '';
+                });
+                csvLines.push(processedRow.join(','));
+              }
+            });
+
+            resolve(csvLines.join('\n'));
           } else {
             // Convert to JSON for wettspielorte
             const json = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
@@ -121,60 +169,6 @@ export default function Admin() {
     });
   };
 
-  const updateIndexFile = (currentContent: string, eventName: string, primaryColor: string): string => {
-    // Find the router configuration and add new route
-    const routerStart = currentContent.indexOf('const router = createHashRouter([');
-    const routerEnd = currentContent.indexOf(']);', routerStart);
-
-    if (routerStart === -1 || routerEnd === -1) {
-      throw new Error('Router-Konfiguration nicht gefunden');
-    }
-
-    const beforeRouter = currentContent.substring(0, routerEnd);
-    const afterRouter = currentContent.substring(routerEnd);
-
-    // Check if route already exists
-    if (currentContent.includes(`path: "/${eventName}"`)) {
-      // Update existing route
-      const routeRegex = new RegExp(
-        `{\\s*path:\\s*"/${eventName}",[^}]*}`,
-        'g'
-      );
-
-      const newRoute = `{
-    path: "/${eventName}",
-    element: <DigitalTimeguide
-      primaryColor='${primaryColor}'
-      name='${eventName}'
-      timetable='/${eventName}/zeitplan.csv'
-      competitionVenues='/${eventName}/wettspielorte.json'
-    />
-  }`;
-
-      return currentContent.replace(routeRegex, newRoute);
-    } else {
-      // Add new route
-      const newRoute = `,
-  {
-    path: "/${eventName}",
-    element: <DigitalTimeguide
-      primaryColor='${primaryColor}'
-      name='${eventName}'
-      timetable='/${eventName}/zeitplan.csv'
-      competitionVenues='/${eventName}/wettspielorte.json'
-    />
-  }`;
-
-      return beforeRouter + newRoute + afterRouter;
-    }
-  };
-
-  interface FileChange {
-    path: string;
-    content: string;
-    sha?: string;
-  }
-
   const getFileInfo = async (octokit: Octokit, path: string): Promise<{ content: string; sha: string } | null> => {
     try {
       const { data: file } = await octokit.rest.repos.getContent({
@@ -198,9 +192,52 @@ export default function Admin() {
     }
   };
 
-  const createAtomicCommit = async (octokit: Octokit, changes: FileChange[], commitMessage: string): Promise<void> => {
+  const deleteEvent = async () => {
+    if (!formData.eventName || !formData.githubToken) {
+      setProcessing(prev => ({ ...prev, error: 'Event-Name und GitHub Token sind erforderlich' }));
+      return;
+    }
+
+    const confirmed = window.confirm(`Möchten Sie das Event "${formData.eventName}" wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.`);
+    if (!confirmed) return;
+
+    setIsDeleting(true);
+    setProcessing({
+      step: 0,
+      message: `Lösche Event "${formData.eventName}"...`,
+      error: null,
+      isProcessing: true
+    });
+
     try {
-      // Get the current commit SHA
+      const octokit = new Octokit({
+        auth: formData.githubToken
+      });
+
+      // Get current events.json
+      setProcessing(prev => ({ ...prev, step: 1, message: 'Lade aktuelle Event-Liste...' }));
+      const eventsFileInfo = await getFileInfo(octokit, 'public/events.json');
+
+      if (!eventsFileInfo) {
+        throw new Error('events.json nicht gefunden');
+      }
+
+      const currentEvents: ExistingEvent[] = JSON.parse(eventsFileInfo.content);
+      const eventExists = currentEvents.some(event => event.name === formData.eventName);
+
+      if (!eventExists) {
+        throw new Error(`Event "${formData.eventName}" nicht gefunden`);
+      }
+
+      // Get files to delete from the event folder
+      setProcessing(prev => ({ ...prev, step: 2, message: 'Ermittele zu löschende Dateien...' }));
+      const filesToDelete: string[] = [
+        `public/${formData.eventName}/zeitplan.csv`,
+        `public/${formData.eventName}/wettspielorte.json`
+      ];
+
+      // Get current commit SHA
+      setProcessing(prev => ({ ...prev, step: 3, message: 'Bereite atomische Löschung vor...' }));
       const { data: ref } = await octokit.rest.git.getRef({
         owner: 'randombenj',
         repo: 'arth-steinen-23',
@@ -216,27 +253,55 @@ export default function Admin() {
         commit_sha: currentCommitSha
       });
 
-      // Create tree items for all changes
-      const treeItems = changes.map(change => ({
-        path: change.path,
-        mode: '100644' as const,
-        type: 'blob' as const,
-        content: change.content // GitHub API accepts string content directly
-      }));
+      // Get the current tree contents
+      const { data: currentTree } = await octokit.rest.git.getTree({
+        owner: 'randombenj',
+        repo: 'arth-steinen-23',
+        tree_sha: currentCommit.tree.sha,
+        recursive: 'true'
+      });
 
-      // Create new tree
+      // Filter out files to delete and update events.json in one atomic operation
+      setProcessing(prev => ({ ...prev, step: 4, message: 'Erstelle neuen Git-Tree ohne Event-Dateien...' }));
+
+      // Update events.json content
+      const updatedEvents = currentEvents.filter(event => event.name !== formData.eventName);
+      const updatedEventsContent = JSON.stringify(updatedEvents, null, 2);
+
+      // Create new tree items - exclude deleted files and update events.json
+      const newTreeItems = currentTree.tree
+        .filter(item => {
+          // Exclude files we want to delete
+          return !filesToDelete.includes(item.path || '');
+        })
+        .map(item => ({
+          path: item.path!,
+          mode: item.mode as any,
+          type: item.type as any,
+          sha: item.sha!
+        }));
+
+      // Add updated events.json with content (not sha)
+      newTreeItems.push({
+        path: 'public/events.json',
+        mode: '100644',
+        type: 'blob',
+        content: updatedEventsContent
+      } as any);
+
+      // Create new tree atomically
       const { data: newTree } = await octokit.rest.git.createTree({
         owner: 'randombenj',
         repo: 'arth-steinen-23',
-        tree: treeItems,
-        base_tree: currentCommit.tree.sha
+        tree: newTreeItems
       });
 
-      // Create new commit
+      // Create single atomic commit
+      setProcessing(prev => ({ ...prev, step: 5, message: 'Erstelle atomischen Commit...' }));
       const { data: newCommit } = await octokit.rest.git.createCommit({
         owner: 'randombenj',
         repo: 'arth-steinen-23',
-        message: commitMessage,
+        message: `Delete event ${formData.eventName}`,
         tree: newTree.sha,
         parents: [currentCommitSha]
       });
@@ -248,10 +313,39 @@ export default function Admin() {
         ref: 'heads/master',
         sha: newCommit.sha
       });
-    } catch (error) {
-      throw new Error(`Fehler beim Erstellen des Commits: ${error}`);
+
+      // Update local state
+      setExistingEvents(updatedEvents);
+
+      // Complete
+      setProcessing(prev => ({
+        ...prev,
+        step: 5,
+        message: `Event "${formData.eventName}" erfolgreich gelöscht!`,
+        isProcessing: false
+      }));
+
+      // Reset form
+      setFormData({
+        eventName: '',
+        primaryColor: '#3e82c4',
+        zeitplanFile: null,
+        wettspielorteFile: null,
+        githubToken: formData.githubToken // Keep the token
+      });
+
+    } catch (error: any) {
+      setProcessing(prev => ({
+        ...prev,
+        error: error.message || 'Fehler beim Löschen des Events',
+        isProcessing: false
+      }));
+    } finally {
+      setIsDeleting(false);
     }
-  };    const processForm = async () => {
+  };
+
+  const processForm = async () => {
     const validationError = validateForm();
     if (validationError) {
       setProcessing(prev => ({ ...prev, error: validationError }));
@@ -281,49 +375,123 @@ export default function Admin() {
         auth: formData.githubToken
       });
 
-      // Prepare all file changes
-      const changes: FileChange[] = [
-        {
-          path: `public/${formData.eventName}/zeitplan.csv`,
-          content: csvContent
-        },
-        {
-          path: `public/${formData.eventName}/wettspielorte.json`,
-          content: jsonContent
-        }
-      ];
+      // Step 4: Get current repository state for atomic operation
+      setProcessing(prev => ({ ...prev, step: 4, message: 'Bereite atomische Aktualisierung vor...' }));
 
-      // Step 4: Get current index.tsx and prepare update
-      setProcessing(prev => ({ ...prev, step: 4, message: 'Aktualisiere Routen...' }));
-      const indexFileInfo = await getFileInfo(octokit, 'src/index.tsx');
+      // Get current commit and tree
+      const { data: ref } = await octokit.rest.git.getRef({
+        owner: 'randombenj',
+        repo: 'arth-steinen-23',
+        ref: 'heads/master'
+      });
 
-      if (indexFileInfo) {
-        const updatedIndexContent = updateIndexFile(
-          indexFileInfo.content,
-          formData.eventName,
-          formData.primaryColor
-        );
+      const currentCommitSha = ref.object.sha;
+      const { data: currentCommit } = await octokit.rest.git.getCommit({
+        owner: 'randombenj',
+        repo: 'arth-steinen-23',
+        commit_sha: currentCommitSha
+      });
 
-        // Only add index.tsx to changes if it actually changed
-        if (updatedIndexContent !== indexFileInfo.content) {
-          changes.push({
-            path: 'src/index.tsx',
-            content: updatedIndexContent,
-            sha: indexFileInfo.sha
-          });
-        }
-      } else {
-        throw new Error('index.tsx nicht gefunden');
+      // Get the current tree contents
+      const { data: currentTree } = await octokit.rest.git.getTree({
+        owner: 'randombenj',
+        repo: 'arth-steinen-23',
+        tree_sha: currentCommit.tree.sha,
+        recursive: 'true'
+      });
+
+      // Get current events.json
+      const eventsFileInfo = await getFileInfo(octokit, 'public/events.json');
+      if (!eventsFileInfo) {
+        throw new Error('events.json nicht gefunden');
       }
 
+      // Update events.json
+      const currentEvents: ExistingEvent[] = JSON.parse(eventsFileInfo.content);
+      const existingEventIndex = currentEvents.findIndex(event => event.name === formData.eventName);
+      const isUpdate = existingEventIndex !== -1;
+
+      if (existingEventIndex !== -1) {
+        // Update existing event
+        currentEvents[existingEventIndex].primaryColor = formData.primaryColor;
+      } else {
+        // Add new event
+        currentEvents.push({
+          name: formData.eventName,
+          primaryColor: formData.primaryColor
+        });
+      }
+
+      // Create new tree items with all changes atomically
+      const newTreeItems = currentTree.tree
+        .filter(item => {
+          // Exclude files we're going to replace
+          const pathsToReplace = [
+            `public/${formData.eventName}/zeitplan.csv`,
+            `public/${formData.eventName}/wettspielorte.json`,
+            'public/events.json'
+          ];
+          return !pathsToReplace.includes(item.path || '');
+        })
+        .map(item => ({
+          path: item.path!,
+          mode: item.mode as any,
+          type: item.type as any,
+          sha: item.sha!
+        }));
+
+      // Add all new/updated files atomically
+      newTreeItems.push(
+        {
+          path: `public/${formData.eventName}/zeitplan.csv`,
+          mode: '100644',
+          type: 'blob',
+          content: csvContent
+        } as any,
+        {
+          path: `public/${formData.eventName}/wettspielorte.json`,
+          mode: '100644',
+          type: 'blob',
+          content: jsonContent
+        } as any,
+        {
+          path: 'public/events.json',
+          mode: '100644',
+          type: 'blob',
+          content: JSON.stringify(currentEvents, null, 2)
+        } as any
+      );
+
       // Step 5: Create atomic commit with all changes
-      setProcessing(prev => ({ ...prev, step: 5, message: 'Committe alle Änderungen...' }));
-      const isUpdate = indexFileInfo.content.includes(`path: "/${formData.eventName}"`);
+      setProcessing(prev => ({ ...prev, step: 5, message: 'Erstelle atomischen Commit...' }));
+
+      // Create new tree atomically
+      const { data: newTree } = await octokit.rest.git.createTree({
+        owner: 'randombenj',
+        repo: 'arth-steinen-23',
+        tree: newTreeItems
+      });
+
       const commitMessage = isUpdate
         ? `Update event ${formData.eventName}`
         : `Add new event ${formData.eventName}`;
 
-      await createAtomicCommit(octokit, changes, commitMessage);
+      // Create single atomic commit
+      const { data: newCommit } = await octokit.rest.git.createCommit({
+        owner: 'randombenj',
+        repo: 'arth-steinen-23',
+        message: commitMessage,
+        tree: newTree.sha,
+        parents: [currentCommitSha]
+      });
+
+      // Update the reference
+      await octokit.rest.git.updateRef({
+        owner: 'randombenj',
+        repo: 'arth-steinen-23',
+        ref: 'heads/master',
+        sha: newCommit.sha
+      });
 
       // Complete
       setProcessing(prev => ({
@@ -373,14 +541,73 @@ export default function Admin() {
         <CardContent>
           <Grid container spacing={3}>
             <Grid item xs={12} md={6}>
-              <TextField
+              <Autocomplete
                 fullWidth
-                label="Event Name (z.B. lenzburg-25)"
+                freeSolo
+                options={existingEvents.map(event => event.name)}
                 value={formData.eventName}
-                onChange={handleInputChange('eventName')}
-                helperText="Nur Kleinbuchstaben, Zahlen und Bindestriche"
-                disabled={processing.isProcessing}
+                onInputChange={(event, newValue) => {
+                  setFormData(prev => ({
+                    ...prev,
+                    eventName: newValue || ''
+                  }));
+                }}
+                onChange={(event, newValue) => {
+                  if (typeof newValue === 'string') {
+                    // Find the selected event and update color
+                    const selectedEvent = existingEvents.find(event => event.name === newValue);
+                    setFormData(prev => ({
+                      ...prev,
+                      eventName: newValue,
+                      primaryColor: selectedEvent ? selectedEvent.primaryColor : prev.primaryColor
+                    }));
+                  }
+                }}
+                disabled={processing.isProcessing || isDeleting}
+                loading={isLoadingEvents}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Event Name (z.B. lenzburg-25)"
+                    helperText="Wähle ein bestehendes Event oder erstelle ein neues"
+                    error={!!(formData.eventName && !/^[a-z0-9-]+$/.test(formData.eventName))}
+                  />
+                )}
+                renderOption={(props, option) => {
+                  const event = existingEvents.find(e => e.name === option);
+                  return (
+                    <Box component="li" {...props} sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                      {event && (
+                        <Box
+                          sx={{
+                            width: 16,
+                            height: 16,
+                            backgroundColor: event.primaryColor,
+                            borderRadius: '50%',
+                            border: '1px solid #ddd'
+                          }}
+                        />
+                      )}
+                      {option}
+                    </Box>
+                  );
+                }}
               />
+              {/* Delete button for existing events */}
+              {formData.eventName && existingEvents.some(event => event.name === formData.eventName) && (
+                <Box sx={{ marginTop: 1 }}>
+                  <Button
+                    variant="outlined"
+                    color="error"
+                    size="small"
+                    startIcon={<Delete />}
+                    onClick={deleteEvent}
+                    disabled={processing.isProcessing || isDeleting || !formData.githubToken}
+                  >
+                    Event löschen
+                  </Button>
+                </Box>
+              )}
             </Grid>
             <Grid item xs={12} md={6}>
               <TextField
@@ -389,7 +616,7 @@ export default function Admin() {
                 label="Primärfarbe"
                 value={formData.primaryColor}
                 onChange={handleInputChange('primaryColor')}
-                disabled={processing.isProcessing}
+                disabled={processing.isProcessing || isDeleting}
               />
             </Grid>
             <Grid item xs={12} md={6}>
@@ -398,7 +625,7 @@ export default function Admin() {
                 component="label"
                 fullWidth
                 startIcon={<CloudUpload />}
-                disabled={processing.isProcessing}
+                disabled={processing.isProcessing || isDeleting}
                 sx={{ height: 56 }}
               >
                 Zeitplan Excel hochladen
@@ -421,7 +648,7 @@ export default function Admin() {
                 component="label"
                 fullWidth
                 startIcon={<CloudUpload />}
-                disabled={processing.isProcessing}
+                disabled={processing.isProcessing || isDeleting}
                 sx={{ height: 56 }}
               >
                 Wettspielorte Excel hochladen
@@ -446,7 +673,7 @@ export default function Admin() {
                 value={formData.githubToken}
                 onChange={handleInputChange('githubToken')}
                 helperText="Benötigt 'repo' Berechtigung für das Repository"
-                disabled={processing.isProcessing}
+                disabled={processing.isProcessing || isDeleting}
               />
             </Grid>
           </Grid>
@@ -456,11 +683,11 @@ export default function Admin() {
               variant="contained"
               size="large"
               fullWidth
-              startIcon={processing.isProcessing ? undefined : <Add />}
+              startIcon={processing.isProcessing || isDeleting ? undefined : <Add />}
               onClick={processForm}
-              disabled={processing.isProcessing}
+              disabled={processing.isProcessing || isDeleting}
             >
-              {processing.isProcessing ? 'Verarbeitung läuft...' : 'Event erstellen/aktualisieren'}
+              {processing.isProcessing || isDeleting ? 'Verarbeitung läuft...' : 'Event erstellen/aktualisieren'}
             </Button>
           </Box>
         </CardContent>
@@ -468,13 +695,15 @@ export default function Admin() {
 
       {(processing.isProcessing || processing.step > 0) && (
         <Paper sx={{ padding: 3 }}>
-          <Stepper activeStep={processing.step - 1} sx={{ marginBottom: 2 }}>
-            {STEPS.map((label) => (
-              <Step key={label}>
-                <StepLabel>{label}</StepLabel>
-              </Step>
-            ))}
-          </Stepper>
+          {!isDeleting && (
+            <Stepper activeStep={processing.step - 1} sx={{ marginBottom: 2 }}>
+              {STEPS.map((label) => (
+                <Step key={label}>
+                  <StepLabel>{label}</StepLabel>
+                </Step>
+              ))}
+            </Stepper>
+          )}
 
           {processing.isProcessing && <LinearProgress sx={{ marginBottom: 2 }} />}
 
@@ -516,7 +745,7 @@ export default function Admin() {
         <CardHeader title="Anleitung" />
         <CardContent>
           <Typography variant="body2" color="text.secondary">
-            1. <strong>Event Name:</strong> Verwende das Format "ort-jahr" (z.B. lenzburg-25)<br />
+            1. <strong>Event Name:</strong> Wähle ein bestehendes Event aus der Liste oder erstelle ein neues im Format "ort-jahr" (z.B. lenzburg-25)<br />
             2. <strong>Zeitplan Excel:</strong> Excel-Datei mit Spalten für Datum, Zeit, Teilnehmer, etc.<br />
             3. <strong>Wettspielorte Excel:</strong> Excel-Datei mit Spalten: <b>Abkürzung, Google Maps URL</b><br />
             4. <strong>GitHub Token:</strong> Personal Access Token mit 'repo' Berechtigung für randombenj/arth-steinen-23<br />

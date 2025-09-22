@@ -1,13 +1,18 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { createHashRouter, RouterProvider } from 'react-router-dom';
+import { createHashRouter, RouteObject, RouterProvider } from 'react-router-dom';
 import Admin from './Admin';
 import DigitalTimeguide from './DigitalTimeguide';
+
+interface EventConfig {
+  name: string;
+  primaryColor: string;
+}
 
 const theme = createTheme({
   palette: {
@@ -26,43 +31,63 @@ const theme = createTheme({
   },
 });
 
-const router = createHashRouter([
-  {
-    path: "/",
-    element: <App />,
-  },
-  {
-    path: "/admin",
-    element: <Admin />
-  },
-  {
-    path: "/langenthal-25",
-    element: <DigitalTimeguide
-      primaryColor='#3e82c4'
-      name='langenthal-25'
-      timetable='/langenthal-25/zeitplan.csv'
-      competitionVenues='/langenthal-25/wettspielorte.json'
-    />
-  },
-  {
-    path: "/lenzburg-25",
-    element: <DigitalTimeguide
-      primaryColor='#78bdda'
-      name='lenzburg-25'
-      timetable='/lenzburg-25/zeitplan.csv'
-      competitionVenues='/lenzburg-25/wettspielorte.json'
-    />
+function AppRouter() {
+  const [events, setEvents] = useState<EventConfig[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const loadEvents = async () => {
+      try {
+        const response = await fetch('/events.json');
+        if (response.ok) {
+          const eventsData: EventConfig[] = await response.json();
+          setEvents(eventsData);
+        } else {
+          console.error('Failed to load events.json');
+        }
+      } catch (error) {
+        console.error('Error loading events:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadEvents();
+  }, []);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
   }
-,
-  {
-    path: "/test-25",
-    element: <DigitalTimeguide
-      primaryColor='#b540c4'
-      name='test-25'
-      timetable='/test-25/zeitplan.csv'
-      competitionVenues='/test-25/wettspielorte.json'
-    />
-  }]);
+
+  // Create base routes
+  const routes: RouteObject[] = [
+    {
+      path: "/",
+      element: <App />,
+    },
+    {
+      path: "/admin",
+      element: <Admin />
+    }
+  ];
+
+  // Add dynamic routes from events.json
+  events.forEach(event => {
+    routes.push({
+      path: `/${event.name}`,
+      element: <DigitalTimeguide
+        primaryColor={event.primaryColor}
+        name={event.name}
+        timetable={`/${event.name}/zeitplan.csv`}
+        competitionVenues={`/${event.name}/wettspielorte.json`}
+      />
+    });
+  });
+
+  const router = createHashRouter(routes);
+
+  return <RouterProvider router={router} />;
+}
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -70,7 +95,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
-      <RouterProvider router={router} />
+      <AppRouter />
     </ThemeProvider>
   </React.StrictMode>
 );
